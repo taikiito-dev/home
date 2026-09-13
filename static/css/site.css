@@ -29,7 +29,12 @@ body {
   font-size: 1rem;
 }
 
-a {
+/* Browsers apply :visited via the UA stylesheet as `a:visited { color:
+   purple }` (specificity 0,1,1 - element + pseudo-class), which beats a
+   bare `a { color: inherit }` (0,0,1). Needs an explicit :visited rule
+   to actually override the default blue/purple visited-link color. */
+a,
+a:visited {
   color: inherit;
 }
 
@@ -68,7 +73,8 @@ h1, h2, h3 {
   margin-bottom: 48px;
 }
 
-.taiki-wordmark {
+.taiki-wordmark,
+.taiki-wordmark:visited {
   font-size: 1.4rem;
   font-weight: 600;
   color: #1a1a1a;
@@ -147,7 +153,8 @@ h1, h2, h3 {
   font-size: 1.1rem;
 }
 
-.taiki-list a {
+.taiki-list a,
+.taiki-list a:visited {
   color: #1a1a1a;
   text-decoration: underline;
   text-decoration-thickness: max(1px, .0625rem);
