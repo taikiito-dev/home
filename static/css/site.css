@@ -6,28 +6,29 @@
   plain, minimal personal-homepage look - closer to the one-person
   essay-site aesthetic of sites like darioamodei.com than a public
   government service. govuk-frontend classes are still used for base
-  typography (heading/body scale) since that part reads fine either way;
-  everything colored/boxed is stripped or replaced with plain text.
+  type scale (heading/body sizes); colors/fonts/spacing are overridden
+  below to read as a quiet, literary essay page rather than a service UI:
+  serif type, warm off-white background, links styled as underlined text
+  in the same ink color (no separate "link blue"), generous line-height.
 */
 
 /* Font override: govuk-frontend's own "GDS Transport, arial, sans-serif"
    stack is Crown-copyright and not licensed for use outside gov.uk-owned
-   sites (it ships only a "light" weight for regular text, which also
-   reads too thin). Override every govuk-frontend font-family declaration
-   to Public Sans/Noto Sans JP (loaded via Google Fonts in layouts/index.html)
-   instead. !important is needed: govuk-frontend.min.css sets font-family
-   on many individual component classes at equal specificity, loaded
-   earlier in the document. */
+   sites. Serif "Newsreader" (Latin) / "Noto Serif JP" (Japanese) instead
+   - loaded via Google Fonts in layouts/index.html. !important is needed:
+   govuk-frontend.min.css sets font-family on many individual component
+   classes at equal specificity, loaded earlier in the document. */
 html, body,
 .govuk-template,
 [class^="govuk-"],
 [class*=" govuk-"] {
-  font-family: "Public Sans", "Noto Sans JP", arial, sans-serif !important;
+  font-family: "Newsreader", "Noto Serif JP", "Times New Roman", serif !important;
 }
 
 body {
-  background: #ffffff;
-  color: #0b0c0c;
+  background: #f0eee6;
+  color: #1a1a1a;
+  line-height: 1.6;
 }
 
 .taiki-page {
@@ -46,72 +47,78 @@ body {
 }
 
 .taiki-wordmark {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #0b0c0c;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1a1a1a;
   text-decoration: none;
 }
 
 .taiki-lang-toggle {
   background: none;
   border: none;
-  color: #505a5f;
+  color: #1a1a1a;
   cursor: pointer;
   font-family: inherit;
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
   padding: 0;
   text-decoration: underline;
+  text-decoration-thickness: max(1px, .0625rem);
   text-underline-offset: 0.2em;
 }
 
 .taiki-lang-toggle:hover {
-  color: #0b0c0c;
+  color: #5b6472;
 }
 
-/* Hero: big plain name, one-line description, plain text links - no
-   colored background block, no button styling. */
+/* Hero: plain name, one-line description, plain text links - no colored
+   background block, no button styling. */
 .taiki-hero {
   margin-bottom: 56px;
 }
 
 .taiki-hero__lede {
   font-size: 1.25rem;
-  line-height: 1.5;
-  color: #0b0c0c;
+  line-height: 1.6;
+  color: #1a1a1a;
   max-width: 34em;
 }
 
 .taiki-hero__links {
   margin-top: 16px;
-  color: #0b0c0c;
+  color: #1a1a1a;
+  font-size: 1rem;
 }
 
 /* Plain, not a mailto: link - clicking used to force-launch a mail app,
    which the user found annoying. Just showing the address as text lets
    people read/copy it and reach out however they prefer. */
 .taiki-hero__label {
-  color: #505a5f;
+  color: #5b6472;
 }
 
 .taiki-hero__links a {
-  color: #0b0c0c;
+  color: #1a1a1a;
   text-decoration: underline;
   text-decoration-thickness: max(1px, .0625rem);
-  text-underline-offset: .1578em;
+  text-underline-offset: .15em;
 }
 
 .taiki-hero__links a:hover {
-  color: #505a5f;
+  color: #5b6472;
 }
 
 .taiki-hero__links span {
-  color: #b1b4b6;
+  color: #a8a196;
   margin: 0 10px;
 }
 
-/* Projects & writing: plain vertical list, no card borders/boxes. */
+/* Projects & writing: plain list, links styled as underlined text in the
+   same ink color (no "link blue") - govuk-link's default blue is
+   overridden here to match. No card borders/boxes, no dividers between
+   items - whitespace alone separates them. */
 .taiki-section h2 {
   margin-bottom: 20px;
+  font-weight: 600;
 }
 
 .taiki-list {
@@ -121,50 +128,55 @@ body {
 }
 
 .taiki-list > li {
-  padding: 20px 0;
-  border-top: 1px solid #b1b4b6;
+  padding-bottom: 24px;
 }
 
 .taiki-list > li:last-child {
-  border-bottom: 1px solid #b1b4b6;
+  padding-bottom: 0;
 }
 
 .taiki-list h3 {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.taiki-list .govuk-link,
+.taiki-list .govuk-link:visited {
+  color: #1a1a1a;
+  text-decoration: underline;
+  text-decoration-thickness: max(1px, .0625rem);
+  text-underline-offset: .15em;
+}
+
+.taiki-list .govuk-link:hover {
+  color: #5b6472;
 }
 
 .taiki-list p {
   margin-bottom: 0;
-  color: #505a5f;
+  color: #5b6472;
 }
 
 .taiki-sublist {
-  margin: 10px 0 0;
+  margin: 8px 0 0;
   padding-left: 1.1em;
-  color: #505a5f;
+  color: #5b6472;
 }
 
 .taiki-sublist li {
   margin-top: 4px;
 }
 
-.taiki-tag {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #505a5f;
-  border: 1px solid #b1b4b6;
-  border-radius: 3px;
-  padding: 1px 6px;
-  vertical-align: middle;
+.taiki-note {
+  color: #a8a196;
+  font-weight: 400;
+  font-size: 0.9em;
 }
 
 .taiki-footer {
   margin-top: 56px;
-  padding-top: 20px;
-  border-top: 1px solid #b1b4b6;
-  color: #505a5f;
-  font-size: 0.9375rem;
+  color: #a8a196;
+  font-size: 0.9rem;
 }
 
 /* Language show/hide via data attribute, toggled by JS */
