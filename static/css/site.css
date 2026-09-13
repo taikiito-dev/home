@@ -11,6 +11,21 @@
   --taiki-navy-dark: #001d4d;
 }
 
+/* Font override: govuk-frontend's own "GDS Transport, arial, sans-serif"
+   stack is Crown-copyright and not licensed for use outside gov.uk-owned
+   sites (it ships only a "light" weight for regular text, which also
+   reads too thin). Override every govuk-frontend font-family declaration
+   to Public Sans/Noto Sans JP (loaded via Google Fonts in layouts/index.html)
+   instead. !important is needed: govuk-frontend.min.css sets font-family
+   on many individual component classes at equal specificity, loaded
+   earlier in the document. */
+html, body,
+.govuk-template,
+[class^="govuk-"],
+[class*=" govuk-"] {
+  font-family: "Public Sans", "Noto Sans JP", arial, sans-serif !important;
+}
+
 /* Header */
 .govuk-header {
   background: var(--taiki-navy);

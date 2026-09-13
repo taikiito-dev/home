@@ -8,9 +8,16 @@
   <meta name="theme-color" content="#002d72">
   <link rel="icon" sizes="48x48" href="/assets/images/favicon.ico">
   <link rel="icon" sizes="any" href="/assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="mask-icon" href="/assets/images/govuk-icon-mask.svg" color="#002d72">
   <link rel="apple-touch-icon" href="/assets/images/govuk-icon-180.png">
   <link rel="stylesheet" href="/govuk/govuk-frontend.min.css">
+  <!-- Font swap: govuk-frontend's default "GDS Transport" is a Crown-copyright
+       font restricted to gov.uk-owned sites and isn't licensed for use here.
+       Load Public Sans (Latin) + Noto Sans JP (the JA toggle text) instead;
+       site.css overrides every govuk-frontend font-family declaration to
+       use them. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/site.css">
 </head>
 <body class="govuk-template__body">
