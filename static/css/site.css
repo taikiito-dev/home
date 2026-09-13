@@ -1,50 +1,66 @@
 /*
-  Site-specific overrides layered on top of govuk-frontend.min.css.
+  Plain hand-written CSS - no design system underneath.
 
-  Design direction (2026-09-13): dropped GOV.UK's boxed/colored chrome
-  (navy header bar, button-styled links, bordered project cards) for a
-  plain, minimal personal-homepage look - closer to the one-person
-  essay-site aesthetic of sites like darioamodei.com than a public
-  government service. govuk-frontend classes are still used for base
-  type scale (heading/body sizes); colors/fonts/spacing are overridden
-  below to read as a quiet, literary essay page rather than a service UI:
-  serif type, warm off-white background, links styled as underlined text
-  in the same ink color (no separate "link blue"), generous line-height.
+  Removed govuk-frontend entirely (2026-09-13): once the navy header,
+  buttons, and card borders were stripped for the minimal darioamodei.com-
+  style redesign, the only things still being pulled from govuk-frontend
+  were a handful of heading/body type-scale classes and a skip-link - for
+  ~180KB of CSS+JS (and a full unused JS module, since no govuk-frontend
+  component - header nav, buttons, accordion - is used on this page
+  anymore). Replaced with the plain rules below. Off-Grid
+  (offgrid.taikiito.com) is a different project and keeps govuk-frontend
+  properly, since GOV.UK's look is a deliberate trust signal there; this
+  is a personal homepage, so it doesn't need it.
 */
 
-/* Font override: govuk-frontend's own "GDS Transport, arial, sans-serif"
-   stack is Crown-copyright and not licensed for use outside gov.uk-owned
-   sites. Serif "Newsreader" (Latin) / "Noto Serif JP" (Japanese) instead
-   - loaded via Google Fonts in layouts/index.html. !important is needed:
-   govuk-frontend.min.css sets font-family on many individual component
-   classes at equal specificity, loaded earlier in the document. */
-html, body,
-.govuk-template,
-[class^="govuk-"],
-[class*=" govuk-"] {
-  font-family: "Newsreader", "Noto Serif JP", "Times New Roman", serif !important;
+* {
+  box-sizing: border-box;
 }
 
-/* .govuk-template__body (class selector, specificity 0,1,0) beats a
-   plain `body` element selector (0,0,1) regardless of source order -
-   govuk-frontend.min.css's own `.govuk-template__body{background-color:
-   #fff}` was silently winning over this rule. Match the class directly
-   so the ivory background actually applies. */
-body,
-.govuk-template__body {
+html, body {
+  font-family: "Newsreader", "Noto Serif JP", "Times New Roman", serif;
+}
+
+body {
   background: #f0eee6;
   color: #1a1a1a;
   line-height: 1.6;
+  margin: 0;
+  font-size: 1rem;
+}
+
+a {
+  color: inherit;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Visually hidden unless focused - standard skip-link pattern. */
+.taiki-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: #f0eee6;
+  color: #1a1a1a;
+  padding: 8px 12px;
+  z-index: 10;
+}
+
+.taiki-skip-link:focus {
+  left: 8px;
+  top: 8px;
 }
 
 .taiki-page {
   max-width: 700px;
-  padding-top: 40px;
-  padding-bottom: 60px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
 }
 
-/* Header: plain text wordmark, no colored bar/box (govuk-frontend's own
-   header component isn't used here at all). */
+/* Header: plain text wordmark, no colored bar/box. */
 .taiki-header {
   display: flex;
   align-items: baseline;
@@ -76,8 +92,7 @@ body,
   color: #5b6472;
 }
 
-/* Hero: plain name, one-line description, plain text links - no colored
-   background block, no button styling. */
+/* Hero: plain name, one-line description - no colored background block. */
 .taiki-hero {
   margin-bottom: 56px;
 }
@@ -87,6 +102,7 @@ body,
   line-height: 1.6;
   color: #1a1a1a;
   max-width: 34em;
+  margin: 0;
 }
 
 /* Plain, not a mailto: link - clicking used to force-launch a mail app,
@@ -100,16 +116,16 @@ body,
 
 .taiki-contact {
   margin-top: 56px;
+  margin-bottom: 0;
   color: #1a1a1a;
 }
 
-/* Projects & writing: plain list, links styled as underlined text in the
-   same ink color (no "link blue") - govuk-link's default blue is
-   overridden here to match. No card borders/boxes, no dividers between
-   items - whitespace alone separates them. */
+/* Projects & writing: plain list, links underlined in the same ink color
+   as body text (no "link blue") - no card borders/boxes, no dividers
+   between items, whitespace alone separates them. */
 .taiki-section h2 {
   margin-bottom: 20px;
-  font-weight: 600;
+  font-size: 1.3rem;
 }
 
 .taiki-list {
@@ -128,23 +144,22 @@ body,
 
 .taiki-list h3 {
   margin-bottom: 6px;
-  font-weight: 600;
+  font-size: 1.1rem;
 }
 
-.taiki-list .govuk-link,
-.taiki-list .govuk-link:visited {
+.taiki-list a {
   color: #1a1a1a;
   text-decoration: underline;
   text-decoration-thickness: max(1px, .0625rem);
   text-underline-offset: .15em;
 }
 
-.taiki-list .govuk-link:hover {
+.taiki-list a:hover {
   color: #5b6472;
 }
 
 .taiki-list p {
-  margin-bottom: 0;
+  margin: 0;
   color: #5b6472;
 }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="govuk-template">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>Taiki Ito</title>
@@ -9,61 +9,57 @@
   <link rel="icon" sizes="48x48" href="/assets/images/favicon.ico">
   <link rel="icon" sizes="any" href="/assets/images/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/images/govuk-icon-180.png">
-  <link rel="stylesheet" href="/govuk/govuk-frontend.min.css">
-  <!-- Font: serif "Newsreader" (Latin) / "Noto Serif JP" (Japanese) instead
-       of govuk-frontend's default "GDS Transport" (Crown-copyright, not
-       licensed for use here) or a plain sans - closer to the essay-site
-       feel of sites like darioamodei.com than a public-service look. -->
+  <!-- Font: serif "Newsreader" (Latin) / "Noto Serif JP" (Japanese) - the
+       essay-site feel of sites like darioamodei.com. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/site.css">
 </head>
-<body class="govuk-template__body">
-  <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+<body>
 
-  <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+  <a href="#main-content" class="taiki-skip-link">Skip to main content</a>
 
-  <div class="govuk-width-container taiki-page">
+  <div class="taiki-page">
 
     <header class="taiki-header">
       <a href="/" class="taiki-wordmark">Taiki Ito</a>
       <button type="button" class="taiki-lang-toggle" id="lang-toggle" aria-label="Switch language / 言語を切り替える">EN / 日本語</button>
     </header>
 
-    <main id="main-content" role="main">
+    <main id="main-content">
 
       <section class="taiki-hero">
-        <p class="taiki-hero__lede govuk-body" data-lang-content="en">I'm a Japan-born, Singapore-based professional working in international business. Outside of work, I write and build small side projects around self-hosting, data sovereignty, and open source.</p>
-        <p class="taiki-hero__lede govuk-body" data-lang-content="ja">シンガポール在住。海外を舞台にした仕事をしながら、仕事の外では、セルフホスティングやデータ主権、オープンソースをテーマにした発信・サイドプロジェクトを作っています。</p>
+        <p class="taiki-hero__lede" data-lang-content="en">I'm a Japan-born, Singapore-based professional working in international business. Outside of work, I write and build small side projects around self-hosting, data sovereignty, and open source.</p>
+        <p class="taiki-hero__lede" data-lang-content="ja">シンガポール在住。海外を舞台にした仕事をしながら、仕事の外では、セルフホスティングやデータ主権、オープンソースをテーマにした発信・サイドプロジェクトを作っています。</p>
       </section>
 
       <section class="taiki-section">
-        <h2 class="govuk-heading-m" data-lang-content="en">Projects &amp; writing</h2>
-        <h2 class="govuk-heading-m" data-lang-content="ja">プロジェクト・執筆</h2>
+        <h2 data-lang-content="en">Projects &amp; writing</h2>
+        <h2 data-lang-content="ja">プロジェクト・執筆</h2>
 
         <ul class="taiki-list">
           <li>
-            <h3 class="govuk-heading-s"><a class="govuk-link" href="https://offgrid.taikiito.com">Off-Grid</a> <span class="taiki-note">(JA)</span></h3>
-            <p class="govuk-body-s" data-lang-content="en">A guide series (in Japanese) on reclaiming data sovereignty through self-hosting, written from my own trial-and-error experience &mdash; originally to teach my wife.</p>
-            <p class="govuk-body-s" data-lang-content="ja">データ主権を取り戻すための、非エンジニア向けセルフホスト移行ガイド集。妻に教えるつもりで書いた実体験ベースの記事。</p>
+            <h3><a href="https://offgrid.taikiito.com">Off-Grid</a> <span class="taiki-note">(JA)</span></h3>
+            <p data-lang-content="en">A guide series (in Japanese) on reclaiming data sovereignty through self-hosting, written from my own trial-and-error experience &mdash; originally to teach my wife.</p>
+            <p data-lang-content="ja">データ主権を取り戻すための、非エンジニア向けセルフホスト移行ガイド集。妻に教えるつもりで書いた実体験ベースの記事。</p>
           </li>
           <li>
-            <h3 class="govuk-heading-s"><a class="govuk-link" href="https://singlish.taikiito.com">singlish-lah</a></h3>
-            <p class="govuk-body-s" data-lang-content="en">A side project collecting Singlish phrases and local slang picked up from everyday chats in Singapore.</p>
-            <p class="govuk-body-s" data-lang-content="ja">シンガポールの日常会話で出会ったシングリッシュ・現地スラングを集めたサイドプロジェクト。</p>
+            <h3><a href="https://singlish.taikiito.com">singlish-lah</a></h3>
+            <p data-lang-content="en">A side project collecting Singlish phrases and local slang picked up from everyday chats in Singapore.</p>
+            <p data-lang-content="ja">シンガポールの日常会話で出会ったシングリッシュ・現地スラングを集めたサイドプロジェクト。</p>
           </li>
           <li>
-            <h3 class="govuk-heading-s"><a class="govuk-link" href="https://github.com/taikiito-dev">GitHub</a></h3>
-            <p class="govuk-body-s" data-lang-content="en">Other side projects and contributions to open-source projects.</p>
-            <p class="govuk-body-s" data-lang-content="ja">その他のサイドプロジェクトや、他のOSSへのコントリビューション履歴。</p>
+            <h3><a href="https://github.com/taikiito-dev">GitHub</a></h3>
+            <p data-lang-content="en">Other side projects and contributions to open-source projects.</p>
+            <p data-lang-content="ja">その他のサイドプロジェクトや、他のOSSへのコントリビューション履歴。</p>
           </li>
           <li>
-            <h3 class="govuk-heading-s" data-lang-content="en">Essays <span class="taiki-note">(coming soon)</span></h3>
-            <h3 class="govuk-heading-s" data-lang-content="ja">エッセイ <span class="taiki-note">(近日公開)</span></h3>
-            <p class="govuk-body-s" data-lang-content="en">Thoughts on health, relationships, and career &mdash; still at the idea stage.</p>
-            <p class="govuk-body-s" data-lang-content="ja">健康・人間関係・キャリアについて考えていること。今のところ構想メモ段階。</p>
-            <ul class="taiki-sublist govuk-body-s">
+            <h3 data-lang-content="en">Essays <span class="taiki-note">(coming soon)</span></h3>
+            <h3 data-lang-content="ja">エッセイ <span class="taiki-note">(近日公開)</span></h3>
+            <p data-lang-content="en">Thoughts on health, relationships, and career &mdash; still at the idea stage.</p>
+            <p data-lang-content="ja">健康・人間関係・キャリアについて考えていること。今のところ構想メモ段階。</p>
+            <ul class="taiki-sublist">
               <li data-lang-content="en">Evolutionary mismatch and health</li>
               <li data-lang-content="ja">進化的ミスマッチと健康管理</li>
               <li data-lang-content="en">On keeping relationships loose enough to walk away from</li>
@@ -87,11 +83,6 @@
 
   </div>
 
-  <script type="module" src="/govuk/govuk-frontend.min.js"></script>
-  <script type="module">
-    import { initAll } from '/govuk/govuk-frontend.min.js';
-    initAll();
-  </script>
   <script src="/js/lang-toggle.js"></script>
 </body>
 </html>
