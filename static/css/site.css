@@ -17,13 +17,13 @@
   box-sizing: border-box;
 }
 
-/* GOV.UK's own approach: "GDS Transport" is licensed to gov.uk domains
-   only, so everyone else falls through to arial/sans-serif - a
-   deliberately universal choice (renders identically everywhere, no
-   webfont download/flash-of-invisible-text). Same idea here: no custom
-   webfont, just each OS's own system UI font. */
+/* "Public Sans" (USWDS, https://public-sans.digital.gov) - open-source
+   equivalent of GOV.UK's GDS Transport, released under SIL OFL so it's
+   free to load as a webfont rather than relying on a gov.uk-only
+   license. Noto Sans JP covers Japanese; system sans-serif is the final
+   fallback if the webfont fails to load. */
 html, body {
-  font-family: "GDS Transport", arial, "Hiragino Kaku Gothic ProN",
+  font-family: "Public Sans", "Noto Sans JP", "Hiragino Kaku Gothic ProN",
     "Yu Gothic UI", Meiryo, sans-serif;
 }
 
