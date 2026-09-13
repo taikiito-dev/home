@@ -1,15 +1,14 @@
 /*
   Site-specific overrides layered on top of govuk-frontend.min.css.
-  Palette: navy (#002d72 primary / #001d4d darker shade) replacing the
-  GOV.UK default blue (#1d70b8), matching card.taikiito.com.
-  Focus-state yellow (#ffdd00) is left untouched — it's a GOV.UK
-  accessibility convention, not a brand color.
-*/
 
-:root {
-  --taiki-navy: #002d72;
-  --taiki-navy-dark: #001d4d;
-}
+  Design direction (2026-09-13): dropped GOV.UK's boxed/colored chrome
+  (navy header bar, button-styled links, bordered project cards) for a
+  plain, minimal personal-homepage look - closer to the one-person
+  essay-site aesthetic of sites like darioamodei.com than a public
+  government service. govuk-frontend classes are still used for base
+  typography (heading/body scale) since that part reads fine either way;
+  everything colored/boxed is stripped or replaced with plain text.
+*/
 
 /* Font override: govuk-frontend's own "GDS Transport, arial, sans-serif"
    stack is Crown-copyright and not licensed for use outside gov.uk-owned
@@ -26,94 +25,138 @@ html, body,
   font-family: "Public Sans", "Noto Sans JP", arial, sans-serif !important;
 }
 
-/* Header */
-.govuk-header {
-  background: var(--taiki-navy);
-  border-bottom-color: var(--taiki-navy-dark);
+body {
+  background: #ffffff;
+  color: #0b0c0c;
 }
 
-.govuk-header__link:hover {
-  border-bottom-color: #ffffff;
+.taiki-page {
+  max-width: 700px;
+  padding-top: 40px;
+  padding-bottom: 60px;
 }
 
-/* Links */
-.govuk-link:not(.govuk-header__link):not(.govuk-footer__link) {
-  color: var(--taiki-navy);
+/* Header: plain text wordmark, no colored bar/box (govuk-frontend's own
+   header component isn't used here at all). */
+.taiki-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 48px;
 }
 
-.govuk-link:not(.govuk-header__link):not(.govuk-footer__link):visited {
-  color: var(--taiki-navy-dark);
+.taiki-wordmark {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0b0c0c;
+  text-decoration: none;
 }
 
-.govuk-link:not(.govuk-header__link):not(.govuk-footer__link):hover {
-  color: var(--taiki-navy-dark);
-}
-
-/* Buttons (primary) */
-.govuk-button:not(.govuk-button--secondary):not(.govuk-button--warning) {
-  background-color: var(--taiki-navy);
-  box-shadow: 0 2px 0 var(--taiki-navy-dark);
-}
-
-.govuk-button:not(.govuk-button--secondary):not(.govuk-button--warning):hover {
-  background-color: var(--taiki-navy-dark);
-}
-
-.govuk-button:not(.govuk-button--secondary):not(.govuk-button--warning):active {
-  background-color: var(--taiki-navy);
-}
-
-/* Tags reused as badges for project cards */
-.govuk-tag--navy {
-  background: #dee9f7;
-  color: var(--taiki-navy-dark);
-}
-
-/* Hero */
-.taiki-hero {
-  background: linear-gradient(135deg, var(--taiki-navy) 0%, var(--taiki-navy-dark) 100%);
-  color: #ffffff;
-  padding: 40px 0;
-}
-
-.taiki-hero .govuk-heading-xl,
-.taiki-hero .govuk-body {
-  color: #ffffff;
-}
-
-.taiki-hero .govuk-button--secondary {
-  background-color: transparent;
-  color: #ffffff;
-  box-shadow: 0 2px 0 #ffffff;
-  border: 1px solid #ffffff;
-}
-
-.taiki-hero .govuk-button--secondary:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-}
-
-/* Project cards */
-.taiki-card {
-  border: 1px solid #b1b4b6;
-  padding: 20px;
-  height: 100%;
-  margin-bottom: 20px;
-}
-
-/* Language toggle */
 .taiki-lang-toggle {
-  background: transparent;
-  border: 1px solid #ffffff;
-  color: #ffffff;
+  background: none;
+  border: none;
+  color: #505a5f;
   cursor: pointer;
   font-family: inherit;
-  font-size: 1rem;
-  padding: 5px 12px;
+  font-size: 0.9375rem;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .taiki-lang-toggle:hover {
-  background: rgba(255, 255, 255, 0.15);
+  color: #0b0c0c;
+}
+
+/* Hero: big plain name, one-line description, plain text links - no
+   colored background block, no button styling. */
+.taiki-hero {
+  margin-bottom: 56px;
+}
+
+.taiki-hero__lede {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: #0b0c0c;
+  max-width: 34em;
+}
+
+.taiki-hero__links {
+  margin-top: 16px;
+}
+
+.taiki-hero__links a {
+  color: #0b0c0c;
+  text-decoration: underline;
+  text-decoration-thickness: max(1px, .0625rem);
+  text-underline-offset: .1578em;
+}
+
+.taiki-hero__links a:hover {
+  color: #505a5f;
+}
+
+.taiki-hero__links span {
+  color: #b1b4b6;
+  margin: 0 10px;
+}
+
+/* Projects & writing: plain vertical list, no card borders/boxes. */
+.taiki-section h2 {
+  margin-bottom: 20px;
+}
+
+.taiki-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.taiki-list > li {
+  padding: 20px 0;
+  border-top: 1px solid #b1b4b6;
+}
+
+.taiki-list > li:last-child {
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.taiki-list h3 {
+  margin-bottom: 8px;
+}
+
+.taiki-list p {
+  margin-bottom: 0;
+  color: #505a5f;
+}
+
+.taiki-sublist {
+  margin: 10px 0 0;
+  padding-left: 1.1em;
+  color: #505a5f;
+}
+
+.taiki-sublist li {
+  margin-top: 4px;
+}
+
+.taiki-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #505a5f;
+  border: 1px solid #b1b4b6;
+  border-radius: 3px;
+  padding: 1px 6px;
+  vertical-align: middle;
+}
+
+.taiki-footer {
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1px solid #b1b4b6;
+  color: #505a5f;
+  font-size: 0.9375rem;
 }
 
 /* Language show/hide via data attribute, toggled by JS */
