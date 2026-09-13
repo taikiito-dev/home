@@ -83,6 +83,14 @@ body {
 
 .taiki-hero__links {
   margin-top: 16px;
+  color: #0b0c0c;
+}
+
+/* Plain, not a mailto: link - clicking used to force-launch a mail app,
+   which the user found annoying. Just showing the address as text lets
+   people read/copy it and reach out however they prefer. */
+.taiki-hero__label {
+  color: #505a5f;
 }
 
 .taiki-hero__links a {
