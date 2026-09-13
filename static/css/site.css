@@ -68,7 +68,7 @@ h1, h2, h3 {
 .taiki-page {
   max-width: 700px;
   margin: 0 auto;
-  padding: 40px 20px 60px;
+  padding: 32px 20px 60px;
 }
 
 /* Header: plain text wordmark, no colored bar/box. */
@@ -76,7 +76,7 @@ h1, h2, h3 {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 48px;
+  margin-bottom: 28px;
 }
 
 .taiki-wordmark,
@@ -106,12 +106,12 @@ h1, h2, h3 {
 
 /* Hero: plain name, one-line description - no colored background block. */
 .taiki-hero {
-  margin-bottom: 56px;
+  margin-bottom: 40px;
 }
 
 .taiki-hero__lede {
-  font-size: 1.25rem;
-  line-height: 1.6;
+  font-size: 1.05rem;
+  line-height: 1.55;
   color: #1a1a1a;
   max-width: 34em;
   margin: 0;
