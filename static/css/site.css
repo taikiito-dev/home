@@ -25,7 +25,13 @@ html, body,
   font-family: "Newsreader", "Noto Serif JP", "Times New Roman", serif !important;
 }
 
-body {
+/* .govuk-template__body (class selector, specificity 0,1,0) beats a
+   plain `body` element selector (0,0,1) regardless of source order -
+   govuk-frontend.min.css's own `.govuk-template__body{background-color:
+   #fff}` was silently winning over this rule. Match the class directly
+   so the ivory background actually applies. */
+body,
+.govuk-template__body {
   background: #f0eee6;
   color: #1a1a1a;
   line-height: 1.6;
