@@ -17,22 +17,28 @@
   box-sizing: border-box;
 }
 
-/* "Public Sans" (USWDS, https://public-sans.digital.gov) - open-source
-   equivalent of GOV.UK's GDS Transport, released under SIL OFL so it's
-   free to load as a webfont rather than relying on a gov.uk-only
-   license. Noto Sans JP covers Japanese; system sans-serif is the final
-   fallback if the webfont fails to load. */
+/* "Atkinson Hyperlegible" (Braille Institute) - a warmer, more humanist
+   alternative to Public Sans, free under SIL OFL. Designed explicitly
+   to maximize character-to-character legibility (distinct letterforms,
+   rounder terminals), following the same accessibility-first philosophy
+   as GOV.UK's typography guidance. Noto Sans JP covers Japanese; system
+   sans-serif is the final fallback if the webfont fails to load. */
 html, body {
-  font-family: "Public Sans", "Noto Sans JP", "Hiragino Kaku Gothic ProN",
-    "Yu Gothic UI", Meiryo, sans-serif;
+  font-family: "Atkinson Hyperlegible", "Noto Sans JP",
+    "Hiragino Kaku Gothic ProN", "Yu Gothic UI", Meiryo, sans-serif;
 }
 
+/* Base size raised from 16px to 18px (1.125rem) - GOV.UK treats 16px as
+   an accessibility *floor*, not a target; its own body copy sizes up to
+   19px on desktop. 18px reads more comfortably for the longer prose on
+   this page. Line-height 1.6 was already in the GOV.UK-recommended
+   range for long-form body text and needed no change. */
 body {
   background: #f0eee6;
   color: #1a1a1a;
   line-height: 1.6;
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.125rem;
 }
 
 /* Browsers apply :visited via the UA stylesheet as `a:visited { color:
@@ -65,8 +71,12 @@ h1, h2, h3 {
   top: 8px;
 }
 
+/* Narrowed from 700px to keep lines under ~75 characters now that body
+   text is 18px instead of 16px (GOV.UK guidance: lines beyond ~75
+   characters get harder to read; the British Dyslexia Association
+   recommends 60-70). */
 .taiki-page {
-  max-width: 700px;
+  max-width: 660px;
   margin: 0 auto;
   padding: 32px 20px 60px;
 }
@@ -110,8 +120,8 @@ h1, h2, h3 {
 }
 
 .taiki-hero__lede {
-  font-size: 1.05rem;
-  line-height: 1.55;
+  font-size: 1.2rem;
+  line-height: 1.6;
   color: #1a1a1a;
   max-width: 34em;
   margin: 0;
