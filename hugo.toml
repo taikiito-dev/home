@@ -1,0 +1,13 @@
+baseURL = "https://taikiito.com/"
+locale = "en-US"
+title = "Taiki Ito"
+
+[params]
+  description = "Taiki Ito's personal homepage"
+
+disableKinds = ["taxonomy", "term", "RSS", "sitemap", "section", "page"]
+
+[taxonomies]
+
+[outputs]
+  home = ["HTML"]

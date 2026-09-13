@@ -1,0 +1,8 @@
+{
+  "name": "taikiito-home",
+  "private": true,
+  "description": "Source for taikiito.com — built with Hugo, styled with govuk-frontend",
+  "dependencies": {
+    "govuk-frontend": "^5.11.1"
+  }
+}

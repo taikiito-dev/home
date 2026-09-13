@@ -1,0 +1,116 @@
+/*
+  Site-specific overrides layered on top of govuk-frontend.min.css.
+  Palette: navy (#002d72 primary / #001d4d darker shade) replacing the
+  GOV.UK default blue (#1d70b8), matching card.taikiito.com.
+  Focus-state yellow (#ffdd00) is left untouched — it's a GOV.UK
+  accessibility convention, not a brand color.
+*/
+
+:root {
+  --taiki-navy: #002d72;
+  --taiki-navy-dark: #001d4d;
+}
+
+/* Header */
+.govuk-header {
+  background: var(--taiki-navy);
+  border-bottom-color: var(--taiki-navy-dark);
+}
+
+.govuk-header__link:hover {
+  border-bottom-color: #ffffff;
+}
+
+/* Links */
+.govuk-link:not(.govuk-header__link):not(.govuk-footer__link) {
+  color: var(--taiki-navy);
+}
+
+.govuk-link:not(.govuk-header__link):not(.govuk-footer__link):visited {
+  color: var(--taiki-navy-dark);
+}
+
+.govuk-link:not(.govuk-header__link):not(.govuk-footer__link):hover {
+  color: var(--taiki-navy-dark);
+}
+
+/* Buttons (primary) */
+.govuk-button:not(.govuk-button--secondary):not(.govuk-button--warning) {
+  background-color: var(--taiki-navy);
+  box-shadow: 0 2px 0 var(--taiki-navy-dark);
+}
+
+.govuk-button:not(.govuk-button--secondary):not(.govuk-button--warning):hover {
+  background-color: var(--taiki-navy-dark);
+}
+
+.govuk-button:not(.govuk-button--secondary):not(.govuk-button--warning):active {
+  background-color: var(--taiki-navy);
+}
+
+/* Tags reused as badges for project cards */
+.govuk-tag--navy {
+  background: #dee9f7;
+  color: var(--taiki-navy-dark);
+}
+
+/* Hero */
+.taiki-hero {
+  background: linear-gradient(135deg, var(--taiki-navy) 0%, var(--taiki-navy-dark) 100%);
+  color: #ffffff;
+  padding: 40px 0;
+}
+
+.taiki-hero .govuk-heading-xl,
+.taiki-hero .govuk-body {
+  color: #ffffff;
+}
+
+.taiki-hero .govuk-button--secondary {
+  background-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 2px 0 #ffffff;
+  border: 1px solid #ffffff;
+}
+
+.taiki-hero .govuk-button--secondary:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+/* Project cards */
+.taiki-card {
+  border: 1px solid #b1b4b6;
+  padding: 20px;
+  height: 100%;
+  margin-bottom: 20px;
+}
+
+/* Language toggle */
+.taiki-lang-toggle {
+  background: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 5px 12px;
+}
+
+.taiki-lang-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Language show/hide via data attribute, toggled by JS */
+[data-lang-content] {
+  display: none;
+}
+
+[data-lang-content].is-active {
+  display: block;
+}
+
+span[data-lang-content].is-active,
+li[data-lang-content].is-active {
+  display: list-item;
+}
