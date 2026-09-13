@@ -17,15 +17,16 @@
   box-sizing: border-box;
 }
 
-/* "Atkinson Hyperlegible" (Braille Institute) - a warmer, more humanist
-   alternative to Public Sans, free under SIL OFL. Designed explicitly
-   to maximize character-to-character legibility (distinct letterforms,
-   rounder terminals), following the same accessibility-first philosophy
-   as GOV.UK's typography guidance. Noto Sans JP covers Japanese; system
-   sans-serif is the final fallback if the webfont fails to load. */
+/* "Newsreader" - the serif Google Font darioamodei.com uses for both
+   body copy and headings (there loaded as the optical-size cuts
+   "Newsreader 24 Pt" for body / "Newsreader Display" for large
+   headings; the base family is the same, so one weight range here
+   covers both). Noto Sans JP covers Japanese, with a serif Japanese
+   fallback (Hiragino Mincho ProN / Yu Mincho) to keep the same tone;
+   system serif is the final fallback if the webfont fails to load. */
 html, body {
-  font-family: "Atkinson Hyperlegible", "Noto Sans JP",
-    "Hiragino Kaku Gothic ProN", "Yu Gothic UI", Meiryo, sans-serif;
+  font-family: "Newsreader", "Noto Sans JP",
+    "Hiragino Mincho ProN", "Yu Mincho", serif;
 }
 
 /* Base size raised from 16px to 18px (1.125rem) - GOV.UK treats 16px as
