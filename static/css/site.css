@@ -83,33 +83,18 @@ body {
   max-width: 34em;
 }
 
-.taiki-hero__links {
-  margin-top: 16px;
-  color: #1a1a1a;
-  font-size: 1rem;
-}
-
 /* Plain, not a mailto: link - clicking used to force-launch a mail app,
    which the user found annoying. Just showing the address as text lets
-   people read/copy it and reach out however they prefer. */
+   people read/copy it and reach out however they prefer. Placed just
+   above the footer rather than up in the hero - GitHub is already
+   linked once in the projects list below, no need to repeat it here. */
 .taiki-hero__label {
   color: #5b6472;
 }
 
-.taiki-hero__links a {
+.taiki-contact {
+  margin-top: 56px;
   color: #1a1a1a;
-  text-decoration: underline;
-  text-decoration-thickness: max(1px, .0625rem);
-  text-underline-offset: .15em;
-}
-
-.taiki-hero__links a:hover {
-  color: #5b6472;
-}
-
-.taiki-hero__links span {
-  color: #a8a196;
-  margin: 0 10px;
 }
 
 /* Projects & writing: plain list, links styled as underlined text in the
@@ -174,7 +159,7 @@ body {
 }
 
 .taiki-footer {
-  margin-top: 56px;
+  margin-top: 20px;
   color: #a8a196;
   font-size: 0.9rem;
 }
