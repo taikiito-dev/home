@@ -2,6 +2,9 @@
 title: "Exit Code 0 Is Not Evidence"
 standfirst: "Fourteen months of running my own infrastructure, and the eleven times a tool told me everything was fine."
 description: "Eleven documented failures from fourteen months of self-hosting — rclone, ufw, Docker, IPv6, cloudflared, GitHub Pages certificates, a mail migration — and the one pattern they share: a tool reported success, and the report was true in a narrow sense and false in the sense that mattered."
+lang: "en"
+altUrl: "/ja/postmortems/"
+altLabel: "日本語"
 ---
 
 I am not a software engineer. I negotiate crude oil contracts for a living. In 2025 I started moving my family's data off other people's servers and onto one I pay for, and I have been operating it since.
