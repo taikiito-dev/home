@@ -5,7 +5,7 @@ title = "Taiki Ito"
 [params]
   description = "Taiki Ito's personal homepage"
 
-disableKinds = ["taxonomy", "term", "RSS", "sitemap", "section", "page"]
+disableKinds = ["taxonomy", "term", "RSS", "sitemap"]
 
 [taxonomies]
 

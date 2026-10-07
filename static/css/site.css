@@ -222,3 +222,79 @@ span[data-lang-content].is-active,
 li[data-lang-content].is-active {
   display: list-item;
 }
+
+/* ---------------------------------------------------------------------
+   Long-form article pages (/postmortems/ etc.)
+
+   The homepage is one short page, so the base rules above set
+   `margin: 0` on headings and rely on component classes for spacing.
+   Article pages are generated from Markdown, so no element can carry a
+   class - these rules re-establish prose rhythm by element, scoped
+   under .taiki-prose so the homepage is untouched.
+   --------------------------------------------------------------------- */
+
+.taiki-prose h1 {
+  font-size: 2rem;
+  line-height: 1.25;
+  margin: 0 0 1rem;
+}
+
+.taiki-prose__standfirst {
+  font-style: italic;
+  color: #55524a;
+  margin: 0 0 2.5rem;
+}
+
+.taiki-prose h2 {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  margin: 3rem 0 0.75rem;
+}
+
+.taiki-prose h3 {
+  font-size: 1.125rem;
+  margin: 2rem 0 0.5rem;
+}
+
+.taiki-prose p,
+.taiki-prose ul,
+.taiki-prose ol {
+  margin: 0 0 1.25rem;
+}
+
+.taiki-prose li {
+  margin-bottom: 0.5rem;
+}
+
+/* Markdown emits <hr> between sections; keep it quiet to match the
+   restraint of the homepage. */
+.taiki-prose hr {
+  border: 0;
+  border-top: 1px solid #ddd8cc;
+  margin: 3rem 0;
+}
+
+.taiki-prose strong {
+  font-weight: 600;
+}
+
+.taiki-prose code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.9em;
+  background: #e6e3d8;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+/* Links inside prose need to be distinguishable mid-sentence; the
+   homepage relies on position and heading weight instead, which does
+   not work inside a paragraph. */
+.taiki-prose a,
+.taiki-prose a:visited {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.taiki-prose__back {
+  margin: 3rem 0 0;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ .Title }} &mdash; Taiki Ito</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Title }} &mdash; Taiki Ito{{ end }}">
+  <meta name="theme-color" content="#f0eee6">
+  <link rel="icon" sizes="48x48" href="/assets/images/favicon.ico">
+  <link rel="icon" sizes="any" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+
+  <a href="#main-content" class="taiki-skip-link">Skip to main content</a>
+
+  <div class="taiki-page">
+
+    <header class="taiki-header">
+      <a href="/" class="taiki-wordmark">Taiki Ito</a>
+    </header>
+
+    <main id="main-content">
+
+      <article class="taiki-prose">
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.standfirst }}<p class="taiki-prose__standfirst">{{ . }}</p>{{ end }}
+        {{ .Content }}
+      </article>
+
+      <p class="taiki-prose__back"><a href="/">&larr; Back to home</a></p>
+
+    </main>
+
+    <footer class="taiki-footer">
+      &copy; {{ now.Format "2006" }} Taiki Ito
+    </footer>
+
+  </div>
+
+</body>
+</html>
