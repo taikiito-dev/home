@@ -1,158 +1,220 @@
 ---
 title: "Taste Is Not a Reason"
-standfirst: "Ten rules for deciding an interface by measurement instead of preference, and the three decisions I got wrong first."
-description: "How I decide interface questions without arguing about taste: ten rules derived from measuring first-party apps, and three case studies — retiring every read receipt, removing blur to get speed back, and where a permanent navigation bar belongs."
+standfirst: "I have adjusted the look of a two-person chat app well over a hundred times. I did not write any of the code. These are the decisions."
+description: "A non-engineer's record of deciding a chat app's interface by measurement rather than preference: why every read receipt was retired, what was cut for speed, and the one decision that broke the app outright."
 lang: "en"
 altUrl: "/ja/taste-is-not-a-reason/"
 altLabel: "日本語"
 ---
 
-I have spent the last several weeks rebuilding the interface of a chat-and-calendar progressive web app that two people use every day: me and one other real user who files bug reports. I have changed it well over a hundred times. Almost all of those changes were about how it looks.
+I have spent several weeks adjusting a chat-and-calendar progressive web app that two people use — myself and one other. Well over a hundred changes, almost all of them about how it looks.
 
-Appearance is the easiest thing to argue about badly. The moment a decision becomes a matter of taste, it stops being decidable, and six months later nobody — including me — can reconstruct why it is the way it is.
+The division of labour first. **I did not write the CSS or the JavaScript.** Claude — Anthropic's AI assistant — wrote it. What I did was use the thing on a real phone, say where it felt wrong, and choose from the options that came back.
 
-So I keep ten rules. Here they are, then three decisions where I broke them and had to measure my way out.
+That split fits visual work unusually well. **This app has two users, so the only person who can say "this is hard to read while using it" is someone using it.** Getting the discomfort into words was my half; turning the words into numbers was Claude's. Every one of the five records below starts with me pointing at something.
 
-## The ten rules
-
-**1. Take dimensions from measuring first-party apps, not from preference.**
-There is no correct number for the corner radius of a message bubble. But there are correct *ratios*. Measured off a first-party app: radius ÷ font size = 1.63, radius ÷ the height of two lines of text = 0.436. So when the font size changes, the radius follows the ratio. Hold the ratio rather than the number and nothing breaks later.
-
-**2. Never read pixel values straight out of a screenshot.**
-Screenshots from an iPhone or a Mac are in **Display P3**, a wider colour space than sRGB. Numbers lifted from them and pasted into CSS come out slightly duller than the real thing. Convert to sRGB, and **round-trip a colour you already know** to check your conversion before trusting it. Don't eyeball colours either: when someone sends a screenshot to specify a colour, sample the pixels mechanically.
-
-**3. Don't fight dimensions the OS has already decided.**
-Header 44pt. Bottom tab bar 49pt. Anything tapped often gets at least 40px (Apple's own guidance is 44pt square). Invent your own and you fight the position the user's thumb has already memorised.
-
-**4. A permanently visible entry point goes on a surface it shares with nothing.**
-Case study below.
-
-**5. If meaning is carried by contrast, keep that mark on one background.**
-Also below. I learned this rule by breaking it.
-
-**6. A mark that means one thing goes on the same side regardless of what it is attached to.**
-Bottom-right on photos and bottom-left on stickers makes the eye hunt. I put it bottom-left first and was corrected immediately. Position is decided by where the same meaning already lives, not by where there happens to be room.
-
-**7. If the state determines the appearance uniquely, let CSS decide it.**
-Inserting a marker from JavaScript means there are five or more paths that have to redraw it — first paint, loading older messages, a new arrival, switching rooms, the optimistic echo of your own send — and you will forget one. If a selector can express it, "forgetting to call it" stops being a category of bug.
-
-**8. Animate `transform` and opacity only. Put blur where the background does not move.**
-Below.
-
-**9. A "waiting" indicator belongs on a surface that overlaps no information at all.**
-A floating "Loading…" card in the middle of the screen always covers something. There is in fact a surface that covers nothing: the 2px bottom edge of the header. Run a band across it and you have said "working on it" without hiding a single character — and without text, so there is nothing to translate.
-
-**10. Don't make spacing carry meaning.**
-I nearly adopted "widen the gap when the sender changes." Then I measured WeChat: the gap does not change when the sender changes. It is a fixed 17pt. Spacing is too convenient as a way to express grouping — use it in one place and you will want it everywhere, until nobody can say what any particular gap means. Deciding not to use it is cheaper.
-
-One more, free: **if you document a shortcut, implement it.** If the desktop layout says "⌘/Ctrl + Enter to send" under the input, that key has to work. Printed and broken is worse than absent.
+What follows is the decisions. Measurements and implementation are collected in the lower half of this page.
 
 ---
 
-## Case 1 — I removed every read receipt
+## Decision 1 — I retired every read receipt
 
-**The first design.** A small ✓ inside each of my own bubbles: faint when unread, solid when read. The familiar thing.
+**Date.** 7 October 2026
 
-**The first symptom.** The ✓ on stickers was hard to see, I was told. Stickers are 128px images with no background of their own, sitting directly on the page. I had reused the treatment built for photos — a small dark pill at the bottom-right corner. That was the mistake. A photo is large and filled to its edges, so covering a corner costs nothing. **A sticker is small, and the face is directly under that corner.**
+**What I was torn between.** Each message carried a small tick inside its bubble — dark once the other person had read it, faint until then. A familiar design. It was hard to read in use, and it took me a while to say why. My first attempt was only "the read tick overlaps the sticker and I can't see it."
 
-**The first fix.** For stickers only, drop the pill and move the mark *outside* the image. The available room is the 11px gap between the image and the avatar (6px row gap + 5px avatar margin). The mark is 13px, so it sits at `right:-13px` and clears. LINE and WhatsApp both put it alongside.
+After that was fixed I looked again, and finally got it out: **"the dark-text/faint-text inversion is reversed, and it's confusing."**
 
-I broke rule 6 here and placed it bottom-left first. I was told to move it to the right immediately. Of course: the ✓ in bubbles is on the right, so the left is where the eye goes to get lost.
+**What came out.** Measured, it looked like this.
 
-**The real symptom.** Right after shipping that, a much better complaint arrived: **"the inversion of dark and light text is reversed — it's confusing."**
-
-It took me a while to understand. Measuring made it obvious. These are the contrast ratios between the mark and whatever it sits on:
-
-| Where the mark sits | Unread | Read | Direction when read |
+| Where the tick sits | Unread | Read | Direction read moves |
 |---|---|---|---|
-| Inside a bubble (blue) | 1.56 | 2.62 | **lighter** than its background |
-| Beside a sticker (white) | 1.56 | 3.64 | **darker** than its background |
+| Inside the bubble (blue ground) | 1.56 | 2.62 | **lighter** than its ground |
+| Beside a sticker (white ground) | 1.56 | 3.64 | **darker** than its ground |
 
-Unread agrees: 1.56 in both. But the **direction of travel on becoming read is opposite**. On a blue bubble the mark rises out of the background; on the page it sinks into it. The same event — "they read it" — got brighter in one place and darker in the other.
+The unread faintness matches exactly. But **the direction "read" travels is reversed.** On the blue bubble, being read makes the tick rise. On the white background, being read makes it sink. The same event goes lighter in one place and darker in the other.
 
-**What that means.** No amount of tuning fixes this. **As long as meaning is carried by contrast, two different backgrounds make the reversal unavoidable.** There is no single colour that is "darker when read" on white and also on blue. It is not a value problem. It is a structural one.
+**What I chose.** **Scrap the per-message tick entirely.** In its place, a small `read` under the last message I sent — nothing else. I picked this from three options. The wording is lowercase `read`, also my call.
 
-**The design I landed on.** I **retired every per-message ✓**. What replaced it is one small `read` under the last message I sent. One mark means one background, and the reversal is gone by construction.
+**What I turned down.** Two things. One, tune the contrast values until they agree. Two, use a different colour just for stickers.
 
-That also turned out to be honest about the data. The only read state this app stores is "which message has the other person read up to" — a single pointer, not a state per message. **Showing a ✓ on every message was displaying information I did not have.** iMessage marking only the last message "Delivered/Read" is presumably the same reasoning.
+**Why.** Because **as long as meaning is carried by contrast, having two different grounds makes the reversal unavoidable.** There is no single colour for which "read is darker" holds on both a white and a blue ground. Tuning the numbers is work that never finishes.
 
-**Implementation**, per rule 7 — CSS decides:
+Reduce the tick to one instance and there is only one ground. The reversal disappears as a matter of structure. I chose to delete the structure that produces the problem rather than the problem.
+
+**Right or wrong in hindsight.** **Right — and corroborated afterwards.** The only read state this app stores is a single marker of how far the other person has read; there is no per-message state at all. **Showing a tick on every message was displaying information the app does not have.** I suspect that is exactly why the iPhone shows "Read" under only the last message.
+
+**What stuck.** **If meaning is carried by contrast, keep the ground to one kind. If you cannot, stop carrying meaning by contrast.** And match the number of indicators to the granularity of the data behind them. One piece of data and ten indicators means something is lying somewhere.
+
+---
+
+## Decision 2 — Same meaning, same side
+
+**Date.** 7 October 2026, mid-way through Decision 1
+
+**What I was torn between.** The first fix above moved the sticker's tick outside the image — and it came out at the bottom *left*, because that was where the space was.
+
+**What I chose.** **I said: put it bottom right, consistently.**
+
+**Why.** The tick inside a bubble is on the right. Put it on the left elsewhere and the eye has to hunt. Bottom right for photos and bottom left for stickers means the reader searches every time.
+
+**Right or wrong in hindsight.** **Right** — and small, but this is the kind of note that only surfaces from real use. Looking at one screen in isolation, I would probably not have caught it.
+
+**What stuck.** Decide an indicator's position by **where the same meaning already lives**, not by where there happens to be room. Use space as the reason and the meaning moves every time the space does.
+
+---
+
+## Decision 3 — Given looks versus speed, I cut the looks
+
+**Date.** October 2026
+
+**What I was torn between.** Putting a background blur behind a translucent surface makes it look expensive for free. Header, input field, menus, the timestamp chip over each photo — it had grown to around twenty places. And scrolling was heavy.
+
+**What I chose.** **Cut the blur to two places: the header buttons and the input field.** Everywhere else keeps the translucent fill, compensated by making the ground slightly more opaque.
+
+**What I turned down.** Keep the blur and find speed elsewhere.
+
+**Why.** The behaviour of blur is unambiguous: **if anything behind it moves by one pixel, the blur is recomputed.** In a chat app, the background is always moving. So this was a cost that no optimisation elsewhere could offset.
+
+**Right or wrong in hindsight.** **Right** — the visual difference is invisible unless compared side by side, and scrolling got measurably lighter. It also showed my own guess to be wrong. **I went in suspecting the header; the real culprit was the timestamp chip sitting on every single photo.** I had not thought about the one thing that multiplies by count.
+
+**What stuck.** **Speed comes from measuring what you added and subtracting it.** Which part is responsible is not available to intuition. And **when you remove an effect, re-examine every value you set while assuming it.** Opacity chosen on the assumption of a blurred background let the text behind show through once the blur was gone.
+
+---
+
+## Decision 4 — Don't let a static ornament prepare to move
+
+**Date.** October 2026
+
+**What I was torn between.** After the blur was cut, a symptom appeared in the calendar: **"there's a crushed character to the right of November."** One unreadable glyph, left behind.
+
+**What was actually happening.** The culprit was a small `⌄` next to the month heading. That ornament carried properties that tell the browser "this may be about to move." Told that, the browser keeps it as its own layer — and **while an animation ran nearby, the old contents of that layer persisted as a ghost.**
+
+**What I chose.** Strip those properties from the ornament. Express its faintness through colour instead.
+
+**What I turned down.** Adjusting the animation's duration or easing curve.
+
+**Why.** The symptom was not on the thing animating; it was on **the static ornament next to it.** Fixing the moving part cannot remove a ghost left by a part that does not move. Separating where the symptom shows from where the cause lives came first.
+
+**Right or wrong in hindsight.** **Right** — and the same day the same `⌄` caused a second thing. A glyph like that does not wrap when its parent is too narrow the way text does; it simply distorts, and a distorted glyph reads as a broken character. **One small ornament was behind two unrelated symptoms.**
+
+**What stuck.** **Do not make a small static ornament a candidate for its own layer.** And when a report is something the person making it cannot name — "there's a crushed character" — **doubt the name of the thing being seen.** It was not a character.
+
+---
+
+## Decision 5 — I made the navigation permanent. And got it badly wrong once
+
+**Date.** October 2026
+
+**What I was torn between.** Where to put the entry points — chat, calendar, photos, settings. My first instinct was the header.
+
+**What I chose.** **Four tabs along the bottom.** On desktop, above 1000px wide, the tabs hide and a narrow vertical rail appears at the left edge instead.
+
+**What I turned down.** Putting the entry points in the header.
+
+**Why.** The header always has something in it: the room name, a back arrow, search, a menu. Push navigation in there and **the thing it competes with changes from screen to screen.** In the calendar it fights the month stepper, in photos the clear-selection control, in chat the search. Fix one and another overflows. It becomes whack-a-mole.
+
+**Hence the rule: permanent navigation goes on a surface it shares with nothing.** The bottom edge and the left edge are those surfaces.
+
+**Right or wrong in hindsight.** **This one I got wrong.** The placement was right. **The way I introduced it caused an incident.** Immediately after the bottom tabs went in, every tap in the app stopped responding. The other user could not use it. I spent four exchanges hunting the cause.
+
+**All four of those exchanges were the mistake. I should have reverted on the first one.** When a change made for looks breaks the ability to operate the app, you remove it — you do not keep it alive while repairing it. I deferred that because I wanted to know the cause. The whole time, the other person's app did not work.
+
+The second attempt worked. **One revertible step at a time:** tabs only, confirm on a real device; then the settings screen; then the calendar.
+
+**What stuck.** Two things.
+
+**Decide what to make permanent by what it competes with, not by where it goes.**
+
+And: **while something is broken, recovery comes before diagnosis.** I had learned to doubt an all-clear. I was much slower to notice that someone else was stopped, waiting on a decision of mine. That is not a technical point and there is no excuse available for it.
+
+---
+
+## The habits I actually use now
+
+Only the ones that survived the five records above.
+
+**1. Hold a vague discomfort until it can be restated as something measurable.** "Hard to read" became "the direction of the contrast ratio reverses depending on the ground." The moment it was restated, the fix was forced. **The restating is Claude's job. Saying the first sentence is the job of the person using it.**
+
+**2. Delete the structure that produces the problem, not the problem.** The read tick was fixed by reducing it to one, not by correcting its values.
+
+**3. Same meaning, same side. Available space is not a reason.**
+
+**4. Remove one effect and re-examine every value chosen while assuming it.**
+
+**5. If it cannot be operated, revert before investigating.** And introduce large structural changes one revertible step at a time.
+
+---
+
+## The question I still cannot answer
+
+**Of the discomforts I reported, how many were actually just preference?** All five above held up under measurement. But that can also be read as: only the ones that held up are in the record. I have never counted how many of my notes evaporated once someone measured them.
+
+Next time I say something, I intend to write it down at the moment I say it.
+
+---
+
+# Implementation
+
+Everything below was written by Claude and confirmed by running it on my own devices. It is kept here for two reasons. One, it shows the shape and the length of the work before you start. Two, **it is material someone wanting to do the same thing can hand straight to their own AI.**
+
+## How dimensions get chosen
+
+Dimensions come from measuring first-party apps, not from preference. There is no correct number for a bubble's corner radius, but there is a defensible **ratio**. Measured locally: radius ÷ font size = 1.63, radius ÷ the height of two lines = 0.436. Change the font size and the radius follows the ratio. Hold ratios rather than numbers and nothing breaks later.
+
+Do not fight dimensions the OS has already set: 44pt header, 49pt bottom tab bar. Frequently tapped targets at least 40px (Apple's guidance is 44pt square). One caveat: **the amount of space reserved for content must not exceed the real height.** Any excess is taken directly out of the content.
+
+## How colours get sampled
+
+Screenshots from iPhone and Mac are stored in **Display P3** (a wider colour space than sRGB). Write the raw values from one into CSS and the result is slightly duller than the device. Always convert to sRGB and **round-trip a colour you already know as a check** before adopting anything. Eyeballing colour is also out: when a screenshot arrives, sample the pixels mechanically.
+
+## The read marker (Decision 1's implementation)
+
+If the appearance is uniquely determined by state, let CSS decide it. Inserting the marker from JavaScript creates five or more repaint routes — first render, scrolling back through history, new messages, switching rooms, optimistic send — and one of them will always forget to call it.
 
 ```css
-.row.me.read:not(:has(~ .row.me.read)) { /* the marker goes here */ }
+.row.me.read:not(:has(~ .row.me.read)) { /* place the marker here */ }
 ```
 
-"My own read row with no later read row of mine after it." Because read state fills in from oldest to newest, exactly one row ever matches. JavaScript's entire job is tagging which rows are read; it does not know where the marker goes. On a browser without `:has()`, the rule is dropped and **the marker simply doesn't appear** — nothing breaks.
+"My own read row that has no later read row of mine after it" can only ever match a single row, because read state is applied from the oldest row forward. JavaScript's only job is to mark which rows are read; it knows nothing about where the marker goes. On a browser that does not support this selector the whole rule is ignored and **the marker simply does not appear** — nothing breaks.
 
-The dimensions, for the record. Leave 22px below the row and place the marker absolutely inside that space. If you let it overhang without reserving the space, it collides with the next row: **adjacent vertical margins collapse into one**, so nobody is holding room for an overhang. The 45px inset from the right is avatar 34 + its margin 5 + row gap 6, which is **exactly the right edge of the bubbles**.
+For dimensions: leave 22px of margin below the row and position the marker absolutely inside it. Letting it overhang without reserving the space makes it collide with the next row (**adjacent vertical margins collapse into one**, so nobody reserves room for the overhang). The 45px from the right is the avatar's 34 plus its 5 of margin plus the row's 6 gap, which lines the marker up with **the right edge of the bubble**.
 
-**Generalised.** **If meaning is carried by contrast, keep it on one background. If you can't, stop using contrast to carry it.** And match the number of markers to the granularity of the data behind them. One pointer rendered as ten marks will lie somewhere.
+Beside a sticker, the available space is the 11px gap between the image and the avatar (6px row gap + 5px avatar margin). The marker is 13px, so `right:-13px` fits exactly.
 
----
+## Rules kept for motion
 
-## Case 2 — What I deleted to make it fast
+- Animate only `transform` and opacity. Never width, height, or position itself (a `height` or `padding-bottom` transition relayouts the whole screen every frame, so stretching the duration does not stop the stutter)
+- Blur only where the background does not move. It can be dropped entirely while something is animating. Never interpolate its radius
+- No shadows on moving elements (a one-pixel line at the edge substitutes)
+- No `transition` or `opacity` on a static ornament. Express faintness through colour
+- Give side-by-side glyphs a no-shrink declaration (`flex: 0 0 auto`)
+- Give the animating side a repaint-containment declaration (`contain: layout paint`)
+- Compute drag response once per frame. **Never let width follow the finger** — change it once, at the moment a threshold is crossed
+- On release, decide open-or-closed from **velocity** (px/ms), not position
+- Change a duration and every timeout tied to that duration changes with it
+- Finish the contents of a thing before you animate it (most "stuttering" is not the curve or the duration; it is other rendering happening in the same window)
+- Only one surface may move during a screen transition (three at once reads as elevator doors)
+- All of the above is disabled when the OS "reduce motion" setting is on
 
-**Blur went from about twenty places to two**
+## No meaning in spacing
 
-Put `backdrop-filter` over a translucent fill and anything looks expensive. Headers, the input, menus, the timestamp pill on every photo — I added them cheerfully until there were about twenty.
+A convention of widening the gap when the sender changes nearly went in. Measured against an existing app used as reference, the gap does not change when the sender changes — it is fixed at 17pt. Spacing is too convenient as a way of expressing grouping: start using it in one place and you will want it everywhere, and eventually nobody can say which gap means what. Deciding not to use it at all is cheaper.
 
-Blur behaves like this: **if anything behind it moves by one pixel, the blur is recomputed.** In a chat, the background always moves. Scrolling moves all of it. Because a timestamp pill sat on every photo, scrolling a photo-heavy room recomputed blur once per pill.
+## Entrances and exits (Decision 5's implementation)
 
-Two survived: the header buttons and the input. Everywhere else, I kept the translucent fill and compensated by **deepening the backing colour by 0.07–0.12**. The difference is invisible unless you compare side by side. The scrolling improvement was not.
+Four bottom tabs, swapped for a 56px left rail on desktop. Stacking order sits above the full-screen panels and below the image viewer. **Funnel every exit through one function** — any transition to a different context must pass through it. Before that existed, the login screen ended up hidden under an opaque panel and looked like a freeze. Each new screen gets registered in three places: the close handler, the swipe-away gesture, and the Escape ordering. Anything that covers the screen gets one sweeper that retracts it if it is showing when it should not be.
 
-One trap here. **When you remove blur, revisit every opacity you chose while blur was there.** A panel tuned to a pleasing 0.74 *while the background was blurred* lets text read straight through once it isn't. Those went to 0.97–0.98. Blur and opacity are separate properties and a single visual decision.
+## Updating the screen during text entry (an iOS trap)
 
-**A decoration that never moved produced a ghost**
+**If the set of form controls on screen changes while text is being entered, iOS rebuilds the bar above the keyboard — and takes the Japanese conversion candidates down with it.** Worse, **rewriting an attribute with the same value still counts as a change.**
 
-After the blur work I applied rule 9 to the calendar, replacing its floating "loading" card with the band running along the bottom edge of the header. A report arrived immediately: **"there's a squashed character to the right of November."**
+Two fixes. Write only when the value actually changes. And **skip the update entirely while an input has focus, then redo it when focus leaves.** Alongside that, frequently rebuilt regions stopped using `<button>` (same appearance and same hit area, with the role declared on a `div` instead). In an app like chat, where the screen updates while you are typing, this has to be settled as a convention.
 
-The culprit was the small `⌄` next to the month heading. It carried an `opacity` and a `transition` — both of which tell the browser "this may be about to move." A browser told that promotes the element to its own layer. And **while an animation ran nearby, that layer's stale pixels stayed on screen as a ghost.**
+## How waiting is shown
 
-Three fixes. **Express faintness with colour, not `opacity`.** **Throw away `transition` on things that don't move** — don't give a stationary decoration the apparatus for moving. And **bound the repaint on the side that does animate** (`contain: layout paint`).
+Float a "loading…" card in the middle of the screen and it will cover something. There is a surface that covers nothing: the 2px bottom edge of the header. Run a bar across it left to right and you have said "waiting" without hiding a single piece of information — and without words, so there is nothing to translate.
 
-The lesson fits in one line: **don't make a small stationary decoration a candidate for its own layer.**
+## Anything the UI promises gets implemented
 
-Same day, same `⌄`, one more: shapes in a flex row don't wrap when space runs short the way text does. They just distort, and a distorted glyph reads as a broken character. Anything laid out beside text gets `flex: 0 0 auto`.
-
-**The motion rules underneath all of this**
-
-- animate `transform` and opacity; never width, height, or position itself
-- no shadow on a moving element (a 1px edge line stands in for it)
-- compute finger tracking once per frame, no more
-- **never let width follow the finger** — change it once, when a threshold is crossed
-- declare "about to move" only while it is actually moving
-- on release, decide open-or-closed by **velocity** (px/ms), not position: fast gestures open from barely anywhere, slow ones need 40%
-- when you change a duration, change every timer keyed to that duration with it
-- all of the above turns off under the OS "reduce motion" setting
-
-**Generalised.** **Speed comes from measuring what you added and removing it.** Guessing doesn't locate it. My prime suspect before measuring was the header. The actual cost was the timestamp pill on every photo.
-
----
-
-## Case 3 — Where a permanent entry point goes
-
-**The design.** Four tabs along the bottom — chat, calendar, photos, settings. Above 1000px the tabs are hidden and a 56px vertical rail appears at the left edge.
-
-**Why not in the header.** I tried the header first. A header always has something in it: the room name, a back arrow, search, a menu. Put the navigation in there and **the thing it competes with changes per screen.** On the calendar it fights the month stepper; in photos, "deselect"; in chat, search. Fix one and it overflows somewhere else. It becomes whack-a-mole.
-
-**Hence rule 4: a permanently visible entry point goes on a surface it shares with nothing.** The bottom edge and the left edge are those surfaces. I don't think Outlook, Slack and Teams all have a left rail because of fashion.
-
-**What it cost instead.** Making navigation permanent means it is on screen *while you are typing*. That is where iOS bit me.
-
-**If the set of form controls on screen changes while text is being composed, iOS rebuilds the bar above the keyboard — and takes the Japanese conversion candidates down with it.** The routine that keeps the tab bar in sync was rewriting the "current tab" attribute every time. And **rewriting an attribute with the same value still counts as a change.**
-
-Two fixes: write only when the value actually differs, and **skip the whole update while the input has focus, then run it once focus leaves.** Alongside that I stopped using `<button>` in the parts that get rebuilt often (same appearance, same hit area, just an element with the role declared instead). In an app where the screen updates while you are mid-sentence, this has to be a standing rule, not a patch.
-
-**Dimensions.** 49pt for the tab bar, 44pt for the header. One caution: **the amount of space the content reserves must not exceed the real height.** Every pixel of overshoot is taken from the content. A permanent entry point costs content area the moment you add it, so it is worth getting that number exactly right.
-
-**One way out.** Every full-screen panel opened from the tabs closes through a single function. Anything that moves to a different context routes through it. Before that existed, **the login screen once ended up underneath an opaque panel and the app looked frozen.** Adding a screen now means registering it in three places: that closer, the swipe-to-dismiss list, and the Escape chain.
-
-**Generalised.** **Decide what goes permanent by asking who it competes with, not where it fits.** And a permanent thing always bills you somewhere. Here the bill arrived as a broken input method.
-
----
-
-## What's left
-
-Almost every one of these ten rules exists because I broke it first. The read-receipt contrast problem shipped and was lived with for weeks before someone described it well enough for me to measure it. Until then, the best I could say was "it feels confusing."
-
-The one claim I will make is this: **a judgement about appearance can be restated as something measurable.** "Confusing" became "the direction of contrast inverts depending on the background." The moment it was restated, there was exactly one fix.
+If the desktop layout prints "⌘/Ctrl + Enter to send" under the input, that shortcut works. Printed and broken is worse than never printed.

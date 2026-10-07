@@ -1,216 +1,168 @@
 ---
-title: "Exit Code 0 Is Not Evidence"
-standfirst: "Fourteen months of running my own infrastructure, and the eleven times a tool told me everything was fine."
-description: "Eleven documented failures from fourteen months of self-hosting — rclone, ufw, Docker, IPv6, cloudflared, GitHub Pages certificates, a mail migration — and the one pattern they share: a tool reported success, and the report was true in a narrow sense and false in the sense that mattered."
+title: "Doubting the All-Clear"
+standfirst: "I have run my own server for fourteen months without typing the commands. The job I turned out to be good at was not believing the report that said it was done."
+description: "A non-engineer's record of running self-hosted infrastructure for fourteen months by deciding rather than implementing: five dated decisions, the options turned down, and which calls look right in hindsight."
 lang: "en"
 altUrl: "/ja/postmortems/"
 altLabel: "日本語"
 ---
 
-I am not a software engineer. I negotiate crude oil contracts for a living. In 2025 I started moving my family's data off other people's servers and onto one I pay for, and I have been operating it since.
+Let me be clear about the division of labour up front. Over the fourteen months I have been running this server, **I have typed almost none of the commands.** I did not write the configuration files either. Claude — Anthropic's AI assistant — did that. I decided.
 
-What follows is not a how-to. The deployment guides already exist, and mine would not be better than theirs. This is the other half — the part that does not get written down, because it is embarrassing and because the person who lived it is usually too busy to stop and write it.
+So this is not a page about how. It is a page about **what I decided**: what I was torn between, which option I took, which ones I turned down, and whether the call looks right or wrong from here. With dates.
 
-Every incident below has the same shape. A tool reported success. I believed it. The report was true in a narrow sense and false in the sense that mattered.
+The implementation lives in a repository. This is the other half, and it is the half nobody writes down.
+
+## What fourteen months taught me about my own role
+
+After fourteen months, what a non-engineer was actually contributing narrowed down to exactly one thing.
+
+**Doubting the all-clear.** That is it.
+
+There is a structural reason for that, and it is worth stating plainly. **Claude wants the task to be finished. I am fine if it isn't.** That asymmetry is the source of everything below. The implementer has a motive to say "done"; I have none. So the doubt has to come from my side. Not because I know more — because I am standing somewhere else.
+
+The five records below are the occasions where that asymmetry actually paid.
 
 ## What I run
 
-A single virtual private server — a Contabo VPS, 6 vCPU and 12 GB of RAM, under ten dollars a month. Docker Compose, an nginx reverse proxy, and a Cloudflare Tunnel, which is outbound-only: nothing is exposed by opening ports inward. On top of that: Immich for photos, Nextcloud for files, Vaultwarden for passwords, Radicale for calendars and contacts, Authentik providing single sign-on, Forgejo for git, Uptime Kuma for monitoring, and a progressive web app I wrote myself. Two daily users.
-
-Encrypted offsite backups go to Backblaze B2 nightly, driven by rclone on a cron. I also moved roughly 53,000 messages onto a mail domain I own, with strict sender authentication, which means I can change providers without telling anyone my address changed. That last part is the whole reason the exercise is worth doing: the address is mine, so the vendor is a replaceable part.
-
-Fourteen months. Here is what went wrong.
+One virtual private server, under ten dollars a month. Docker Compose behind a reverse proxy, reached through an outbound-only tunnel rather than by opening ports inward. On it: photos, files, passwords, calendars and contacts, single sign-on, git, monitoring, and a progressive web app of my own. Encrypted backups go offsite nightly. Roughly 53,000 messages now live on a mail domain I own, which means I can change providers without telling anyone my address changed. Two daily users.
 
 ---
 
-## 1. The backup script that stopped and said nothing
+## Decision 1 — I was out of disk. Three options were compared, and I picked a fourth
 
-**Symptom.** After migrating to a new server, forty-six photos existed only on the machine I was about to decommission.
+**Date.** September 2026
 
-**What I believed.** The nightly `rclone` backup to Backblaze B2 had been running for months. It exited. No alerts. Therefore it was backing everything up.
+**What I was torn between.** A 200 GB disk was filling up, and photos only ever grow.
 
-**What was actually true.** The script began with `set -e`. One step failed partway through — and `set -e` did exactly what it is designed to do: it stopped the script. Everything after that step never ran, every night, silently. The script's "success" was only the absence of a crash I would have noticed.
+**The options I was given.** Three. One, move old data to cheaper network-attached storage. Two, switch to a different storage product. Three, migrate to a bigger server. I was handed a genuine comparison — cost per terabyte, egress charges, failure modes, migration runbooks. I stayed in that comparison for weeks.
 
-**How I found out.** Not from monitoring. From manually comparing file counts between the two machines during the migration, because I happened to be looking.
+**What I chose.** **None of them. I made the disk bigger.** My provider's control panel has a button labelled **Extend SSD Storage**. No reinstall, no migration. 200 GB to 400 GB, done that afternoon.
 
-**What I changed.** I rewrote it so each step reports its own outcome, and the script ends by printing either a clear all-clear line or a clear failure line. It no longer halts at the first problem; it attempts everything and tells me what did not work. `set -e` is correct for a script whose output you read. It is actively dangerous for one that runs at 2 a.m. while you are asleep.
+**What I turned down.** All three. The first was the one most strongly recommended.
 
-**The general lesson.** A backup that has never been restored is not a backup, and a backup job whose only failure signal is "did the process crash" is not monitored. Ask of any automated job: *if one step inside this failed last night, how would I learn?* If the answer is "I wouldn't," that job is decoration.
+**Why.** Reading the comparison table, I noticed every row had the same property: **the setup gets more complicated than it is today.** Data in two places, one more vendor, a longer restore procedure. I am not an engineer, and I am the one who has to fix this when it breaks. **Saving a few dollars a month and being able to fix it myself are not tradeable against each other.** So I asked the dumbest question available: can I just make this disk bigger? I could.
 
----
+**Right or wrong in hindsight.** **Right — but not cleanly right.** At the capacity I actually needed, extending the disk is the *most* expensive option per terabyte. On price alone I lost. It was still correct, because price was never the axis that mattered.
 
-## 2. The sync tool that deleted files and returned success
-
-**Symptom.** Files present at the destination disappeared after a routine `rclone sync`.
-
-**What I believed.** `sync` means "make the destination match the source." Safe, idempotent, boring.
-
-**What was actually true.** It *is* one-way mirroring, which means it deletes at the destination — that is documented, that part was my misreading, and I own it. But the sharp edge was this: symlinks were skipped with a warning, and the real files at the destination were removed. This happened even for symlinks pointing at nothing. **And the exit code was 0.** There was no failure to detect, because by the tool's own definition nothing had failed.
-
-The warning is in the log. The log is not what an unattended job gets judged by.
-
-**What I changed.** I no longer use `sync` against anything I care about. Restores use `rclone copy`, which never deletes. Before any mirroring run I check explicitly for files that exist *only* at the destination — `rclone check --one-way` in the reverse direction. For a library of around 59,000 files that comparison takes about four minutes, which is a price I am now happy to pay.
-
-If I could ask for one change upstream, it would be this: a run that skipped files and deleted their counterparts at the destination should not exit 0. A distinct exit code, or a one-line summary of skipped items at the end, would be enough. The information exists — it just never reaches the only channel an unattended job is read through.
-
-**The general lesson.** Exit code 0 means *the program finished the thing it thought it was doing*. It does not mean *the outcome you wanted happened*. Where those two can diverge, you need a separate check that measures the outcome rather than the process.
+**What stuck.** When a comparison table appears, **go looking for one option that is not on it.** Boring options — "just make it bigger", "just turn it off", "just delete it" — rarely make the table, because there is nothing to compare. For weeks I had been solving a harder problem than the one I owned.
 
 ---
 
-## 3. Testing a firewall from inside the firewall
+## Decision 2 — I wanted to run my own mail. I decided not to
 
-**Symptom.** None. That is the point.
+**Date.** 27 September 2026
 
-**What I believed.** I had blocked a set of ports with `ufw`. I verified it by connecting to my own public address from the server itself and confirming the connection behaved as expected.
+**What I was torn between.** Moving mail onto my own domain was already done. The question was whether to run delivery itself on my own server. The research was finished and the method was clear.
 
-**What was actually true.** My blocking rules were scoped to traffic arriving on the external interface. A connection originating on the box to its own public address never traverses that interface — it takes a local route. **So the test could only ever report "reachable."** It was structurally incapable of detecting the failure it existed to detect, and it failed in the dangerous direction: the one where everything looks fine.
+**What I chose.** **Not to.** Delivery stays with a provider (Fastmail). What I own is the domain.
 
-**What I changed.** All external reachability testing now happens from a machine that is not the server. It is one extra step and it is not optional.
+**What I turned down.** Running my own mail server. **This was the option I wanted.**
 
-**The general lesson.** A test that cannot fail is not a test. Before trusting a verification, ask what result you would see if the thing being verified were broken. If you cannot describe that result, you have not verified anything.
+**Why.** Because breaking means something different here than anywhere else in the stack. If photo sync stops for three days, the only person inconvenienced is me. **If mail stops for three days, the other person never learns I am unreachable, and their business stops instead of mine.** Worse, delivery failures are quiet — there is no guarantee I would notice.
 
----
+I also had precedent against myself: I once left the server down for five and a half days while travelling. The reason that cost nothing is that what went down was photos and a calendar.
 
-## 4. Closing the door and leaving the window open
+**Right or wrong in hindsight.** **Right — but it is the kind of call you can never confirm.** The correctness of something you did not do can only be measured in accidents that did not happen.
 
-**Symptom.** Two services that should have required authentication were reachable from the open internet.
+**What stuck.** Decide what to self-host by asking **who is inconvenienced when it breaks.** If only I am, self-host it. If someone else's business stops, use a provider. "Can it technically be done" is not an input. Doing it because it is possible has the order backwards.
 
-**What I believed.** I had found an exposure, written blocking rules, confirmed the ports were closed, and moved on. I had marked the task done.
-
-**What was actually true.** I had written IPv4 rules. The server also has a public IPv6 address, and Docker was publishing on both. The IPv6 path was untouched — default-accept, no rules at all. Two login screens had been publicly reachable the entire time I believed I had fixed the problem.
-
-Two well-known sharp edges met here, and I knew about neither. Docker writes its own forwarding rules and does not consult `ufw`, so a published port is reachable whatever `ufw status` says. And a rule set written for one address family is simply absent on the other.
-
-**What I changed.** Every network rule is now written and verified for both address families, and my reachability check tests both explicitly. Separately, and more importantly: I stopped relying on blocking rules as the primary defence. Services bind to the loopback interface and are reached only through the tunnel. Firewall rules are the second layer now, not the first.
-
-**The general lesson.** This is the most uncomfortable category of failure I have: **"I solved it" when I had solved half of it.** It is worse than an unsolved problem, because an unsolved problem is still on the list. A half-solved one has been crossed off.
+So far nothing else has crossed that line.
 
 ---
 
-## 5. The ports my search pattern could not see
+## Decision 3 — I stopped believing "backups are running"
 
-**Symptom.** A routine audit of listening sockets showed nothing unexpected. A later audit, done differently, found nineteen.
+**Date.** August–September 2026, several times
 
-**What I believed.** To list what is exposed, run `ss -tulpn` and filter for the wildcard address: `grep 0.0.0.0`.
+**What I was torn between.** The nightly backup had been reporting success for months. No alerts. Was that good enough?
 
-**What was actually true.** A socket listening on both address families displays as `*:port`, not `0.0.0.0:port`. The string I was filtering for was not in the line at all. My pattern was searching for something that was not there and returning an empty result, which I read as "nothing exposed."
+**What I chose.** **Count it myself.** During a server migration I compared photo counts between the old and new machines by hand.
 
-I had also assumed exposure could only come from container port mappings. These were host processes, which my mental model did not cover at all.
+**What came out.** **Forty-six files existed only on the machine I was about to decommission.** The backup script had been stopping at one step partway through, and everything after that step had not run for months. Silently. "Success" had only ever meant "it did not break in a way I would notice."
 
-**What I changed.** I inverted the filter. Instead of listing what matches "exposed," I list everything and **exclude** what is provably local. Anything left that I do not recognise gets investigated rather than filtered away.
+**Right or wrong in hindsight.** **Right — and I only just made it.** If I had not counted, those forty-six were gone. My reason for counting was not even principled: I was mid-migration and both machines happened to be in front of me.
 
-**The general lesson.** Allowlist your audits; do not blocklist them. A filter built from "things I expect to be bad" can only find the problems you already imagined. A filter built from "things I have confirmed are fine" surfaces the ones you did not.
+**Three more wins of the same shape**
 
----
+- **A mail client migration.** Reported complete. It was not complete.
+- **A mail tooling integration.** Reported solved three times. Not solved, three times.
+- **A 53,000-message mail migration.** Source and destination counts were "roughly equal", and I nearly called it done. **Six weeks of mail had not transferred at all.** The gap happened to sit just inside my personal tolerance for "roughly". I recovered 7,536 messages only because an export I had made months earlier for an unrelated reason was still sitting in a trash folder. **That is not a restore procedure. That is luck.**
 
-## 6. The flag in the wrong position, and the zero that hid it
+**What stuck.** Three things.
 
-**Symptom.** A tunnel configuration I had validated turned out to be invalid.
+**Treat "success" as a claim, not a result.** Exit code 0, 200 OK, "no alerts", "done" — every one of them answers a narrower question than the one I am asking.
 
-**What was actually true.** I ran `cloudflared tunnel ingress validate --config FILE`. The config flag is global, so it has to come *before* the subcommand: `cloudflared --config FILE tunnel ingress validate`. In the position I used it, the flag is undefined — and the command **returned exit code 0 anyway**, having validated nothing. I read the zero as "configuration is valid."
+**Verify by a different route than the one that did the work.** Verifying along the same route just runs the same assumption twice.
 
-This is the purest form of the pattern on this page. An unrecognised flag should be a non-zero exit, and a validator that validated nothing should never be able to look like one that passed.
-
-**What I changed.** For anything that validates rather than acts, I now confirm the tool actually read the file I meant — usually by feeding it something deliberately broken and checking that it complains. If it does not complain about a broken file, it was never looking at my file.
-
-**The general lesson.** Validation tools are the easiest place for a false pass to hide, because a passing validation produces no output to be suspicious of. **Test your tests with a known-bad input.**
+**Match the granularity of the check to the granularity of what you would miss.** Aggregate comparisons hide compensating errors. If 500 items fail to copy and 480 duplicate, your totals agree and your data is wrong.
 
 ---
 
-## 7. The 200 OK that hid a month-long failure
+## Decision 4 — I called the restore direction myself
 
-**Symptom.** A site served fine over plain HTTP. Encrypted requests failed.
+**Date.** September 2026
 
-**What I believed.** The site was up. I checked it repeatedly over several weeks and it responded every time.
+**What I was torn between.** Backups were going offsite encrypted. How they come *back* had not been decided.
 
-**What was actually true.** The GitHub Pages certificate for the custom domain had never finished issuing. Plain HTTP worked perfectly, which is exactly why I did not investigate — I was checking the wrong protocol and getting a reassuring answer. This went on for about a month.
+**What I chose.** **The server pulls from the backup store.** This one was my call.
 
-The root cause was two layers down and entirely mine: my publish step force-pushed, rewriting history on every deploy. Certificate issuance kept getting reset to the beginning. I had tried removing and re-adding the custom domain more than ten times, which addressed nothing, because the thing undoing my fix ran again the next time I published.
+**Why.** Not for a technical reason. I thought: **if something has to push the data in, then restoring requires that pushing machine to still be alive.** Needing a second working machine in order to recover from the first one dying felt wrong.
 
-**What I changed.** I check certificate state as a field I query — `gh api repos/OWNER/REPO/pages --jq '.https_certificate.state'`, which should read `approved` — not as "does the page load." And in the end I took that certificate out of the path entirely and let Cloudflare terminate TLS instead, which fixed a month-old problem in the time a DNS record takes to apply. **Sometimes the fix is deleting the thing, not repairing it.**
+**Right or wrong in hindsight.** **Right — and the situation actually arrived.** At one point the configuration file needed to perform a restore existed only *inside* the backup. Keys locked in the safe, safe locked with the keys. Pull was the only direction that works out of that.
 
-**The general lesson.** Two. When a symptom survives ten attempted fixes, the problem is not the thing you keep fixing — stop and look for what is undoing your work. And a success response from a layer you are not testing is not evidence about the layer you are.
-
----
-
-## 8. "Roughly the same number" is not verification
-
-**Symptom.** Thousands of messages nearly lost during a mail migration.
-
-**What I believed.** Source and destination had approximately matching counts. Migration complete. I started deleting from the source.
-
-**What was actually true.** Six weeks of mail had not transferred at all. The totals happened to be close enough that the discrepancy sat inside my tolerance for "roughly." I recovered 7,536 messages, and only because a Google Takeout export I had made months earlier for an unrelated reason was still sitting in a trash folder. That is not a recovery procedure. That is luck.
-
-**What I changed.** Migrations are verified by matching unique identifiers per item — for mail, `Message-ID` — not in aggregate. And nothing is deleted from a source until the destination has been verified by a *different* method than the one that performed the copy.
-
-**The general lesson.** Aggregate checks hide compensating errors. If 500 items fail to copy and 480 duplicate, your totals look fine and your data is wrong. The verification has to be at the granularity of the thing you would miss.
+**What stuck.** **A backup you have never restored is not a backup.** And being a non-engineer is not a handicap on this kind of call. "What is still in my hands when this breaks" is a question about sequence, not about technology — and sequence is what I do for a living.
 
 ---
 
-## 9. Benchmarking two different things and believing the number
+## Decision 5 — I stopped accepting "build succeeded" as evidence (today)
 
-**Symptom.** I measured an encrypted `rclone` mount at 7.01 seconds against 0.46 for the plain one — fifteen times slower — and nearly made an architectural decision on that basis.
+**Date.** 7 October 2026
 
-**What was actually true.** The two mounts had different cache and `--vfs-read-chunk-size` settings. I was not measuring encryption overhead. I was measuring my own configuration difference. With the flags aligned, the real gap was well under a second on a 17 MB file — a genuine cost, and a trivial one.
+**What I was torn between.** I added two articles to this site. Publishing succeeded. **The articles did not appear.**
 
-**What I changed.** Any A/B comparison now starts by diffing the configuration of A and B, and I make the measurement reproduce before I believe it.
+**What was actually happening.** Two unrelated causes stacked. First, a configuration key in the site generator had been renamed in a newer version — and the old key is simply *ignored*, so the build keeps succeeding and quietly emits nothing. Second, I had dated an article in the future, and the tool does not publish future-dated pages by default. Also silent.
 
-**The general lesson.** A number that supports a decision deserves more scepticism than one that does not, and a surprisingly *large* effect is usually a methodology error rather than a discovery. I was about to accept a worse design to avoid a cost that did not exist.
+Neither counts as a failure, so the success report was true. **It just answered something other than the question I was asking, which was: can the article be read?**
 
----
+**What I chose.** Stamp the published output with **the commit it was built from** (`build-id.txt`).
 
-## 10. Three architectures compared, and the button I never clicked
+**What I turned down.** "Be more careful next time." I have tried that repeatedly and it has never once worked.
 
-**Symptom.** Running out of disk. Weeks of comparative analysis.
+**Why that shape.** What actually hurts me is not knowing which of two things is wrong: is publishing lagging, or did the article get dropped? Those two have opposite responses, and guessing wrong costs hours of waiting. So all I need is to know which commit production came from. **I do not need the cause. Once the problem is halved, finding the cause is Claude's job.**
 
-**What I believed.** Growing past my disk meant choosing between offloading old data to object storage over a network filesystem, moving to a different storage product, or migrating to a larger server. I evaluated all three in detail — per-terabyte costs, egress behaviour, failure modes, migration runbooks.
+**Right or wrong in hindsight.** **Unknown.** I added it today, and it pays off the next time this happens. I will come back and fill this in.
 
-**What was actually true.** My provider's control panel has a button labelled **Extend SSD Storage**. No reinstall, no migration, two commands afterwards to grow the partition and the filesystem. It is documented in their help centre. I had never considered it. I went from 200 GB to 400 GB in an afternoon. I found it because I stopped and asked the dumbest available question: *can I just make this disk bigger?*
-
-At the size I actually needed, extending the disk is the most expensive option per terabyte — and it was still correct, because the alternatives cost a few dollars a month less and a great deal of complexity more.
-
-**What I changed.** Before comparing architectures, I check whether the current setup has a boring parameter I can simply increase.
-
-**The general lesson.** This is my favourite failure, because nothing broke. I just spent weeks solving a harder problem than the one I had. **Interesting solutions crowd out boring ones, and at this scale the boring one is usually right.** Worth saying plainly: the question that found it was mine, asked out of frustration, against the grain of the analysis I had already done.
+**What stuck.** My job is not to find the cause. **It is to cut the search space in half.** That does not require knowing the implementation.
 
 ---
 
-## 11. Secrets in a history, put there by a method I had already replaced
+## The habits I actually use now
 
-**Symptom.** A private git repository's history contained a server's private key, service configuration files, and an expired API token.
+Only the ones that survived the five records above.
 
-**What was actually true.** Those files were tracked because, at one point, committing them *was* how they got backed up. Later I moved backups to encrypted object storage — which made the tracking unnecessary. **Nobody removed it, because removing it was not a step in setting up the new method.** The old mechanism kept running correctly, doing something that was no longer wanted.
+**1. When I hear "done", I look at the outcome by a route other than the work.** I only have to look at the result. I do not have to understand the route.
 
-**What I changed.** Removed the files from tracking, rotated what needed rotating. And adopted a rule I now apply generally: **when you replace a mechanism, explicitly audit what the old one was doing and turn that off.** Migration checklists are good at adding the new thing and bad at subtracting the old one.
+**2. I am most suspicious right after something is fixed.** A problem I have crossed off is no longer being watched, which makes a half-fix more dangerous than no fix.
 
-**The general lesson.** The dangerous legacy system is not the one that is broken. It is the one that still works.
+**3. When a comparison table appears, I hunt for the boring option missing from it.** Just make it bigger. Just stop doing it. Just delete the component. Interesting solutions crowd out boring ones, and at this size the boring one is usually right.
 
----
+**4. I decide what to self-host by who is inconvenienced when it breaks.** Technical feasibility is not an input.
 
-## What I actually do differently now
-
-Not best practices. Five habits that came out of the failures above.
-
-**I treat a success report as a claim, not a result.** Exit code 0, 200 OK, "no alerts," "the process is running" — each answers a narrower question than the one I am asking. For anything that matters, I check the outcome by a different route than the one that produced it.
-
-**I ask what a failure would look like.** Before trusting a check, I describe the output I would see if the underlying thing were broken. If I cannot describe it, the check is theatre. This is what the firewall test taught me and it is the highest-return habit on this list.
-
-**I am most suspicious right after I fix something.** The IPv6 incident and the certificate incident were both "solved" problems. A problem I have crossed off is no longer being watched, which makes a half-fix more dangerous than no fix. I now re-verify from scratch rather than from the state of mind of having just succeeded.
-
-**I check for the boring parameter before designing anything.** Can I make this bigger. Can I turn this off. Can I delete the component instead of repairing it. Twice now the answer was yes, after I had already built the complicated version in my head.
-
-**I write the failures down at the time.** Not for an audience — because by the second occurrence I could not remember what I had already ruled out. One error code in particular I diagnosed three separate times with three different root causes, and the only reason I did not lose a fourth evening to it is that the first three were written down. Those notes are the reason this page exists. I did not reconstruct any of it from memory.
+**5. When the same symptom stops me three times, I build a tool that narrows it down rather than hunting the cause.** The cause was different every time — one error code, three occurrences, three genuinely different root causes. The reason a fourth evening did not go the same way is that the first three were written down.
 
 ---
 
-## Why publish this
+## The question I still cannot answer
 
-Two reasons.
+One thing is genuinely open.
 
-The guides for setting this up are good and plentiful. The record of what it costs to *keep* it running is almost nonexistent, which means everyone arriving at this decision estimates the hard part from no data. I had to learn all of the above by hitting it. Someone else can have it for free.
+**Did I win those five because I doubted, or because I happened to be looking?** The forty-six photos surfaced because both machines were in front of me mid-migration. The six weeks of mail survived because of an export sitting in a trash folder. Neither is comfortably a credit to me.
 
-And a narrower one. I came to this without a software engineering background, which meant I had no instinct for which reassuring signals to distrust. That turned out to be the actual skill — not knowing the commands, but knowing which confirmations are worthless. If you are in the same position, the list above is roughly what I would have wanted on day one.
+The checks I have put in since are an attempt to convert that luck into procedure. Whether it worked is not yet known. The next time something slips through, it goes here.
 
 ---
 
-*Fourteen months, one server, two users, eleven documented failures. Still running.*
+*Commands, configuration, and the technical root causes live in the [repository](https://github.com/taikiito-dev), not on this site. This page is a record of decisions, not a runbook.*
+
+*Fourteen months, one server, two users. I have not typed it. I have decided it.*
