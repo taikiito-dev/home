@@ -38,6 +38,7 @@ jobs:
           HUGO_ENV: production
         run: |
           hugo --gc --minify --baseURL "https://taikiito.com/"
+          echo "${GITHUB_SHA} $(date -u +%Y-%m-%dT%H:%M:%SZ)" > public/build-id.txt
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
