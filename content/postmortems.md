@@ -1,31 +1,43 @@
 ---
-title: "Doubting the All-Clear"
-standfirst: "I have run my own server for fourteen months without typing the commands. The job I turned out to be good at was not believing the report that said it was done."
-description: "A non-engineer's record of running self-hosted infrastructure for fourteen months by deciding rather than implementing: five dated decisions, the options turned down, and which calls look right in hindsight."
+title: "Running My Own Server: Fourteen Months of Decisions"
+standfirst: "I am not a software engineer. I stopped keeping my photos and my mail on somebody else's service and moved them onto one server I pay for. This is what I decided."
+description: "A non-engineer's record of running a self-hosted server for fourteen months: what is on it, five dated decisions, the options turned down, and which calls look right in hindsight."
 lang: "en"
 altUrl: "/ja/postmortems/"
 altLabel: "日本語"
 ---
 
-Let me be clear about the division of labour up front. Over the fourteen months I have been running this server, **I have typed almost none of the commands.** I did not write the configuration files either. Claude — Anthropic's AI assistant — did that. I decided.
+I am not a software engineer. I negotiate crude oil contracts for a living and I have never held a job that involved writing code.
 
-So this is not a page about how. It is a page about **what I decided**: what I was torn between, which option I took, which ones I turned down, and whether the call looks right or wrong from here. With dates.
+In 2025 I started moving what I had been keeping on large cloud services onto a single server I pay a monthly fee for. Photos, files, passwords, calendars, and eventually mail.
 
-The implementation lives in a repository. This is the other half, and it is the half nobody writes down.
+The reason was simple: **I did not like that the terms of custody could change at the custodian's convenience.** Price rises, feature removals, policy changes, account suspensions. None of them are things I can stop. At some point it stopped sitting well with me that everything of the irreplaceable kind — photographs going back to childhood, years of correspondence — was stacked on top of things I could not stop.
 
-## What fourteen months taught me about my own role
+Fourteen months later, that server is still running. Two users. It has not been out of my hands for a day.
 
-After fourteen months, what a non-engineer was actually contributing narrowed down to exactly one thing.
+This page is a record of **what I decided** over those fourteen months: what I was torn between, which option I took, which ones I turned down, and whether the call looks right or wrong from here. With dates. It is not a runbook — if that is what you came for, read "What is on it" below and then go to the [repository](https://github.com/taikiito-dev) instead.
+
+## What is on it
+
+One rented virtual private server, under ten dollars a month. Nothing is exposed by opening ports inward; it is reached through a tunnel the server itself dials outward.
+
+On it: photos, files, passwords, calendars and contacts, a single sign-on front door, a git repository, uptime monitoring, and a chat-and-calendar app I had built for myself. Backups go offsite every night, encrypted.
+
+Mail came last and matters most. Roughly 53,000 messages now live on a domain I own. **That is the part that actually changed things.** Because the address is mine, I can change providers without telling anyone that my address changed — which is the first time the custodian became a replaceable part rather than the foundation.
+
+Two users. One is me; the other is simply a user, and not an engineer either. So "it only breaks for me" was never an available excuse.
+
+## The division of labour — I am not the one typing
+
+Now the part worth being explicit about. Of everything listed above, **I have typed almost none of the commands.** I did not write the configuration files either. Claude — Anthropic's AI assistant — did that. I decided.
+
+This was not a workaround for lack of time. It is the split that produces the most, because not holding the implementation means **I can spend all of my attention on the decisions.** And after fourteen months, what in those decisions was actually doing the work narrowed to exactly one thing.
 
 **Doubting the all-clear.** That is it.
 
-There is a structural reason for that, and it is worth stating plainly. **Claude wants the task to be finished. I am fine if it isn't.** That asymmetry is the source of everything below. The implementer has a motive to say "done"; I have none. So the doubt has to come from my side. Not because I know more — because I am standing somewhere else.
+There is a structural reason for it. **Claude wants the task to be finished. I am fine if it isn't.** That asymmetry is the source of everything below. The implementing side has a motive to say "done"; I have none. So the doubt has to come from my side — not because I know more, but because I am standing somewhere else.
 
 The five records below are the occasions where that asymmetry actually paid.
-
-## What I run
-
-One virtual private server, under ten dollars a month. Docker Compose behind a reverse proxy, reached through an outbound-only tunnel rather than by opening ports inward. On it: photos, files, passwords, calendars and contacts, single sign-on, git, monitoring, and a progressive web app of my own. Encrypted backups go offsite nightly. Roughly 53,000 messages now live on a mail domain I own, which means I can change providers without telling anyone my address changed. Two daily users.
 
 ---
 
