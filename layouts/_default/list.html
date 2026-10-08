@@ -1,0 +1,98 @@
+{{- /* Section index for /writing/ and /archive/ (plus their /ja/ twins).
+
+     Same bilingual convention as single.html: a section is a separate page
+     per language, declaring its own `lang` and pointing at its counterpart
+     via `altUrl` / `altLabel` in front matter. No JavaScript language
+     swapping here - that is only on the homepage, which is short enough to
+     hold both languages at once.
+
+     Ordering differs per section and is deliberate:
+       /writing/  - `weight` ascending, so the series reads in the order it
+                    was meant to be read (the foundational guide is weight 1).
+                    This is a reference set, not a feed.
+       /archive/  - date descending, because the dev diary genuinely is a
+                    feed and its entries only make sense newest-first.
+     Anything else falls back to weight.
+*/ -}}
+{{- $lang := .Params.lang | default "en" -}}
+{{- $isJa := eq $lang "ja" -}}
+{{- /* Match on the logical path, NOT on `.Section`: Hugo's `.Section` is the
+       first path element, so /ja/archive/ reports "ja", not "archive", and an
+       `eq .Section "archive"` test here silently fails for the Japanese half
+       of the site. (It happened to still come out newest-first, because
+       Hugo's weight sort falls back to date-descending when every weight is
+       unset — luck, not intent.) */ -}}
+{{- $isArchive := eq (path.Base .Path) "archive" -}}
+{{- $pages := cond $isArchive .RegularPages.ByDate.Reverse .RegularPages.ByWeight -}}
+<!DOCTYPE html>
+<html lang="{{ $lang }}">
+<head>
+  <meta charset="utf-8">
+  <title>{{ .Title }} &mdash; Taiki Ito</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Title }} &mdash; Taiki Ito{{ end }}">
+  <meta name="theme-color" content="#f0eee6">
+  <link rel="icon" sizes="48x48" href="/assets/images/favicon.ico">
+  <link rel="icon" sizes="any" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/site.css">
+  {{- with .OutputFormats.Get "rss" }}
+  <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Title }} &mdash; Taiki Ito">
+  {{- end }}
+  {{- with .Params.altUrl }}
+  <link rel="alternate" hreflang="{{ if $isJa }}en{{ else }}ja{{ end }}" href="{{ . | absURL }}">
+  <link rel="alternate" hreflang="{{ $lang }}" href="{{ $.Permalink }}">
+  {{- end }}
+</head>
+<body>
+
+  <a href="#main-content" class="taiki-skip-link">Skip to main content</a>
+
+  <div class="taiki-page">
+
+    <header class="taiki-header">
+      <a href="/" class="taiki-wordmark">Taiki Ito</a>
+      {{- with .Params.altUrl }}
+      <a href="{{ . }}" class="taiki-lang-toggle" hreflang="{{ if $isJa }}en{{ else }}ja{{ end }}">{{ $.Params.altLabel | default "日本語" }}</a>
+      {{- end }}
+    </header>
+
+    <main id="main-content">
+
+      <h1 class="taiki-listpage__title">{{ .Title }}</h1>
+      {{- with .Params.standfirst }}
+      <p class="taiki-prose__standfirst">{{ . }}</p>
+      {{- end }}
+
+      {{- with .Content }}
+      <div class="taiki-prose taiki-listpage__intro">{{ . }}</div>
+      {{- end }}
+
+      <section class="taiki-section">
+        <ul class="taiki-list">
+          {{- range $pages }}
+          <li>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            {{- with .Params.description }}
+            <p>{{ . }}</p>
+            {{- end }}
+          </li>
+          {{- end }}
+        </ul>
+      </section>
+
+      <p class="taiki-prose__back"><a href="/">&larr; {{ if $isJa }}ホームに戻る{{ else }}Back to home{{ end }}</a></p>
+
+    </main>
+
+    <footer class="taiki-footer">
+      &copy; {{ now.Format "2006" }} Taiki Ito
+    </footer>
+
+  </div>
+
+</body>
+</html>

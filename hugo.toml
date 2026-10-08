@@ -5,9 +5,30 @@ title = "Taiki Ito"
 [params]
   description = "Taiki Ito's personal homepage"
 
-disableKinds = ["taxonomy", "term", "RSS", "sitemap"]
+# 2026-10-08: this used to also disable "RSS" and "sitemap", which was the
+# right call while the site was a single profile page with nothing to
+# subscribe to or crawl. The Off-Grid guide series moved in here on that
+# date (43 pages across two languages), so both are back on: /writing/ and
+# /archive/ now emit a feed, and a sitemap exists for search engines to
+# find the articles at their new URLs. Taxonomies stay off - tags are kept
+# in front matter as metadata, but no tag pages are generated.
+disableKinds = ["taxonomy", "term"]
 
 [taxonomies]
 
 [outputs]
   home = ["HTML"]
+  section = ["HTML", "RSS"]
+
+[markup]
+  # Articles carry no raw HTML outside fenced code blocks (checked at
+  # migration time), so goldmark's `unsafe` stays off.
+  [markup.highlight]
+    # Emit chroma CSS classes instead of inline styles, so static/css/site.css
+    # can flatten syntax colours to plain ink. Hugo's default chroma palette
+    # is built for a dark background and is close to unreadable on this
+    # site's #f0eee6 paper.
+    noClasses = false
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3

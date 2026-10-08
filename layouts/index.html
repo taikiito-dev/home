@@ -38,24 +38,75 @@
         <p class="taiki-hero__lede" data-lang-content="ja">シンガポール在住。原油の取引を仕事にしていて、ソフトウェアエンジニアではありません。2025年から、写真・ファイル・予定表・メールを大手のクラウドサービスから自分が払う1台のサーバーへ移し、運用しています。そこで決めたことを、外した判断も含めて書き残しています。</p>
       </section>
 
-      <!-- Deliberately only two destinations. The decision records used to be
-           listed here one at a time; they now live in the Off-Grid guide
-           series, so this page stays a front door instead of growing a list
-           that lengthens with every article. Project links moved to
-           content/projects.md for the same reason. -->
+      <!-- Latest three articles, newest first.
+
+           This page held no article list at all between 2026-10-07 and
+           2026-10-08: the records had just moved out to a separate site
+           (Off-Grid) and listing them here would have meant maintaining
+           the same list twice. They now live in this repo under
+           /writing/, so a capped list is cheap and the page no longer
+           sends a first-time visitor off-domain to find out what the site
+           is about. Capped at three on purpose - the previous version grew
+           by one entry per article published, which is what drove the
+           move away from listing them here. -->
+      {{- /* Languages are separated by directory (content/writing vs
+             content/ja/writing), not by Hugo's multilingual machinery, which
+             this site does not use.
+
+             Do NOT filter these with `where site.RegularPages "Section"
+             "writing"`: Hugo's `.Section` is the FIRST path element, so every
+             page under content/ja/ reports section "ja" regardless of which
+             subdirectory it is in. That filter silently returned the English
+             pages only and left the Japanese list empty. Address the two
+             section pages directly instead. */ -}}
+      {{- $en := first 3 (site.GetPage "/writing").RegularPages.ByDate.Reverse }}
+      {{- $ja := first 3 (site.GetPage "/ja/writing").RegularPages.ByDate.Reverse }}
+
+      <section class="taiki-section" data-lang-content="en">
+        <h2>Latest</h2>
+        <ul class="taiki-list">
+          {{- range $en }}
+          <li>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="taiki-latest__date">{{ .Date.Format "2 Jan 2006" }}</span></h3>
+          </li>
+          {{- end }}
+        </ul>
+        <p class="taiki-latest__more"><a href="/writing/">All writing &rarr;</a></p>
+      </section>
+
+      <section class="taiki-section" data-lang-content="ja">
+        <h2>最近書いたもの</h2>
+        <ul class="taiki-list">
+          {{- range $ja }}
+          <li>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="taiki-latest__date">{{ .Date.Format "2006-01-02" }}</span></h3>
+          </li>
+          {{- end }}
+        </ul>
+        <p class="taiki-latest__more"><a href="/ja/writing/">すべての記事 &rarr;</a></p>
+      </section>
+
+      <!-- Destinations. Project links live in content/projects.md rather than
+           inline here, for the same reason the article list is capped. -->
       <section class="taiki-section">
         <ul class="taiki-list">
           <li>
-            <h3 data-lang-content="en"><a href="https://offgrid.taikiito.com/en/guides/">Writing</a></h3>
-            <h3 data-lang-content="ja"><a href="https://offgrid.taikiito.com/guides/">執筆</a></h3>
-            <p data-lang-content="en">Dated records of what I decided while moving my own data onto a server I pay for: what I was torn between, what I turned down, and how the calls look in hindsight. Published on Off-Grid.</p>
-            <p data-lang-content="ja">自分のデータを自分が払うサーバーへ移しながら決めたことの記録。迷ったこと、却下した案、後から見た当たり外れ。Off-Grid に置いてある。</p>
+            <h3 data-lang-content="en"><a href="/writing/">Writing</a></h3>
+            <h3 data-lang-content="ja"><a href="/ja/writing/">執筆</a></h3>
+            <p data-lang-content="en">Dated records of what I decided while moving my own data onto a server I pay for: what I was torn between, what I turned down, and how the calls look in hindsight. The commands sit below each decision, as steps.</p>
+            <p data-lang-content="ja">自分のデータを自分が払うサーバーへ移しながら決めたことの記録。迷ったこと、却下した案、後から見た当たり外れ。コマンドや設定値は、その下に手順としてまとめてある。</p>
           </li>
           <li>
             <h3 data-lang-content="en"><a href="/projects/">Projects</a></h3>
             <h3 data-lang-content="ja"><a href="/ja/projects/">プロジェクト</a></h3>
-            <p data-lang-content="en">Off-Grid, singlish-lah, and the repositories behind them.</p>
-            <p data-lang-content="ja">Off-Grid、singlish-lah、そのソースを置いているリポジトリ。</p>
+            <p data-lang-content="en">What I have built, and the repositories behind it.</p>
+            <p data-lang-content="ja">作ったものと、そのソースを置いているリポジトリ。</p>
+          </li>
+          <li>
+            <h3 data-lang-content="en"><a href="/about/">About</a></h3>
+            <h3 data-lang-content="ja"><a href="/ja/about/">このサイトについて</a></h3>
+            <p data-lang-content="en">Why I started, how the writing is split between what I decided and what Claude implemented, and the older diary this site began as.</p>
+            <p data-lang-content="ja">始めた理由、「自分が決めたこと」と「Claudeが実装したこと」の分け方、それにこのサイトが最初に取っていた日誌形式について。</p>
           </li>
         </ul>
       </section>

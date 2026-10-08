@@ -298,3 +298,155 @@ li[data-lang-content].is-active {
 .taiki-prose__back {
   margin: 3rem 0 0;
 }
+
+/* ---------------------------------------------------------------------
+   Added 2026-10-08 with the Off-Grid migration.
+
+   The article pages that lived here before (postmortems, taste-is-not-a-
+   reason) were pure prose: paragraphs, headings, lists. The 42 pages that
+   moved in from Off-Grid carry code blocks, tables and blockquotes, none
+   of which this stylesheet had any rule for - they would have rendered at
+   browser defaults (Times, full-bleed, overflowing the 660px column).
+   --------------------------------------------------------------------- */
+
+.taiki-prose pre {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  background: #e6e3d8;
+  padding: 1rem;
+  border-radius: 3px;
+  /* Long shell commands and config lines are common in the step sections.
+     Scroll them rather than letting them widen the page on a phone. */
+  overflow-x: auto;
+  margin: 0 0 1.25rem;
+}
+
+/* `code` inside `pre` must drop the inline-code chip styling, or every
+   code block gets a second background and padding inside the first. */
+.taiki-prose pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+  border-radius: 0;
+}
+
+/* Chroma token colours flattened to plain ink (see hugo.toml's
+   markup.highlight.noClasses = false). Comments keep a muted grey so they
+   still read as secondary; everything else is body-text ink. Dropping
+   multi-colour highlighting is deliberate - this site is set in a serif
+   on paper-coloured stock, and a rainbow code block fights it. */
+.taiki-prose .chroma,
+.taiki-prose .chroma * {
+  background: none !important;
+  color: #1a1a1a !important;
+}
+
+.taiki-prose .chroma .c,
+.taiki-prose .chroma .c1,
+.taiki-prose .chroma .cm,
+.taiki-prose .chroma .cp,
+.taiki-prose .chroma .cs {
+  color: #6b6558 !important;
+}
+
+.taiki-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+}
+
+.taiki-prose th,
+.taiki-prose td {
+  padding: 0.5rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #ddd8cc;
+}
+
+.taiki-prose th {
+  font-weight: 600;
+  border-bottom: 2px solid #1a1a1a;
+}
+
+/* Tables are the one element that genuinely cannot reflow to 660px when
+   they carry four or more columns of Japanese. Wrap-scroll the whole
+   table rather than shrinking type further. */
+.taiki-prose .table-wrap {
+  overflow-x: auto;
+}
+
+.taiki-prose blockquote {
+  margin: 0 0 1.25rem;
+  padding: 0.25rem 0 0.25rem 1.1rem;
+  border-left: 3px solid #ddd8cc;
+  color: #55524a;
+}
+
+.taiki-prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.taiki-prose img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Nested lists were getting the same 0.5rem bottom margin as top-level
+   items, which read as a gap inside a single thought. */
+.taiki-prose li > ul,
+.taiki-prose li > ol {
+  margin: 0.4rem 0 0;
+}
+
+/* ---- Section index pages (/writing/, /archive/) ---------------------- */
+
+.taiki-listpage__title {
+  font-size: 2rem;
+  line-height: 1.25;
+  margin: 0 0 1rem;
+}
+
+/* The intro paragraph above the list is prose from Markdown, so it needs
+   .taiki-prose for rhythm - but its trailing margin would stack on top of
+   the list's own spacing. */
+.taiki-listpage__intro > :last-child {
+  margin-bottom: 2.5rem;
+}
+
+/* Article titles in a section index run longer than the two homepage
+   entries this class was written for, so they get a slightly larger size
+   and tighter leading than .taiki-list h3's 1.1rem default. */
+.taiki-listpage__title + .taiki-prose__standfirst {
+  margin-bottom: 2rem;
+}
+
+.taiki-section .taiki-list h3 {
+  font-size: 1.15rem;
+  line-height: 1.4;
+}
+
+/* ---- Homepage "latest" entries --------------------------------------- */
+
+/* Dates sit beside the title rather than above it, so the list keeps the
+   same vertical rhythm as the two destination entries below it. */
+.taiki-latest__date {
+  color: #a8a196;
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin-left: 0.5em;
+  white-space: nowrap;
+}
+
+.taiki-latest__more {
+  margin: 4px 0 0;
+}
+
+.taiki-latest__more a,
+.taiki-latest__more a:visited {
+  color: #5b6472;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}

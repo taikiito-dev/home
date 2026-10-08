@@ -1,19 +1,15 @@
 ---
 title: "Projects"
 standfirst: "Things I have built or write, and where each one lives."
-description: "Projects and writing by Taiki Ito — a self-hosting guide series in Japanese, a Singlish phrase collection, and open-source repositories."
+description: "Projects by Taiki Ito — a Singlish phrase collection and open-source repositories."
 lang: "en"
 altUrl: "/ja/projects/"
 altLabel: "日本語"
 ---
 
-## Off-Grid
+## Writing
 
-A guide series, written in Japanese, on moving photos, files, passwords, calendars, and mail off large cloud services and onto hardware I pay for. Each page leads with the decisions — what I was torn between, what I turned down, which calls look wrong in hindsight — and keeps the commands below that as steps.
-
-It is written for people who are not engineers. That constraint is the point: if a step cannot be explained without jargon, it gets explained anyway rather than skipped.
-
-[offgrid.taikiito.com](https://offgrid.taikiito.com/en/guides/) · also in [Japanese](https://offgrid.taikiito.com/guides/)
+The record of moving my own data onto a server I pay for is not a separate site: it lives here, under [Writing](/writing/).
 
 ## singlish-lah
 
