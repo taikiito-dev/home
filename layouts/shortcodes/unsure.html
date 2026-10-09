@@ -1,0 +1,23 @@
+{{- /* An inline "I have not verified this" marker.
+
+     Usage, inside any article or note:
+
+       {{</* unsure */>}}
+       Possibly the container's own DNS, but I have not reproduced it.
+       {{</* /unsure */>}}
+
+     This exists so that publishing an unverified claim is cheaper than
+     either leaving it out or quietly asserting it. The label is fixed
+     rather than free text: a reader scanning the page should be able to
+     recognise the marker without reading it, and a fixed string is also
+     greppable (`rg 'unsure'` over content/ gives every open question on
+     the site).
+
+     Label language follows the page's own `lang` front matter rather than
+     a parameter, because this site separates languages by directory and a
+     page is never bilingual. */ -}}
+{{- $isJa := eq (.Page.Params.lang | default "en") "ja" -}}
+<aside class="taiki-unsure">
+  <p class="taiki-unsure__label">{{ if $isJa }}ここは確かめていない{{ else }}Not verified{{ end }}</p>
+  {{ .Inner | markdownify }}
+</aside>

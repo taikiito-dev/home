@@ -5,6 +5,35 @@
      own language and points at its counterpart via `altUrl` / `altLabel`
      in front matter. */ -}}
 {{- $lang := .Params.lang | default "en" -}}
+{{- $isJa := eq $lang "ja" -}}
+{{- /* Which shelf this page belongs to, for the label in the meta bar.
+
+     Derive it from the logical path, NOT from `.Section`: Hugo's `.Section`
+     is the FIRST path element, so everything under content/ja/ reports
+     "ja". `path.Dir` of "/ja/writing/some-slug" is "/ja/writing", whose
+     base is the shelf name - and that works identically for the English
+     half ("/writing/some-slug").
+
+     The label exists because the site now has three shelves with
+     different standards (settled decision records, unfinished working
+     notes, a frozen diary). A reader arriving from a search result lands
+     mid-site with no way to tell which one they are reading, and the
+     standard they should hold it to differs. One line of metadata is the
+     cheapest fix; this is lifted from kentarokuribayashi.com, which
+     prints "Journal·<date>" or "Blog·<date>" at the top of every entry. */ -}}
+{{- $shelf := path.Base (path.Dir .Path) -}}
+{{- $shelfLabel := "" -}}
+{{- $shelfURL := "" -}}
+{{- if eq $shelf "writing" -}}
+  {{- $shelfLabel = cond $isJa "執筆" "Writing" -}}
+  {{- $shelfURL = cond $isJa "/ja/writing/" "/writing/" -}}
+{{- else if eq $shelf "notes" -}}
+  {{- $shelfLabel = "Notes" -}}
+  {{- $shelfURL = cond $isJa "/ja/notes/" "/notes/" -}}
+{{- else if eq $shelf "archive" -}}
+  {{- $shelfLabel = cond $isJa "アーカイブ" "Archive" -}}
+  {{- $shelfURL = cond $isJa "/ja/archive/" "/archive/" -}}
+{{- end -}}
 <!DOCTYPE html>
 <html lang="{{ $lang }}">
 <head>
@@ -29,7 +58,11 @@
 
   <a href="#main-content" class="taiki-skip-link">Skip to main content</a>
 
-  <div class="taiki-page">
+  {{- /* Article pages widen the column to 720px (see site.css). The
+         homepage and the section indexes stay at 660px: they are lists of
+         short lines, where a wider measure just pushes the eye further
+         for no gain. */ -}}
+  <div class="taiki-page taiki-page--article">
 
     <header class="taiki-header">
       <a href="/" class="taiki-wordmark">Taiki Ito</a>
@@ -40,13 +73,39 @@
 
     <main id="main-content">
 
+      {{- with $shelfLabel }}
+      <p class="taiki-metabar">
+        <a class="taiki-metabar__shelf" href="{{ $shelfURL }}">{{ . }}</a>
+        {{- with $.Date }}<span class="taiki-metabar__date">{{ if $isJa }}{{ .Format "2006-01-02" }}{{ else }}{{ .Format "2 Jan 2006" }}{{ end }}</span>{{ end -}}
+        {{- /* `lastmod` only shows when it actually differs from the
+               publication date, so an untouched page does not carry a
+               redundant second date. On this site a revision is part of
+               the record - notes are published unfinished on purpose and
+               corrected later - so "when was this last touched" is
+               information the reader needs, not noise. */ -}}
+        {{- if and $.Lastmod $.Date (ne ($.Lastmod.Format "2006-01-02") ($.Date.Format "2006-01-02")) }}
+        <span class="taiki-metabar__lastmod">{{ if $isJa }}最終更新 {{ $.Lastmod.Format "2006-01-02" }}{{ else }}updated {{ $.Lastmod.Format "2 Jan 2006" }}{{ end }}</span>
+        {{- end }}
+      </p>
+      {{- end }}
+
       <article class="taiki-prose">
         <h1>{{ .Title }}</h1>
         {{ with .Params.standfirst }}<p class="taiki-prose__standfirst">{{ . }}</p>{{ end }}
         {{ .Content }}
       </article>
 
-      <p class="taiki-prose__back"><a href="/">&larr; {{ if eq $lang "ja" }}ホームに戻る{{ else }}Back to home{{ end }}</a></p>
+      {{- /* Back to the shelf, not to the homepage: a reader who finished
+             one decision record is far more likely to want the next one
+             than the profile page. Falls back to home for any page that
+             sits outside a shelf. */ -}}
+      <p class="taiki-prose__back">
+        {{- if $shelfURL -}}
+        <a href="{{ $shelfURL }}">&larr; {{ if $isJa }}{{ $shelfLabel }}の一覧へ{{ else }}All {{ $shelfLabel | lower }}{{ end }}</a>
+        {{- else -}}
+        <a href="/">&larr; {{ if $isJa }}ホームに戻る{{ else }}Back to home{{ end }}</a>
+        {{- end -}}
+      </p>
 
     </main>
 

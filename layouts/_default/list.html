@@ -12,6 +12,12 @@
                     This is a reference set, not a feed.
        /archive/  - date descending, because the dev diary genuinely is a
                     feed and its entries only make sense newest-first.
+       /notes/    - date descending, same reason: working notes are a running
+                    log, and a note's usefulness decays with age in a way a
+                    decision record's does not. The date is also printed on
+                    each row here (it is not under /writing/), because "how
+                    old is this" is the first thing a reader of an unfinished
+                    note needs to know.
      Anything else falls back to weight.
 */ -}}
 {{- $lang := .Params.lang | default "en" -}}
@@ -22,8 +28,10 @@
        of the site. (It happened to still come out newest-first, because
        Hugo's weight sort falls back to date-descending when every weight is
        unset — luck, not intent.) */ -}}
-{{- $isArchive := eq (path.Base .Path) "archive" -}}
-{{- $pages := cond $isArchive .RegularPages.ByDate.Reverse .RegularPages.ByWeight -}}
+{{- $base := path.Base .Path -}}
+{{- $isNotes := eq $base "notes" -}}
+{{- $isFeed := or (eq $base "archive") $isNotes -}}
+{{- $pages := cond $isFeed .RegularPages.ByDate.Reverse .RegularPages.ByWeight -}}
 <!DOCTYPE html>
 <html lang="{{ $lang }}">
 <head>
@@ -72,10 +80,12 @@
       {{- end }}
 
       <section class="taiki-section">
-        <ul class="taiki-list">
+        <ul class="taiki-list taiki-list--index">
           {{- range $pages }}
           <li>
-            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              {{- if $isNotes }}<span class="taiki-latest__date">{{ if $isJa }}{{ .Date.Format "2006-01-02" }}{{ else }}{{ .Date.Format "2 Jan 2006" }}{{ end }}</span>{{ end -}}
+            </h3>
             {{- with .Params.description }}
             <p>{{ . }}</p>
             {{- end }}

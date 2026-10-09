@@ -82,6 +82,20 @@ h1, h2, h3 {
   padding: 32px 20px 60px;
 }
 
+/* Article pages only. 660px was set for 18px English lines at ~75
+   characters; Japanese at the same size fits roughly 36 characters per
+   line there, which is narrow enough that long articles turn into a very
+   tall thin ribbon. 720px is the measure kentarokuribayashi.com uses for
+   its article column.
+
+   Tradeoff accepted knowingly: the ENGLISH articles now run to about 80
+   characters per line, slightly past the ~75 GOV.UK guidance that set
+   660px in the first place. The site is Japanese-first (20 articles vs
+   2), so the Japanese measure wins. Revisit if the English half grows. */
+.taiki-page--article {
+  max-width: 720px;
+}
+
 /* Header: plain text wordmark, no colored bar/box. */
 .taiki-header {
   display: flex;
@@ -256,14 +270,32 @@ li[data-lang-content].is-active {
   margin: 2rem 0 0.5rem;
 }
 
+/* Leading opened from the global 1.6 to 2.0, and only inside prose.
+   Japanese sets without word spaces, so the gap between lines is the main
+   thing giving the eye a place to land; 1.6 was tuned for the homepage's
+   short English-first lines and read as a wall once full articles moved
+   in. 2.0 matches the measure used by kentarokuribayashi.com, whose body
+   text is the closest comparable (Japanese, similar size, plain CSS). */
 .taiki-prose p,
 .taiki-prose ul,
 .taiki-prose ol {
+  line-height: 2;
   margin: 0 0 1.25rem;
 }
 
 .taiki-prose li {
+  line-height: 2;
   margin-bottom: 0.5rem;
+}
+
+/* Figures that are not running text keep the tighter global leading -
+   2.0 inside a table cell or a code block wastes vertical space without
+   helping anyone read. */
+.taiki-prose pre,
+.taiki-prose pre code,
+.taiki-prose th,
+.taiki-prose td {
+  line-height: 1.6;
 }
 
 /* Markdown emits <hr> between sections; keep it quiet to match the
@@ -449,4 +481,127 @@ li[data-lang-content].is-active {
   font-size: 0.95rem;
   text-decoration: underline;
   text-underline-offset: 0.15em;
+}
+
+/* ---- Section index excerpts ------------------------------------------ */
+
+/* Clamp the per-item blurb on /writing/, /notes/ and /archive/ to three
+   lines. These come from each page's front-matter `description`, which is
+   written for search engines and runs 100-200 Japanese characters - long
+   enough that a 20-item list became a wall of grey text and the titles
+   stopped being scannable. Three lines is enough to tell two articles
+   apart, which is the only job the blurb has in a list.
+
+   Scoped to --index so the homepage's hand-written destination
+   descriptions, which are already short and are the point of those rows,
+   are not truncated.
+
+   `line-clamp` is the standard property and `-webkit-line-clamp` the
+   prefixed one every current engine still matches on; both are listed so
+   this does not depend on the prefix surviving. Where neither applies the
+   text simply shows in full - the list is longer, nothing breaks. */
+.taiki-list--index p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* ---- Shelf label above an article ----------------------------------- */
+
+/* Set by layouts/_default/single.html. Tells the reader which of the three
+   shelves they landed on (settled decision record / unfinished note /
+   frozen diary), because the standard to hold the page to differs and a
+   search result drops them in with no context. Small and grey on purpose:
+   it is orientation, not a headline. */
+.taiki-metabar {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  gap: 0 0.65em;
+  margin: 0 0 1.25rem;
+}
+
+.taiki-metabar__shelf,
+.taiki-metabar__shelf:visited {
+  color: #5b6472;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.taiki-metabar__shelf:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.taiki-metabar__date,
+.taiki-metabar__lastmod {
+  color: #a8a196;
+}
+
+/* ---- Typographic detail --------------------------------------------- */
+
+/* Tabular figures everywhere a number is meant to line up or be scanned:
+   dates in lists and meta bars, and numbers inside tables. Proportional
+   digits make a column of dates look ragged. */
+.taiki-latest__date,
+.taiki-metabar__date,
+.taiki-metabar__lastmod,
+.taiki-prose th,
+.taiki-prose td {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Japanese headings only. Noto Sans JP sets its glyphs on a full em
+   square, so a large heading carries visible air on both sides of every
+   character and reads loose compared to the Latin cut of Newsreader at
+   the same size. Negative tracking closes that up; the larger the type,
+   the more it needs, hence the three steps. Scoped with :lang() so the
+   English pages - where Newsreader is already correctly fitted - are
+   untouched. */
+:lang(ja) .taiki-listpage__title,
+:lang(ja) .taiki-prose h1 {
+  letter-spacing: -0.035em;
+}
+
+:lang(ja) .taiki-prose h2 {
+  letter-spacing: -0.02em;
+}
+
+:lang(ja) .taiki-wordmark {
+  letter-spacing: -0.01em;
+}
+
+/* ---- "Not verified" marker ------------------------------------------- */
+
+/* Set by the `unsure` shortcode. Shares the blockquote's left rule so the
+   two read as the same family of aside, but tints warm rather than neutral
+   so a reader skimming can tell an open question from a quotation without
+   reading either. Deliberately NOT a warning box: an unverified note is
+   the normal state of a working note, not an error. */
+.taiki-unsure {
+  margin: 0 0 1.25rem;
+  padding: 0.6rem 0 0.6rem 1.1rem;
+  border-left: 3px solid #c9b79a;
+  color: #55524a;
+}
+
+.taiki-unsure__label {
+  color: #8a7a5e;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.3rem;
+  text-transform: uppercase;
+}
+
+/* The shortcode's body is markdownified, so it arrives as its own <p>.
+   Strip the trailing margin the prose rules give it, or the aside gains a
+   second gap at the bottom. */
+.taiki-unsure p:last-child {
+  margin-bottom: 0;
 }
