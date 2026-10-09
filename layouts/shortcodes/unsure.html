@@ -1,17 +1,21 @@
 {{- /* An inline "I have not verified this" marker.
 
-     Usage, inside any article or note:
+     Call it as a paired shortcode and put the uncertain claim inside:
+     open with the name `unsure`, close with `/unsure`.
 
-       {{</* unsure */>}}
-       Possibly the container's own DNS, but I have not reproduced it.
-       {{</* /unsure */>}}
+     NOTE for whoever edits this comment next: do NOT paste an escaped
+     shortcode example in here. The escape sequence contains the two
+     characters that close a Go template comment, so the comment ends
+     early and the build dies with "comment ends before closing
+     delimiter". That is exactly how this file broke on first push
+     (run 37875249595).
 
      This exists so that publishing an unverified claim is cheaper than
      either leaving it out or quietly asserting it. The label is fixed
      rather than free text: a reader scanning the page should be able to
      recognise the marker without reading it, and a fixed string is also
-     greppable (`rg 'unsure'` over content/ gives every open question on
-     the site).
+     greppable - `rg unsure` over content/ lists every open question on
+     the site.
 
      Label language follows the page's own `lang` front matter rather than
      a parameter, because this site separates languages by directory and a
