@@ -272,21 +272,31 @@ li[data-lang-content].is-active {
   margin: 2rem 0 0.5rem;
 }
 
-/* Leading opened from the global 1.6 to 2.0, and only inside prose.
-   Japanese sets without word spaces, so the gap between lines is the main
-   thing giving the eye a place to land; 1.6 was tuned for the homepage's
-   short English-first lines and read as a wall once full articles moved
-   in. 2.0 matches the measure used by kentarokuribayashi.com, whose body
-   text is the closest comparable (Japanese, similar size, plain CSS). */
+/* Leading inside prose only, opened from the global 1.6.
+
+   History, because this was adjusted twice in one day and the next person
+   to touch it should not repeat the loop:
+     1.6 - the original, tuned for the homepage's short lines.
+     2.0 - borrowed from kentarokuribayashi.com. Too open on a real
+           screen; the owner said so within the hour.
+     1.8 - current. Japanese sets without word spaces, so the line gap is
+           what gives the eye a place to land and some extra over 1.6 does
+           help a long article. 1.8 is the smallest step that still does
+           that.
+
+   The lesson from the 2.0 attempt, which also applied to the column width
+   reverted above: a measure copied from another site does not transfer on
+   its own, because it was tuned against that site's type size, typeface
+   and page width. Borrow WHAT to show, not the numbers. */
 .taiki-prose p,
 .taiki-prose ul,
 .taiki-prose ol {
-  line-height: 2;
+  line-height: 1.8;
   margin: 0 0 1.25rem;
 }
 
 .taiki-prose li {
-  line-height: 2;
+  line-height: 1.8;
   margin-bottom: 0.5rem;
 }
 
