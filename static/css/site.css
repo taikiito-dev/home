@@ -72,31 +72,38 @@ h1, h2, h3 {
   top: 8px;
 }
 
-/* Narrowed from 700px to keep lines under ~75 characters now that body
-   text is 18px instead of 16px (GOV.UK guidance: lines beyond ~75
-   characters get harder to read; the British Dyslexia Association
-   recommends 60-70). */
+/* 740px, chosen by the owner on 2026-10-09 by stepping through 660 / 700
+   / 740 / 780 / 860 on a real maximised browser window and picking one.
+
+   The earlier value was 660px, set when this was an English-first profile
+   page: it keeps English under ~75 characters per line, following GOV.UK
+   guidance. That reasoning stopped fitting once the site became mostly
+   Japanese long-form. Japanese reads best at roughly 35-45 characters per
+   line, and 660px at 18px gives only about 34 - at or below the floor,
+   which is why the page read as a narrow ribbon in a wide window.
+
+   At 740px: Japanese lands near 38 characters, English near 81. The
+   English lines run slightly past the old guidance, taken knowingly - 20
+   of the 22 articles are Japanese.
+
+   Note for anyone revisiting this: an attempt at 720px on the same day
+   was rejected, but it went in TOGETHER WITH a 2.0 line-height, and the
+   two compounded. Judge width and leading one at a time, on screen. */
 .taiki-page {
-  max-width: 660px;
+  max-width: 740px;
   margin: 0 auto;
   padding: 32px 20px 60px;
 }
 
-/* Article pages used to widen to 720px here, copying the article column
-   of kentarokuribayashi.com. REVERTED 2026-10-09 the same day it went up:
-   the owner read it on the live site and the lines read as too wide.
+/* `.taiki-page--article` (set by single.html) briefly carried a separate,
+   wider measure for article pages. It no longer does: the base width
+   above was raised to 740px for every page, so articles and the homepage
+   now share one column and a second value would only be a thing to keep
+   in sync.
 
-   Why the borrowed number did not transfer: that site sets 720px at 17px
-   with no serif, inside a 1440px page that has a sidebar to balance it.
-   Here the type is 18px Newsreader in a 660px page with nothing beside
-   it, so the same measure gives a longer line AND removes the margin that
-   was making the column feel like a column. The original 660px was chosen
-   against the ~75-character guidance, and that reasoning still holds.
-
-   Kept as an empty hook rather than deleted: single.html still applies
-   the class, and leaving the selector documented here is cheaper than
-   rediscovering why it was tried. Do not re-widen without looking at it
-   on a real screen first. */
+   The class is still emitted, deliberately, as a hook for the next time
+   article pages need something the homepage does not. Nothing is bound to
+   it today. */
 
 /* Header: plain text wordmark, no colored bar/box. */
 .taiki-header {
