@@ -82,19 +82,21 @@ h1, h2, h3 {
   padding: 32px 20px 60px;
 }
 
-/* Article pages only. 660px was set for 18px English lines at ~75
-   characters; Japanese at the same size fits roughly 36 characters per
-   line there, which is narrow enough that long articles turn into a very
-   tall thin ribbon. 720px is the measure kentarokuribayashi.com uses for
-   its article column.
+/* Article pages used to widen to 720px here, copying the article column
+   of kentarokuribayashi.com. REVERTED 2026-10-09 the same day it went up:
+   the owner read it on the live site and the lines read as too wide.
 
-   Tradeoff accepted knowingly: the ENGLISH articles now run to about 80
-   characters per line, slightly past the ~75 GOV.UK guidance that set
-   660px in the first place. The site is Japanese-first (20 articles vs
-   2), so the Japanese measure wins. Revisit if the English half grows. */
-.taiki-page--article {
-  max-width: 720px;
-}
+   Why the borrowed number did not transfer: that site sets 720px at 17px
+   with no serif, inside a 1440px page that has a sidebar to balance it.
+   Here the type is 18px Newsreader in a 660px page with nothing beside
+   it, so the same measure gives a longer line AND removes the margin that
+   was making the column feel like a column. The original 660px was chosen
+   against the ~75-character guidance, and that reasoning still holds.
+
+   Kept as an empty hook rather than deleted: single.html still applies
+   the class, and leaving the selector documented here is cheaper than
+   rediscovering why it was tried. Do not re-widen without looking at it
+   on a real screen first. */
 
 /* Header: plain text wordmark, no colored bar/box. */
 .taiki-header {
