@@ -483,8 +483,21 @@ li[data-lang-content].is-active {
   white-space: nowrap;
 }
 
+/* Separates the destinations block from the latest-articles block on the
+   homepage. Without it the two run together, because neither carries a
+   boxed or tinted background and their rows are styled identically. */
+.taiki-rule {
+  border: 0;
+  border-top: 1px solid #ddd8cc;
+  margin: 40px 0;
+}
+
+/* Was 4px, which put this link hard against whatever followed it - on the
+   homepage that was the next block's first heading, so the "all writing"
+   link read as a caption belonging to that heading rather than as the
+   tail of the list above. */
 .taiki-latest__more {
-  margin: 4px 0 0;
+  margin: 16px 0 0;
 }
 
 .taiki-latest__more a,
