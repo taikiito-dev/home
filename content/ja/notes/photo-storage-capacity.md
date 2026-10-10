@@ -16,10 +16,10 @@ tags: ["写真", "Immich", "VPS", "Backblaze B2", "rclone", "容量"]
 
 ## 前提
 
-- 写真は[Google PhotosからImmichに移した](/ja/writing/google-photos-to-immich/)状態（Immich = 自前サーバーで動かす写真管理ソフト）
-- サーバーは[自宅PCからVPSへ移した](/ja/writing/home-server-to-vps/)直後（VPS = 仮想専用サーバー。業者のデータセンターにある自分専用のLinuxマシンを借りる形）。Contaboの6vCPU / 12GB RAM / **SSD 200GB** のプランで月$9.00（2026年9月時点）
-- バックアップ先はBackblaze B2（安価なオブジェクトストレージ。2026年9月時点で1TBあたり月$6.95）。構成は[バックアップを「消されても戻せる」形にする](/ja/writing/backup-ransomware-resistant/)
-- 土台の考え方は[自分の「サーバー」を持つとはどういうことか](/ja/writing/self-hosting-basics/)
+- 写真は[Google PhotosからImmichに移した](/ja/notes/google-photos-to-immich/)状態（Immich = 自前サーバーで動かす写真管理ソフト）
+- サーバーは[自宅PCからVPSへ移した](/ja/notes/home-server-to-vps/)直後（VPS = 仮想専用サーバー。業者のデータセンターにある自分専用のLinuxマシンを借りる形）。Contaboの6vCPU / 12GB RAM / **SSD 200GB** のプランで月$9.00（2026年9月時点）
+- バックアップ先はBackblaze B2（安価なオブジェクトストレージ。2026年9月時点で1TBあたり月$6.95）。構成は[バックアップを「消されても戻せる」形にする](/ja/notes/backup-ransomware-resistant/)
+- 土台の考え方は[自分の「サーバー」を持つとはどういうことか](/ja/notes/self-hosting-basics/)
 
 ## まず現実を測った
 

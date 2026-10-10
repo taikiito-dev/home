@@ -17,7 +17,7 @@ Since September 2026 I have been moving the things I had left sitting on Google,
 
 Some of it turned out easier than I expected. Some of it cost me a whole day. I wanted to tell her about it, but the [diary](/archive/) I was writing at the time was mostly notes to myself and assumed technical background. It was not something I could hand over.
 
-So I rewrote the same experience in a form that needs **no prior knowledge** — and that someone who wants to do the same thing can use directly. That is why the [writing](/writing/) section exists.
+So I rewrote the same experience in a form that needs **no prior knowledge** — and that someone who wants to do the same thing can use directly. That is why the migration records under [Notes](/notes/) exist.
 
 ## What this site is, and is not
 
@@ -41,7 +41,8 @@ Host names in the articles are replaced with placeholders like `vault.example.co
 
 ## How the site is laid out
 
-- **[Writing](/writing/)** — the main thing here. One article per job: moving some specific thing off a large service and onto something I run. What I decided and why, then the steps. Not a diary — kept up to date as a reference to the current correct state. Most of it is in Japanese; two of the records are in English.
+- **[Writing](/writing/)** — finished decision records, written on the assumption that they will not be reworked after publication. Only a few pieces live here.
+- **[Notes](/notes/)** — the casual shelf, in Japanese. One record per job: moving some specific thing off a large service and onto something I run. What I decided and why, then the steps — edited as things change, since steps go stale.
 - **[Projects](/projects/)** — what I have built, and where the source lives.
 - **[Archive](/archive/)** — a dated dev diary I kept until the summer of 2026. I folded it because a dated post goes stale and never gets corrected. It is left here for the record; anything still current is in Writing.
 

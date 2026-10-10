@@ -1,13 +1,15 @@
 ---
 title: "Notes"
-standfirst: "Working notes. Things I looked up, things I got stuck on, things I have not settled yet."
-description: "Working notes taken while running a self-hosted server. Where something is unverified, it says so."
+standfirst: "The casual shelf: migration records and working notes, edited as things change."
+description: "Migration records and working notes from running a self-hosted server — photos, files, passwords, mail, calendars. Where something is unverified, it says so."
 lang: "en"
 altUrl: "/ja/notes/"
 altLabel: "日本語"
 ---
-The pages under [Writing](/writing/) get written once a decision has settled. This is the stage before that: notes taken while my hands were still on the keyboard, in date order.
+The pages under [Writing](/writing/) are written as finished pieces and left largely unedited after publication. This shelf is the opposite: migration records, steps and working notes, in date order, edited as things change.
 
-**These are not finished.** Half-finished research, things I have not reproduced yet, failures whose cause I still do not know — they go up with the uncertainty left in. Where I have not verified something, it says so on the spot. When I find out later that a note was wrong, I correct it and add the date rather than deleting it.
+**These are not frozen.** Steps go stale as software moves on, and half-finished research, things I have not reproduced yet, failures whose cause I still do not know — they go up with the uncertainty left in. Where I have not verified something, it says so on the spot. When I find out later that a note was wrong, I correct it and add the date rather than deleting it.
+
+This shelf is written [in Japanese](/ja/notes/).
 
 The bet is that an unresolved note can still be a useful lead for someone searching for the same problem.

@@ -8,7 +8,7 @@ lang: "ja"
 tags: ["カレンダー", "連絡先", "Radicale", "CalDAV", "CardDAV", "Nextcloud"]
 ---
 
-[前の記事](/ja/writing/icloud-google-to-nextcloud-contacts-calendar/)で、連絡先とカレンダーをiCloud・GoogleからNextcloudへ移した。それを今度はNextcloudから引き剥がして、Radicaleという「予定表と住所録しかできない」小さなサーバーへ移した記録。移行は予定236件・連絡先575件が失敗0件で完了し、今もMacとiPhoneから繋がっている。
+[前の記事](/ja/notes/icloud-google-to-nextcloud-contacts-calendar/)で、連絡先とカレンダーをiCloud・GoogleからNextcloudへ移した。それを今度はNextcloudから引き剥がして、Radicaleという「予定表と住所録しかできない」小さなサーバーへ移した記録。移行は予定236件・連絡先575件が失敗0件で完了し、今もMacとiPhoneから繋がっている。
 
 先に役割を書いておく。**コマンドと流し込みのスクリプトを書いたのはClaude（AnthropicのAIアシスタント）で、私は決める側をやった。** 作業の中身を考えなくていいぶん、「何を得て何を捨てるか」の見極めに時間を使えた。この移行は、まさにそこが全てだった。先に正直に書くと、**Nextcloudで困っていたことは何も無かった**。故障の修理ではなく、作りを良くするための工事だ。だから得たものと同じ分量で、失ったものを書く。このページも前半に判断、後半に手順という形にしてある。
 
@@ -103,8 +103,8 @@ REPORTは、カレンダーアプリが「この日からこの日までに何�
 
 ## 前提
 
-- 常時起動しているLinux環境とDocker(ソフトを1つずつ箱に入れて動かす仕組み)が使えること。土台は[自分の「サーバー」を持つとはどういうことか](/ja/writing/self-hosting-basics/)
-- すでにNextcloudの連絡先・カレンダーを使っている状態([前の記事](/ja/writing/icloud-google-to-nextcloud-contacts-calendar/))
+- 常時起動しているLinux環境とDocker(ソフトを1つずつ箱に入れて動かす仕組み)が使えること。土台は[自分の「サーバー」を持つとはどういうことか](/ja/notes/self-hosting-basics/)
+- すでにNextcloudの連絡先・カレンダーを使っている状態([前の記事](/ja/notes/icloud-google-to-nextcloud-contacts-calendar/))
 - CalDAV(予定表をやりとりするための標準的な通信規約)・CardDAV(住所録用の同じもの)の名前だけ知っていれば十分
 
 ## 立てて流し込む
@@ -152,7 +152,7 @@ AndroidとThunderbirdは今回つないでいないので手順を書かない�
 
 ## バックアップは単純になった
 
-データが素のファイルになったので、バックアップは**フォルダを同期するだけ**になった。既存の日次スクリプトに2行足して終わりで、初回送信は1,035ファイル・379KiBで32秒。ただし**消されても戻せる形にしておくことは、データが素のファイルになっても別途必要**で、そこは変わらない([バックアップを「消されても戻せる」形にする](/ja/writing/backup-ransomware-resistant/))。
+データが素のファイルになったので、バックアップは**フォルダを同期するだけ**になった。既存の日次スクリプトに2行足して終わりで、初回送信は1,035ファイル・379KiBで32秒。ただし**消されても戻せる形にしておくことは、データが素のファイルになっても別途必要**で、そこは変わらない([バックアップを「消されても戻せる」形にする](/ja/notes/backup-ransomware-resistant/))。
 
 ## 結果
 

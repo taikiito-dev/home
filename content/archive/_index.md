@@ -6,4 +6,4 @@ lang: "en"
 altUrl: "/ja/archive/"
 altLabel: "日本語"
 ---
-These were written as a time-stamped diary before the decision records took over. They are left here unchanged; anything still current lives in [Writing](/writing/).
+These were written as a time-stamped diary before the decision records took over. They are left here unchanged; anything still current lives under [Notes](/ja/notes/) and [Writing](/writing/).

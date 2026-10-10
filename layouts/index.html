@@ -81,8 +81,12 @@
              subdirectory it is in. That filter silently returned the English
              pages only and left the Japanese list empty. Address the two
              section pages directly instead. */ -}}
-      {{- $en := first 3 (site.GetPage "/writing").RegularPages.ByDate.Reverse }}
-      {{- $ja := first 3 (site.GetPage "/ja/writing").RegularPages.ByDate.Reverse }}
+      {{- /* Latest spans BOTH shelves (writing + notes) since 2026-10-10,
+             when most Japanese articles moved to /ja/notes/: a Latest fed
+             from /writing/ alone would freeze at two entries while new
+             notes kept appearing invisibly. */ -}}
+      {{- $en := first 3 ((union (site.GetPage "/writing").RegularPages (site.GetPage "/notes").RegularPages).ByDate.Reverse) }}
+      {{- $ja := first 3 ((union (site.GetPage "/ja/writing").RegularPages (site.GetPage "/ja/notes").RegularPages).ByDate.Reverse) }}
 
       <!-- Destinations come FIRST, before the latest-articles list.
 
@@ -106,8 +110,8 @@
           <li>
             <h3 data-lang-content="en"><a href="/writing/">Writing</a></h3>
             <h3 data-lang-content="ja"><a href="/ja/writing/">執筆</a></h3>
-            <p data-lang-content="en">Dated records of what I decided while moving my own data onto a server I pay for: what I was torn between, what I turned down, and how the calls look in hindsight. The commands sit below each decision, as steps.</p>
-            <p data-lang-content="ja">自分のデータを自分が払うサーバーへ移しながら決めたことの記録。迷ったこと、却下した案、後から見た当たり外れ。コマンドや設定値は、その下に手順としてまとめてある。</p>
+            <p data-lang-content="en">Finished decision records, written on the assumption that they will not be reworked later: what I was torn between, what I turned down, and how the calls look in hindsight.</p>
+            <p data-lang-content="ja">完成品として書いた判断の記録。何に迷い、どの案を却下し、後から見てどれが外れていたか。公開後は大きく書き換えない数本だけを置いている。</p>
           </li>
           {{- /* The Notes row belongs HERE, directly under Writing, and the
                  owner chose to link it from the homepage rather than leave
@@ -136,8 +140,8 @@
           <li>
             <h3 data-lang-content="en"><a href="/notes/">Notes</a></h3>
             <h3 data-lang-content="ja"><a href="/ja/notes/">Notes</a></h3>
-            <p data-lang-content="en">Working notes, newest first: things I looked up, things I got stuck on, things not settled yet. Unfinished on purpose, and marked where I have not verified something.</p>
-            <p data-lang-content="ja">書きかけの作業メモ。調べたこと、詰まったこと、まだ結論が出ていないこと。完成品ではなく、確かめていない箇所にはそう書いてある。</p>
+            <p data-lang-content="en">The casual shelf, newest first: migration records and working notes, edited as things change. Marked where something is unverified. Written in Japanese.</p>
+            <p data-lang-content="ja">気軽に書く棚。移行の記録と作業メモを日付順に。手順は古くなり得るので直しながら更新する。確かめていない箇所にはそう書いてある。</p>
           </li>
           {{- end }}
           <li>

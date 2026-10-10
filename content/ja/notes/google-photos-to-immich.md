@@ -304,10 +304,10 @@ rclone sync ~/immich/library "$B2_REMOTE/immich/library" \
 
 初回は決定5のとおり手動で、`--bwlimit`（転送速度の上限）を付けて実行し、完了を確認してから自動実行に組み込む。
 
-⚠️ **そして、このスクリプトが毎晩ちゃんと全ステップ走ったかを報告する形にしておくこと。** 自分はこれを後回しにして、46件取りこぼした。詳しくは[バックアップを「消されても戻せる」形にする](/ja/writing/backup-ransomware-resistant/)に書いた。
+⚠️ **そして、このスクリプトが毎晩ちゃんと全ステップ走ったかを報告する形にしておくこと。** 自分はこれを後回しにして、46件取りこぼした。詳しくは[バックアップを「消されても戻せる」形にする](/ja/notes/backup-ransomware-resistant/)に書いた。
 
 ---
 
-次は、同じ考え方でGoogle Driveのファイルを移した話。→ [ファイルをGoogle DriveからNextcloudに移す](/ja/writing/google-drive-to-nextcloud/)
+次は、同じ考え方でGoogle Driveのファイルを移した話。→ [ファイルをGoogle DriveからNextcloudに移す](/ja/notes/google-drive-to-nextcloud/)
 
 **更新履歴** — 2026-08-24: 初版 / 2026-09-12: 現状の進捗を追記 / 2026-09-13: 再現可能なレベルに手順を全面追記 / 2026-10-07: 構成を「判断」と「手順」に分け、コマンドをClaudeが書いたことを明記。46件の取りこぼしを後日談として追記

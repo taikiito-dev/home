@@ -66,7 +66,7 @@ tags: ["メモ", "Joplin", "iCloud Notes"]
 
 ## 前提
 
-すでにNextcloudが動いていることを前提にする。まだの場合は先に[ファイルをGoogle DriveからNextcloudに移す](/ja/writing/google-drive-to-nextcloud/)を読んでほしい。Joplin自体は自分でサーバーを用意する必要がなく、既存のNextcloudをファイル置き場として使うだけなので、新しいDockerコンテナを立てる作業は無い。
+すでにNextcloudが動いていることを前提にする。まだの場合は先に[ファイルをGoogle DriveからNextcloudに移す](/ja/notes/google-drive-to-nextcloud/)を読んでほしい。Joplin自体は自分でサーバーを用意する必要がなく、既存のNextcloudをファイル置き場として使うだけなので、新しいDockerコンテナを立てる作業は無い。
 
 ## Step 1: Joplinを選ぶ
 
@@ -76,7 +76,7 @@ tags: ["メモ", "Joplin", "iCloud Notes"]
 
 Nextcloudのブラウザ画面から、Files(ファイル)アプリで新しいフォルダ(例: `Joplin`)を作成する。
 
-次に、[前の記事](/ja/writing/icloud-google-to-nextcloud-contacts-calendar/)のStep 1と同じ要領で、Joplin専用のアプリパスワードを発行する。個人設定 → セキュリティ → 「新しいアプリパスワードを作成」で、名前を`joplin-sync`のように分かりやすくしておく。
+次に、[前の記事](/ja/notes/icloud-google-to-nextcloud-contacts-calendar/)のStep 1と同じ要領で、Joplin専用のアプリパスワードを発行する。個人設定 → セキュリティ → 「新しいアプリパスワードを作成」で、名前を`joplin-sync`のように分かりやすくしておく。
 
 ## Step 3: Joplinアプリ側でWebDAV同期を設定する
 
@@ -95,6 +95,6 @@ Mac・iPhoneの両方に公式Joplinアプリをインストールする。設�
 
 Joplinは新規メモの置き場として運用中。iCloud Notesの過去メモはアーカイブとしてそのまま残しているが、能動的に見返すことはほとんどない。
 
-次は、メールをGmailから自分のドメインに移した、一番苦労した話。→ [メールをGmailから自分のドメインに移す](/ja/writing/gmail-to-own-domain/)
+次は、メールをGmailから自分のドメインに移した、一番苦労した話。→ [メールをGmailから自分のドメインに移す](/ja/notes/gmail-to-own-domain/)
 
 **更新履歴** — 2026-09-12: 初版 / 2026-09-13: NextcloudのWebDAV同期の実際の設定手順(URL・アプリパスワード)を追記し、再現可能なレベルに書き直し / 2026-10-07: 構成を「判断」と「手順」に分け、設定をClaudeが書いたことを明記 / 2026-10-08: 動機を冒頭に出し、帰属を点検

@@ -88,10 +88,10 @@ tags: ["パスワード", "Vaultwarden", "1Password"]
 
 ## 前提
 
-以下がすでに用意できていることを前提にする。まだの場合は先に[自分の「サーバー」を持つとはどういうことか](/ja/writing/self-hosting-basics/)を読んでほしい。
+以下がすでに用意できていることを前提にする。まだの場合は先に[自分の「サーバー」を持つとはどういうことか](/ja/notes/self-hosting-basics/)を読んでほしい。
 
 - 常時起動しているLinux環境(Docker Engineが使える状態)
-- 自分名義のドメイン、Cloudflare Tunnelが動いている状態(導入手順は[前々回の記事](/ja/writing/google-drive-to-nextcloud/)のStep 3と同じ)
+- 自分名義のドメイン、Cloudflare Tunnelが動いている状態(導入手順は[前々回の記事](/ja/notes/google-drive-to-nextcloud/)のStep 3と同じ)
 
 ## Step 1: docker-compose(複数のコンテナをまとめて定義・起動するDockerの仕組み)でVaultwardenを構築する
 
@@ -135,7 +135,7 @@ docker compose ps
 
 ## Step 2: Cloudflare Tunnelで公開する
 
-Nextcloudの時([前の記事](/ja/writing/google-drive-to-nextcloud/))と同じ要領で、`/etc/cloudflared/config.yml`にVaultwarden用の行を追記する。
+Nextcloudの時([前の記事](/ja/notes/google-drive-to-nextcloud/))と同じ要領で、`/etc/cloudflared/config.yml`にVaultwarden用の行を追記する。
 
 ```yaml
 ingress:
@@ -177,12 +177,12 @@ sudo rclone --config /home/<user>/.config/rclone/rclone.conf sync \
 
 対処は、この設定ファイルの中身をVaultwarden自身にSecure Note(パスワード以外のメモも安全に保存できる機能)として複製保存しておくことだった。Vaultwardenはクライアントアプリに一度ログインしておけばオフラインキャッシュが残るため、サーバーが全損してもスマホから鍵を取り出せる。何もしなければ鍵はサーバー本体にだけ残り、全損時にバックアップと鍵を同時に失う。**バックアップの有無だけを見ていると、この一段上の依存関係を見落とす。**
 
-このバックアップ自体を「乗っ取られても消されない」形にする話は[バックアップを「消されても戻せる」形にする](/ja/writing/backup-ransomware-resistant/)に別途書いた。
+このバックアップ自体を「乗っ取られても消されない」形にする話は[バックアップを「消されても戻せる」形にする](/ja/notes/backup-ransomware-resistant/)に別途書いた。
 
 ## 結果
 
 パスワード15件・パスキー15件、全て移行完了。1Passwordは解約し、年間の固定費を1本減らせた。これが元々の目的だった。パスワードの移行自体は簡単だが、パスキーは仕組み上コピーできないので、サイトごとの再登録作業を見込んでおくとよい。
 
-次は、連絡先とカレンダーをNextcloudに集約した話。→ [連絡先とカレンダーをiCloud・GoogleからNextcloudに移す](/ja/writing/icloud-google-to-nextcloud-contacts-calendar/)
+次は、連絡先とカレンダーをNextcloudに集約した話。→ [連絡先とカレンダーをiCloud・GoogleからNextcloudに移す](/ja/notes/icloud-google-to-nextcloud-contacts-calendar/)
 
 **更新履歴** — 2026-09-12: 初版 / 2026-09-13: docker-compose設定・Cloudflare Tunnel公開手順・バックアップコマンドを追記し、再現可能なレベルに書き直し / 2026-10-07: 構成を「判断」と「手順」に分け、コマンドをClaudeが書いたことを明記 / 2026-10-08: 動機を冒頭に出し、帰属を点検

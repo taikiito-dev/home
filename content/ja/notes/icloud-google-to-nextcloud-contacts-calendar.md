@@ -8,7 +8,7 @@ lang: "ja"
 tags: ["連絡先", "カレンダー", "Nextcloud", "CalDAV", "CardDAV"]
 ---
 
-連絡先とカレンダーを、Nextcloudの標準機能(Contacts・Calendar)に一本化した記録。すでにファイル([前の記事](/ja/writing/google-drive-to-nextcloud/))で使っていたNextcloudに機能を足すだけなので、新しいサーバーを立てる作業は無かった。
+連絡先とカレンダーを、Nextcloudの標準機能(Contacts・Calendar)に一本化した記録。すでにファイル([前の記事](/ja/notes/google-drive-to-nextcloud/))で使っていたNextcloudに機能を足すだけなので、新しいサーバーを立てる作業は無かった。
 
 先に役割を書いておく。**コマンドを書いたのはClaude(AnthropicのAIアシスタント)で、私は決める側をやった。** 手順を考えなくていいぶん、「どのデータを移し、どれを残すか」だけをじっくり考えられた。だからこのページも、前半に判断、後半に実際の手順という形にしてある。
 
@@ -16,7 +16,7 @@ tags: ["連絡先", "カレンダー", "Nextcloud", "CalDAV", "CardDAV"]
 
 ## 前提
 
-すでにNextcloudが動いていることを前提にする。まだの場合は先に[ファイルをGoogle DriveからNextcloudに移す](/ja/writing/google-drive-to-nextcloud/)を読んでほしい。
+すでにNextcloudが動いていることを前提にする。まだの場合は先に[ファイルをGoogle DriveからNextcloudに移す](/ja/notes/google-drive-to-nextcloud/)を読んでほしい。
 
 ## 何をしたかったか
 
@@ -52,7 +52,7 @@ tags: ["連絡先", "カレンダー", "Nextcloud", "CalDAV", "CardDAV"]
 
 **却下した案** 共有カレンダーも含めて全部移す。
 
-**なぜ却下したか** 相手がGoogle前提で使っているためだ。[ファイル移行](/ja/writing/google-drive-to-nextcloud/)の時の「**移す理由が移さない理由に勝つものだけ移す**」という基準を、ここでも踏襲した形だ。
+**なぜ却下したか** 相手がGoogle前提で使っているためだ。[ファイル移行](/ja/notes/google-drive-to-nextcloud/)の時の「**移す理由が移さない理由に勝つものだけ移す**」という基準を、ここでも踏襲した形だ。
 
 **残った教訓** 自分だけのデータと、相手のいるデータは同じ基準では動かせない。移さない判断も移行の一部だ。
 
@@ -139,6 +139,6 @@ curl -u "admin:<アプリパスワード>" \
 
 ---
 
-次は、メモをJoplinに移そうとして、結局全部は移さなかった話。→ [メモをiCloud NotesからJoplinに移す](/ja/writing/icloud-notes-to-joplin/)
+次は、メモをJoplinに移そうとして、結局全部は移さなかった話。→ [メモをiCloud NotesからJoplinに移す](/ja/notes/icloud-notes-to-joplin/)
 
 **更新履歴** — 2026-09-12: 初版 / 2026-09-13: アプリパスワードの発行手順・実際のcurl PUTコマンドを追記し、再現可能なレベルに書き直し / 2026-10-07: 構成を「判断」と「手順」に分け、コマンドをClaudeが書いたことを明記

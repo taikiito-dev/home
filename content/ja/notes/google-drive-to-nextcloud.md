@@ -12,7 +12,7 @@ tags: ["ファイル", "Nextcloud", "Google Drive"]
 
 **この記事でやること** — Google Driveに置きっぱなしだった`archive`フォルダ(契約書や身分証のコピーなど、実質100〜150MB)を、自前サーバーのNextcloudへ移す。共有フォルダ2つは移さずGoogleに残した。手順は[ページ後半](#手順)にまとめた。
 
-このサイトの他の記事は、たいてい何か困ったことが起きてから動いている。[Googleとの紐付けを外した話](/ja/writing/google-account-unlinking/)はクラウドの請求額から始まっているし、[写真サーバーの容量の話](/ja/writing/photo-storage-capacity/)は空き容量が3年もたないと測れたから始まった。この記事だけは違う。**困っていないのに手を動かした記録**だ。
+このサイトの他の記事は、たいてい何か困ったことが起きてから動いている。[Googleとの紐付けを外した話](/ja/notes/google-account-unlinking/)はクラウドの請求額から始まっているし、[写真サーバーの容量の話](/ja/notes/photo-storage-capacity/)は空き容量が3年もたないと測れたから始まった。この記事だけは違う。**困っていないのに手を動かした記録**だ。
 
 だから読みどころもそこになる。困っていない移行は、途中で変なものを見つけても、きれいに終わらせる動機がない。実際この作業では**Googleのストレージ表示が実データの90倍を指しているという矛盾**を見つけたが、それは今も未解決のまま放置してある。困っていないから、放置できてしまう。
 
@@ -20,7 +20,7 @@ tags: ["ファイル", "Nextcloud", "Google Drive"]
 
 ## 何を移したか
 
-対象はGoogle Driveに置きっぱなしになっていた`archive`フォルダで、契約書や身分証のコピーなどが入っている。量は実質100〜150MB程度。写真の移行([前の記事](/ja/writing/google-photos-to-immich/))が59,000枚・100GB超だったのに対して、桁が3つ違う。
+対象はGoogle Driveに置きっぱなしになっていた`archive`フォルダで、契約書や身分証のコピーなどが入っている。量は実質100〜150MB程度。写真の移行([前の記事](/ja/notes/google-photos-to-immich/))が59,000枚・100GB超だったのに対して、桁が3つ違う。
 
 ---
 
@@ -75,15 +75,15 @@ Google Driveの代わりになる自前ホスト型のソフトは複数ある�
 | Syncthing | サーバーを介さず端末同士が直接同期 | 管理はシンプルだが「どこからでもブラウザで見る」用途を想定していない |
 | Filestash | 既存のストレージにWeb UIを被せる | 土台のストレージが既にある前提。今回は土台から用意する必要があった |
 
-選んだのはNextcloud。この後[連絡先・カレンダーも同じNextcloudに移す](/ja/writing/icloud-google-to-nextcloud-contacts-calendar/)ことになったので、アプリを足せる構成は結果として効いた。
+選んだのはNextcloud。この後[連絡先・カレンダーも同じNextcloudに移す](/ja/notes/icloud-google-to-nextcloud-contacts-calendar/)ことになったので、アプリを足せる構成は結果として効いた。
 
 ## 前提
 
-以下がすでに用意できていることを前提にする。まだの場合は先に[自分の「サーバー」を持つとはどういうことか](/ja/writing/self-hosting-basics/)を読んでほしい。
+以下がすでに用意できていることを前提にする。まだの場合は先に[自分の「サーバー」を持つとはどういうことか](/ja/notes/self-hosting-basics/)を読んでほしい。
 
 - 常時起動しているLinux環境(Docker Engineが使える状態)
 - 自分名義のドメイン、およびCloudflare(無料プランで可)でそのドメインを管理していること
-- Cloudflare Tunnel(`cloudflared`というソフトを使い、ルーターの設定を一切いじらずにサーバーを安全にインターネット公開する仕組み)がすでに動いている状態。導入手順は[自分の「サーバー」を持つとはどういうことか](/ja/writing/self-hosting-basics/)を参照
+- Cloudflare Tunnel(`cloudflared`というソフトを使い、ルーターの設定を一切いじらずにサーバーを安全にインターネット公開する仕組み)がすでに動いている状態。導入手順は[自分の「サーバー」を持つとはどういうことか](/ja/notes/self-hosting-basics/)を参照
 
 ## Step 1: docker-composeでNextcloudを構築する
 
@@ -187,7 +187,7 @@ sudo rclone --config /home/<user>/.config/rclone/rclone.conf sync \
   ~/nextcloud/data "$B2_REMOTE/nextcloud/data"
 ```
 
-これを日次のcron(定期実行の仕組み)に登録しておけば、毎晩自動でバックアップが取られる。バックアップの構成そのものは[バックアップを「消されても戻せる」形にする](/ja/writing/backup-ransomware-resistant/)に分けて書いた。
+これを日次のcron(定期実行の仕組み)に登録しておけば、毎晩自動でバックアップが取られる。バックアップの構成そのものは[バックアップを「消されても戻せる」形にする](/ja/notes/backup-ransomware-resistant/)に分けて書いた。
 
 ---
 
@@ -197,6 +197,6 @@ sudo rclone --config /home/<user>/.config/rclone/rclone.conf sync \
 
 それでも移したこと自体は無駄になっていない。この後、同じNextcloudに連絡先とカレンダーを集約することになり、土台としてそのまま使えた。事件がなくても先に器を作っておくと、次に事件が起きたときに置き場所を探さなくて済む。そのくらいの効用はあった。
 
-次は、同じNextcloudに連絡先とカレンダーも集約した話。→ [連絡先とカレンダーをiCloud・GoogleからNextcloudに移す](/ja/writing/icloud-google-to-nextcloud-contacts-calendar/)
+次は、同じNextcloudに連絡先とカレンダーも集約した話。→ [連絡先とカレンダーをiCloud・GoogleからNextcloudに移す](/ja/notes/icloud-google-to-nextcloud-contacts-calendar/)
 
 **更新履歴** — 2026-09-12: 初版 / 2026-09-13: docker-compose設定・Cloudflare Tunnel公開手順・バックアップコマンドを追記し、再現可能なレベルに書き直し / 2026-10-07: 構成を「判断」と「手順」に分け、コマンドをClaudeが書いたことを明記 / 2026-10-07: 冒頭を「引き金になった事件がない移行」として書き直し、製品選定を手順側へ移動

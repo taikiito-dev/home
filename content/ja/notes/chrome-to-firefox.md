@@ -28,7 +28,7 @@ tags: ["Firefox", "Chrome", "ブラウザ", "広告ブロック"]
 移行作業自体はあっさり終わった。
 
 - Firefoxの**Chromeからのインポート機能**(標準搭載)で、ブックマーク・履歴・保存されたパスワードをまとめて持ってきた。1件ずつ手作業で移す、ということはしていない。
-- パスワードは元々、自前ホストの**Vaultwarden**([パスワードを1PasswordからVaultwardenに移す](/ja/writing/1password-to-vaultwarden/)を参照)に一本化済みだったので、ブラウザ側の「保存されたパスワード」機能自体をほとんど使っていない。Bitwarden公式の拡張機能をFirefoxに入れて、そこからVaultwardenに繋いでいるだけ。
+- パスワードは元々、自前ホストの**Vaultwarden**([パスワードを1PasswordからVaultwardenに移す](/ja/notes/1password-to-vaultwarden/)を参照)に一本化済みだったので、ブラウザ側の「保存されたパスワード」機能自体をほとんど使っていない。Bitwarden公式の拡張機能をFirefoxに入れて、そこからVaultwardenに繋いでいるだけ。
 
 ## 入れた拡張機能
 
