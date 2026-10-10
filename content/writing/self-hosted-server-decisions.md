@@ -1,26 +1,26 @@
 ---
-title: "Running My Own Server: Fourteen Months of Decisions"
+title: "Running My Own Server: One Month of Decisions"
 date: 2026-10-07
-lastmod: 2026-10-08
+lastmod: 2026-10-10
 weight: 16
-description: "A non-engineer's record of moving photos, files, passwords, calendars and mail onto one rented server and running it for fourteen months: five dated decisions, the options turned down, which calls look right in hindsight, and how to stand the same setup up from scratch."
+description: "A non-engineer's record of moving photos, files, passwords, calendars and mail onto one rented server and running it for one month: five dated decisions, the options turned down, which calls look right in hindsight, and how to stand the same setup up from scratch."
 lang: "en"
 altUrl: "/ja/writing/self-hosted-server-decisions/"
 altLabel: "日本語"
 tags: ["decision record", "self-hosting", "VPS", "backup", "operations"]
 ---
 
-I am not a software engineer. I negotiate crude oil contracts for a living and I have never held a job that involved writing code.
+I am not a software engineer. I negotiate crude oil contracts for a living and I have never held a job that involved writing code. **A month ago I had nothing to do with software at all** — no server of my own, no command line, none of it.
 
-**What this covers** — Putting photos, files, passwords, calendars and the mail for a domain I own onto one rented server, and keeping it running for fourteen months. Five dated decisions, and the options I turned down. The implementation notes are in the [second half](#implementation).
+**What this covers** — Putting photos, files, passwords, calendars and the mail for a domain I own onto one rented server, and keeping it running for one month. Five dated decisions, and the options I turned down. The implementation notes are in the [second half](#implementation).
 
-In 2025 I started moving what I had been keeping on large cloud services onto a single server I pay a monthly fee for. Photos, files, passwords, calendars, and eventually mail.
+In September 2026 I started moving what I had been keeping on large cloud services onto a single server I pay a monthly fee for. Photos, files, passwords, calendars, and eventually mail.
 
 The reason was simple: **I did not like that the terms of custody could change at the custodian's convenience.** Price rises, feature removals, policy changes, account suspensions. None of them are things I can stop. At some point it stopped sitting well with me that everything of the irreplaceable kind — photographs going back to childhood, years of correspondence — was stacked on top of things I could not stop.
 
-Fourteen months later, that server is still running. Two users. It has not been out of my hands for a day.
+One month later, that server is still running. Two users. It has not been out of my hands for a day.
 
-This page is a record of **what I decided** over those fourteen months: what I was torn between, which option I took, which ones I turned down, and whether the call looks right or wrong from here. With dates. Decisions in the first half, implementation in the second: **what I would do, and in what order, to stand this up from scratch** is written out in the [second half](#implementation).
+This page is a record of **what I decided** over that month: what I was torn between, which option I took, which ones I turned down, and whether the call looks right or wrong from here. With dates. Decisions in the first half, implementation in the second: **what I would do, and in what order, to stand this up from scratch** is written out in the [second half](#implementation).
 
 ## What is on it
 
@@ -36,7 +36,7 @@ Two users. One is me; the other is simply a user, and not an engineer either. So
 
 Now the part worth being explicit about. Of everything listed above, **I have typed almost none of the commands.** I did not write the configuration files either. Claude — Anthropic's AI assistant — did that. I decided.
 
-This was not a workaround for lack of time. It is the split that produces the most, because not holding the implementation means **I can spend all of my attention on the decisions.** And after fourteen months, what in those decisions was actually doing the work narrowed to exactly one thing.
+This was not a workaround for lack of time. It is the split that produces the most, because not holding the implementation means **I can spend all of my attention on the decisions.** And after one month, what in those decisions was actually doing the work narrowed to exactly one thing.
 
 **Doubting the all-clear.** That is it.
 
@@ -180,13 +180,13 @@ The checks I have put in since are an attempt to convert that luck into procedur
 
 ---
 
-*Fourteen months, one server, two users. I have not typed it. I have decided it.*
+*One month, one server, two users. I have not typed it. I have decided it.*
 
 # Implementation
 
 Everything below was written by Claude (Anthropic's AI assistant) and verified by running it on my own machine. It is kept here for two reasons. **(1) It shows the shape and the length of the work before you start. (2) It is material someone wanting to do the same thing can hand straight to their own AI.**
 
-This is not the fourteen months in chronological order. It is **what I would do, and in what order, to stand up today's setup from scratch.** The five records above are a log of where in this order something bit me. The commands worked in September and October 2026, so check each tool's current syntax against its official documentation.
+This is not that month in chronological order. It is **what I would do, and in what order, to stand up today's setup from scratch.** The five records above are a log of where in this order something bit me. The commands worked in September and October 2026, so check each tool's current syntax against its official documentation.
 
 ## The environment this assumes
 
@@ -206,7 +206,7 @@ This is not the fourteen months in chronological order. It is **what I would do,
 
 **I skipped the annual-term discount.** Being unable to walk away quickly if the provider disappoints defeats the purpose.
 
-**Own the domain yourself and leave mail delivery to a provider.** This is the single highest-return thing in fourteen months: because the address is mine, I can change providers without telling anyone my address changed. Why I did not self-host delivery is in Decision 2.
+**Own the domain yourself and leave mail delivery to a provider.** This is the single highest-return thing of that month: because the address is mine, I can change providers without telling anyone my address changed. Why I did not self-host delivery is in Decision 2.
 
 ## Step 2: Publish without opening any inbound ports
 
