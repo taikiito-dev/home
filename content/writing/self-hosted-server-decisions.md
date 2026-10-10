@@ -18,9 +18,9 @@ In September 2026 I started moving what I had been keeping on large cloud servic
 
 The reason was simple: **I did not like that the terms of custody could change at the custodian's convenience.** Price rises, feature removals, policy changes, account suspensions. None of them are things I can stop. At some point it stopped sitting well with me that everything of the irreplaceable kind — photographs going back to childhood, years of correspondence — was stacked on top of things I could not stop.
 
-One month later, that server is still running. Two users. It has not been out of my hands for a day.
+That server has been running since September 2026. Two users. It has not been out of my hands for a day.
 
-This page is a record of **what I decided** over that month: what I was torn between, which option I took, which ones I turned down, and whether the call looks right or wrong from here. With dates. Decisions in the first half, implementation in the second: **what I would do, and in what order, to stand this up from scratch** is written out in the [second half](#implementation).
+This page is a record of **what I decided** over the first month: what I was torn between, which option I took, which ones I turned down, and whether the call looks right or wrong from here. With dates. Decisions in the first half, implementation in the second: **what I would do, and in what order, to stand this up from scratch** is written out in the [second half](#implementation).
 
 ## What is on it
 
@@ -36,7 +36,7 @@ Two users. One is me; the other is simply a user, and not an engineer either. So
 
 Now the part worth being explicit about. Of everything listed above, **I have typed almost none of the commands.** I did not write the configuration files either. Claude — Anthropic's AI assistant — did that. I decided.
 
-This was not a workaround for lack of time. It is the split that produces the most, because not holding the implementation means **I can spend all of my attention on the decisions.** And after one month, what in those decisions was actually doing the work narrowed to exactly one thing.
+This was not a workaround for lack of time. It is the split that produces the most, because not holding the implementation means **I can spend all of my attention on the decisions.** And by the end of the first month, what in those decisions was actually doing the work had narrowed to exactly one thing.
 
 **Doubting the all-clear.** That is it.
 
@@ -180,7 +180,7 @@ The checks I have put in since are an attempt to convert that luck into procedur
 
 ---
 
-*One month, one server, two users. I have not typed it. I have decided it.*
+*The first month, one server, two users. I have not typed it. I have decided it.*
 
 # Implementation
 
