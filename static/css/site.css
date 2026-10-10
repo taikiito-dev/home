@@ -637,3 +637,44 @@ li[data-lang-content].is-active {
 .taiki-unsure p:last-child {
   margin-bottom: 0;
 }
+
+/* ---- Japanese type runs one step smaller (chosen 2026-10-10) ----
+
+   At equal px, Noto Sans JP reads a full step larger than Newsreader:
+   kana/kanji fill the em square while Newsreader's lowercase sits well
+   inside it. The owner compared 18/17/16px side by side on real copy
+   and picked 17px (ratio 17/18 = 94.44%).
+
+   Article and list pages carry <html lang="ja">, so one root-level
+   percentage scales every rem-based size on the page together (body,
+   headings, meta) and keeps their proportions intact. The homepage
+   mixes both languages in one document (html lang="en" with
+   data-lang-content spans), so the same ratio is applied per element
+   there. Column widths are px and unaffected. */
+
+html[lang="ja"] {
+  font-size: 94.4444%;
+}
+
+.taiki-hero__lede[data-lang-content="ja"] {
+  font-size: 1.1333rem;
+}
+
+.taiki-list h3[data-lang-content="ja"] {
+  font-size: 1.0389rem;
+}
+
+.taiki-list p[data-lang-content="ja"] {
+  font-size: 1.0625rem;
+}
+
+/* The Latest list on the homepage switches per language at the section
+   level; its JP article titles and the shelf links below them carry no
+   data-lang-content of their own. */
+section[data-lang-content="ja"] .taiki-list h3 {
+  font-size: 1.0389rem;
+}
+
+section[data-lang-content="ja"] .taiki-latest__more {
+  font-size: 1.0625rem;
+}
