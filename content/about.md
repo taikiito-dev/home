@@ -13,7 +13,7 @@ altLabel: "日本語"
 
 It started from wanting to explain what I had been doing in words my wife could follow.
 
-For about a year I have been moving the things I had left sitting on Google, Apple and other large services — photos, passwords, files, mail, contacts — onto hardware I pay for. Google Photos to Immich. Google Drive to a Nextcloud of my own. A commercial password manager to Vaultwarden.
+For about a month I have been moving the things I had left sitting on Google, Apple and other large services — photos, passwords, files, mail, contacts — onto hardware I pay for. Google Photos to Immich. Google Drive to a Nextcloud of my own. A commercial password manager to Vaultwarden.
 
 Some of it turned out easier than I expected. Some of it cost me a whole day. I wanted to tell her about it, but the [diary](/archive/) I was writing at the time was mostly notes to myself and assumed technical background. It was not something I could hand over.
 
@@ -35,7 +35,7 @@ You, reading this, probably have access to Claude or ChatGPT too. So the steps a
 
 From October 2026 on, each article is built in two halves: **decisions** on top (what I settled on, what I turned down, how it looks in hindsight), and **implementation** below (written by Claude, run on my own machines, confirmed by me). The order matters, because **the decisions are the part you need first.**
 
-The split feels good to work in. Not having to compose the steps means I can spend the attention on what is worth protecting. **Being able to delegate the implementation is what leaves the human side free to concentrate on judgement.** What I was doing all year was, probably, practice at that. And anyone can start practising.
+The split feels good to work in. Not having to compose the steps means I can spend the attention on what is worth protecting. **Being able to delegate the implementation is what leaves the human side free to concentrate on judgement.** What I was doing over that month was, probably, practice at that. And anyone can start practising.
 
 Host names in the articles are replaced with placeholders like `vault.example.com`. Readers have to substitute their own domain, but writing down which address runs what amounts to publishing a floor plan of my own setup, so I stopped. I used to leave them in, thinking a concrete example would be more useful. I changed my mind.
 

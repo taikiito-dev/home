@@ -92,11 +92,11 @@ So far nothing else has crossed that line.
 
 **Date.** August–September 2026, several times
 
-**What I was torn between.** The nightly backup had been reporting success for months. No alerts. Was that good enough?
+**What I was torn between.** The nightly backup had been reporting success for weeks. No alerts. Was that good enough?
 
 **What I chose.** **Count it myself.** During a server migration I compared photo counts between the old and new machines by hand.
 
-**What came out.** **Forty-six files existed only on the machine I was about to decommission.** The backup script had been stopping at one step partway through, and everything after that step had not run for months. Silently. "Success" had only ever meant "it did not break in a way I would notice."
+**What came out.** **Forty-six files existed only on the machine I was about to decommission.** The backup script had been stopping at one step partway through, and everything after that step had not run for weeks. Silently. "Success" had only ever meant "it did not break in a way I would notice."
 
 **Right or wrong in hindsight.** **Right — and I only just made it.** If I had not counted, those forty-six were gone. My reason for counting was not even principled: I was mid-migration and both machines happened to be in front of me.
 
@@ -104,7 +104,7 @@ So far nothing else has crossed that line.
 
 - **A mail client migration.** Reported complete. It was not complete.
 - **A mail tooling integration.** Reported solved three times. Not solved, three times.
-- **A 53,000-message mail migration.** Source and destination counts were "roughly equal", and I nearly called it done. **Six weeks of mail had not transferred at all.** The gap happened to sit just inside my personal tolerance for "roughly". I recovered 7,536 messages only because an export I had made months earlier for an unrelated reason was still sitting in a trash folder. **That is not a restore procedure. That is luck.**
+- **A 53,000-message mail migration.** Source and destination counts were "roughly equal", and I nearly called it done. **Six weeks of mail had not transferred at all.** The gap happened to sit just inside my personal tolerance for "roughly". I recovered 7,536 messages only because an export I had made earlier in the migration for an unrelated reason was still sitting in a trash folder. **That is not a restore procedure. That is luck.**
 
 **What stuck.** Three things.
 
