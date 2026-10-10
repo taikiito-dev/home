@@ -2,7 +2,7 @@
 title: "UIを好みで決めない"
 date: 2026-10-07
 lastmod: 2026-10-10
-weight: 18
+weight: 17
 description: "2人で使うチャット＋カレンダーのPWAの見た目を、非エンジニアがClaudeに実装させて百数十回直した記録。好みではなく実測で決めるために、既読の印を全廃した判断・速さのために装飾を削った判断・入口を一度完全に外した判断を日付つきで残し、寸法と動きの作法を後半にまとめた。"
 lang: "ja"
 altUrl: "/writing/ui-decisions-by-measurement/"

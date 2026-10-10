@@ -2,7 +2,7 @@
 title: "Taste Is Not a Reason"
 date: 2026-10-07
 lastmod: 2026-10-10
-weight: 18
+weight: 17
 description: "A non-engineer's record of adjusting a two-person chat-and-calendar PWA well over a hundred times, with Claude doing the implementation: five dated decisions settled by measurement rather than preference — retiring every read receipt, cutting ornament for speed, removing the navigation outright — plus the dimensions and motion rules in the second half."
 lang: "en"
 altUrl: "/ja/writing/ui-decisions-by-measurement/"

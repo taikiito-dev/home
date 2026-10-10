@@ -2,10 +2,9 @@
 title: "自前サーバーを一から立てる — 10のステップ"
 date: 2026-10-08
 lastmod: 2026-10-11
-weight: 17
 description: "写真・ファイル・パスワード・予定表・メールを借りたサーバー1台に載せるまでの10ステップ。外向きのポートを一切開けずに公開する、サーバー自身が履歴を壊せないように鍵を絞る、監視をサーバーの外に置く、成功の主張を外から検証できる形にする。Claudeが書き、実機で確かめた。日付つきの記録であって、保守し続ける手順書ではない。"
 lang: "ja"
-altUrl: "/writing/self-hosted-server-setup/"
+altUrl: "/notes/self-hosted-server-setup/"
 altLabel: "English"
 tags: ["セルフホスティング", "VPS", "バックアップ", "運用", "Claude"]
 ---
