@@ -1,8 +1,8 @@
 ---
 title: "About"
 date: 2026-09-12
-lastmod: 2026-10-08
-standfirst: "What this site is, what it deliberately leaves out, and the one thing worth stating up front: I did not type the commands."
+lastmod: 2026-10-10
+standfirst: "What this site is, what it deliberately leaves out, and how the work is split: I decide what gets built, Claude writes the commands."
 description: "About taikiito.com — why a non-engineer moved his family's photos, files, passwords and mail off large cloud services onto one server, and how the writing here is split between decisions and implementation."
 lang: "en"
 altUrl: "/ja/about/"
@@ -13,7 +13,7 @@ altLabel: "日本語"
 
 It started from wanting to explain what I had been doing in words my wife could follow.
 
-For about a month I have been moving the things I had left sitting on Google, Apple and other large services — photos, passwords, files, mail, contacts — onto hardware I pay for. Google Photos to Immich. Google Drive to a Nextcloud of my own. A commercial password manager to Vaultwarden.
+Since September 2026 I have been moving the things I had left sitting on Google, Apple and other large services — photos, passwords, files, mail, contacts — onto hardware I pay for. Google Photos to Immich. Google Drive to a Nextcloud of my own. A commercial password manager to Vaultwarden.
 
 Some of it turned out easier than I expected. Some of it cost me a whole day. I wanted to tell her about it, but the [diary](/archive/) I was writing at the time was mostly notes to myself and assumed technical background. It was not something I could hand over.
 

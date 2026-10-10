@@ -10,7 +10,7 @@ altLabel: "日本語"
 tags: ["decision record", "self-hosting", "VPS", "backup", "operations"]
 ---
 
-I am not a software engineer. I negotiate crude oil contracts for a living and I have never held a job that involved writing code. **Until September 2026 I had nothing to do with software at all** — no server of my own, no command line, none of it.
+I negotiate crude oil contracts for a living. I don't write code — I decide what to build and why, and Claude Code writes it. **Until September 2026 I had nothing to do with software at all** — no server of my own, no command line, none of it.
 
 **What this covers** — Putting photos, files, passwords, calendars and the mail for a domain I own onto one rented server, and keeping it running since September 2026. Five dated decisions, and the options I turned down. The implementation notes are in the [second half](#implementation).
 

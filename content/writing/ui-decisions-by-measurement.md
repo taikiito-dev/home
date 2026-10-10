@@ -1,7 +1,7 @@
 ---
 title: "Taste Is Not a Reason"
 date: 2026-10-07
-lastmod: 2026-10-08
+lastmod: 2026-10-10
 weight: 17
 description: "A non-engineer's record of adjusting a two-person chat-and-calendar PWA well over a hundred times, with Claude doing the implementation: five dated decisions settled by measurement rather than preference — retiring every read receipt, cutting ornament for speed, removing the navigation outright — plus the dimensions and motion rules in the second half."
 lang: "en"
@@ -10,7 +10,7 @@ altLabel: "日本語"
 tags: ["decision record", "UI design", "PWA", "Claude"]
 ---
 
-I have spent several weeks adjusting a chat-and-calendar progressive web app that two people use — myself and one other. Well over a hundred changes, almost all of them about how it looks.
+Since September 2026 I have been adjusting a chat-and-calendar progressive web app that two people use — myself and one other. Well over a hundred changes, almost all of them about how it looks.
 
 The division of labour first. **I did not write the CSS or the JavaScript.** Claude — Anthropic's AI assistant — wrote it. What I did was use the thing on a real phone, say where it felt wrong, and choose from the options that came back.
 
