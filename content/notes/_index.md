@@ -10,6 +10,6 @@ The pages under [Writing](/writing/) are written as finished pieces and left lar
 
 **These are not frozen.** Steps go stale as software moves on, and half-finished research, things I have not reproduced yet, failures whose cause I still do not know — they go up with the uncertainty left in. Where I have not verified something, it says so on the spot. When I find out later that a note was wrong, I correct it and add the date rather than deleting it.
 
-This shelf is written [in Japanese](/ja/notes/).
+The notes written so far are [in Japanese](/ja/notes/); anything written in English will be listed on this page.
 
 The bet is that an unresolved note can still be a useful lead for someone searching for the same problem.

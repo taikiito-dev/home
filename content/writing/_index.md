@@ -6,6 +6,6 @@ lang: "en"
 altUrl: "/ja/writing/"
 altLabel: "日本語"
 ---
-Nothing here is general advice. Each page leads with the decisions and dates, and keeps the commands and settings below that as steps.
+Nothing here is general advice. A page leads with the decisions and the dates; where the steps and settings to reproduce one run long, they get a page of their own and the two link to each other.
 
 Only finished pieces live here, written on the assumption that they will not be reworked later. Working records and migration notes live under [Notes](/notes/).
