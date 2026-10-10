@@ -34,8 +34,30 @@
     <main id="main-content">
 
       <section class="taiki-hero">
-        <p class="taiki-hero__lede" data-lang-content="en">I'm a Japan-born, Singapore-based crude oil trader &mdash; not a software engineer. Since 2025 I've been moving my photos, files, calendars, and mail off large cloud services and onto one server I pay for, and running it. I write down the decisions, including the wrong ones.</p>
-        <p class="taiki-hero__lede" data-lang-content="ja">シンガポール在住。原油の取引を仕事にしていて、ソフトウェアエンジニアではありません。2025年から、写真・ファイル・予定表・メールを大手のクラウドサービスから自分が払う1台のサーバーへ移し、運用しています。そこで決めたことを、外した判断も含めて書き残しています。</p>
+        <!-- Rewritten 2026-10-10. Two things were wrong with the previous
+             lede, both of them in the site's first line.
+
+             "Since 2025" was a factual error: the server went up in
+             September 2026. The same error had been sitting in the articles
+             as "14 months" and was corrected there earlier the same day -
+             this copy was missed because only content/ was checked.
+             Dates, never durations: a duration has to be re-edited to stay
+             true, which is how the 14-month figure survived.
+
+             "not a software engineer" framed the whole site as an amateur's
+             apology. The owner's position is the opposite and is stated
+             plainly now: he decides what gets built and why, Claude Code
+             writes it. That division is the thing worth saying, not a
+             disclaimer about what he cannot do.
+
+             Deliberately absent: data sovereignty, and any wish to be of
+             use to others. Both were true-sounding and wrong as openers -
+             the actual trigger was a cloud bill and a tool that stopped
+             working away from home, which is what the articles say. A
+             motive stated on the front page the articles then contradict
+             is worse than no motive at all. -->
+        <p class="taiki-hero__lede" data-lang-content="en">Petroleum trading is my job. I don't write code &mdash; I decide what to build and why, and I build it with Claude Code. Since September 2026 my photos, files, calendars and mail have run on one server I pay for. The tools I build for it are on GitHub. I write down the decisions, including the wrong ones.</p>
+        <p class="taiki-hero__lede" data-lang-content="ja">原油の取引を仕事にしています。コードは書きません。何を作るか・なぜ作るかを決めて、Claude Code と一緒に組み上げています。2026年9月から、写真・ファイル・予定表・メールは自分が払う1台のサーバーで動いています。そのために作った道具はGitHubに置いています。決めたことは、外した判断も含めて書き残しています。</p>
       </section>
 
       <!-- Latest three articles, newest first.
@@ -121,8 +143,18 @@
           <li>
             <h3 data-lang-content="en"><a href="/projects/">Projects</a></h3>
             <h3 data-lang-content="ja"><a href="/ja/projects/">プロジェクト</a></h3>
-            <p data-lang-content="en">What I have built, and the repositories behind it.</p>
-            <p data-lang-content="ja">作ったものと、そのソースを置いているリポジトリ。</p>
+            <!-- The bug reports filed upstream live on this page rather than
+                 in a row of their own here. Same text either way, but the
+                 reading changes with the position: on the front page it is
+                 addressed at whoever just arrived, and four issue numbers
+                 read as a claim being pressed. Inside Projects it is found
+                 by someone who went looking. The owner's instruction was to
+                 keep it from looking like someone making much of little, and
+                 placement decides most of that. The GitHub profile README
+                 already carries the same list, so anyone arriving from
+                 GitHub has read it before reaching this site. -->
+            <p data-lang-content="en">What I have built, what I have reported to the projects I use, and the repositories behind both.</p>
+            <p data-lang-content="ja">作ったもの、使っているプロジェクトに報告したこと、そのソースを置いているリポジトリ。</p>
           </li>
           <li>
             <h3 data-lang-content="en"><a href="/about/">About</a></h3>
