@@ -6,19 +6,18 @@
      without reinstating hreflang as well.
 
      Which shelf this page belongs to, for the breadcrumb. Derive it from the
-     logical path, not from `.Section`. */ -}}
+     logical path, not from `.Section`.
+
+     Writing is the only shelf. Branches for Notes and Archive were removed
+     on 2026-10-11 with the shelves themselves; a page outside a shelf
+     (/projects/, /about/) leaves both variables empty and the breadcrumb
+     below shortens by one level, which is what it already did for them. */ -}}
 {{- $shelf := path.Base (path.Dir .Path) -}}
 {{- $shelfLabel := "" -}}
 {{- $shelfURL := "" -}}
 {{- if eq $shelf "writing" -}}
   {{- $shelfLabel = "Writing" -}}
   {{- $shelfURL = "/writing/" -}}
-{{- else if eq $shelf "notes" -}}
-  {{- $shelfLabel = "Notes" -}}
-  {{- $shelfURL = "/notes/" -}}
-{{- else if eq $shelf "archive" -}}
-  {{- $shelfLabel = "Archive" -}}
-  {{- $shelfURL = "/archive/" -}}
 {{- end -}}
 <!DOCTYPE html>
 <html lang="en">
@@ -67,10 +66,10 @@
         {{- with $.Date }}<span class="taiki-metabar__date">{{ .Format "2 Jan 2006" }}</span>{{ end -}}
         {{- /* `lastmod` only shows when it actually differs from the
                publication date, so an untouched page does not carry a
-               redundant second date. On this site a revision is part of
-               the record - notes are published unfinished on purpose and
-               corrected later - so "when was this last touched" is
-               information the reader needs, not noise. */ -}}
+               redundant second date. The reason it is shown at all has
+               narrowed since Notes left: these pieces are meant to be left
+               alone after publication, so a second date is the reader's
+               signal that one of them was corrected. */ -}}
         {{- if and $.Lastmod $.Date (ne ($.Lastmod.Format "2006-01-02") ($.Date.Format "2006-01-02")) }}
         <span class="taiki-metabar__lastmod">updated {{ $.Lastmod.Format "2 Jan 2006" }}</span>
         {{- end }}

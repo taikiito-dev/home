@@ -1,29 +1,21 @@
-{{- /* Section index for /writing/, /notes/ and /archive/.
+{{- /* Section index. /writing/ is the only section.
 
      English only since 2026-10-11; see single.html for why the bilingual
      machinery was removed.
 
-     Ordering differs per section and is deliberate:
-       /writing/  - `weight` ascending, so the series reads in the order it
-                    was meant to be read (the foundational guide is weight 1).
-                    This is a reference set, not a feed.
-       /archive/  - date descending, because the dev diary genuinely is a
-                    feed and its entries only make sense newest-first.
-       /notes/    - date descending, same reason: working notes are a running
-                    log, and a note's usefulness decays with age in a way a
-                    decision record's does not. The date is also printed on
-                    each row here (it is not under /writing/), because "how
-                    old is this" is the first thing a reader of an unfinished
-                    note needs to know.
-     Anything else falls back to weight.
+     Pages are ordered by `weight` ascending, so the set reads in the order
+     it was meant to be read (the foundational guide is weight 1). This is a
+     reference set, not a feed, which is also why no date is printed on each
+     row - the dates are on the pages themselves.
+
+     Archive and Notes were ordered date-descending instead, and Notes
+     printed its dates, because both were running logs where age was the
+     first thing a reader needed. Both shelves were folded into /writing/ on
+     2026-10-11 and that branch went with them. Restoring a running log
+     means restoring the ordering too: a feed sorted by weight silently
+     reads oldest-first.
 */ -}}
-{{- /* Match on the logical path, NOT on `.Section`. Kept from the bilingual
-       era, where `.Section` returned "ja" for half the site and this test
-       silently failed; the path form is correct either way. */ -}}
-{{- $base := path.Base .Path -}}
-{{- $isNotes := eq $base "notes" -}}
-{{- $isFeed := or (eq $base "archive") $isNotes -}}
-{{- $pages := cond $isFeed .RegularPages.ByDate.Reverse .RegularPages.ByWeight -}}
+{{- $pages := .RegularPages.ByWeight -}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,9 +68,7 @@
         <ul class="taiki-list taiki-list--index">
           {{- range $pages }}
           <li>
-            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a>
-              {{- if $isNotes }}<span class="taiki-latest__date">{{ .Date.Format "2 Jan 2006" }}</span>{{ end -}}
-            </h3>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
             {{- with .Params.description }}
             <p>{{ . }}</p>
             {{- end }}
