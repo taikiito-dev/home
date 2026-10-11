@@ -16,7 +16,7 @@ In September 2026 I started moving what I had been keeping on large cloud servic
 
 The reason was simple: **I did not like that the terms of custody could change at the custodian's convenience.** Price rises, feature removals, policy changes, account suspensions. None of them are things I can stop. At some point it stopped sitting well with me that everything of the irreplaceable kind — photographs going back to childhood, years of correspondence — was stacked on top of things I could not stop.
 
-That server has been running since September 2026. Two users. It has not been out of my hands for a day.
+That server has been running since September 2026. It has not been out of my hands for a day.
 
 This page is a record of **what I decided** over the first month: what I was torn between, which option I took, which ones I turned down, and whether the call looks right or wrong from here. With dates.
 
@@ -28,7 +28,7 @@ On it: photos, files, passwords, calendars and contacts, a single sign-on front 
 
 Mail came last and matters most. Roughly 53,000 messages now live on a domain I own. **That is the part that actually changed things.** Because the address is mine, I can change providers without telling anyone that my address changed — which is the first time the custodian became a replaceable part rather than the foundation.
 
-Two users. One is me; the other is simply a user, and not an engineer either. So "it only breaks for me" was never an available excuse.
+I am the only user, and I am not an engineer. There is no support desk behind me: if it breaks while I am away from it, it stays broken until I am back.
 
 ## The division of labour — I am not the one typing
 
@@ -178,7 +178,7 @@ The checks I have put in since are an attempt to convert that luck into procedur
 
 ---
 
-*The first month, one server, two users. I have not typed it. I have decided it.*
+*The first month, one server, one user. I have not typed it. I have decided it.*
 
 ---
 

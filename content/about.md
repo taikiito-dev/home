@@ -48,9 +48,7 @@ Updated at whatever pace is sustainable, when there is something to say.
 
 ## About me
 
-Based in Singapore. Petroleum trading is my job. I am not an engineer and not planning to become one — I decide what gets built and why, and I build it with Claude Code.
-
-My photos, files, passwords, mail and calendars run on a server of mine, and two people use it every day. I did not type the commands. **I only decided.**
+Based in Singapore.
 
 I would be glad if this site read as a worked example of how far you can get without specialist knowledge — though not in the sense I first meant it. **What stood in for expertise was not effort or self-study, but the habit of checking whether something is really finished when you are told it is.** That one is available to anybody.
 
