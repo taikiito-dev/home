@@ -33,6 +33,8 @@ You, reading this, probably have access to Claude or ChatGPT too. So the steps a
 
 From October 2026 on, what I publish is the decisions — what I settled on, what I turned down, how it looks in hindsight. The steps are left out. A page of commands I did not work out myself is a page I cannot defend when asked about it, and the version your own assistant writes for you will be newer and fitted to your machine anyway.
 
+One page breaks that rule: the deployment guide, which the maintainers of the software asked me to write because nobody else was running it that way. The commands in it are not mine either, but every failure it describes is — I hit all of them. That is the standard it is published to.
+
 The split feels good to work in. Not having to compose the steps means I can spend the attention on what is worth protecting. **Being able to delegate the implementation is what leaves the human side free to concentrate on judgement.** What I was doing over that month was, probably, practice at that. And anyone can start practising.
 
 Host names in the articles are replaced with placeholders like `vault.example.com`. Readers have to substitute their own domain, but writing down which address runs what amounts to publishing a floor plan of my own setup, so I stopped. I used to leave them in, thinking a concrete example would be more useful. I changed my mind.
@@ -49,7 +51,5 @@ Updated at whatever pace is sustainable, when there is something to say.
 ## About me
 
 Based in Singapore.
-
-I would be glad if this site read as a worked example of how far you can get without specialist knowledge — though not in the sense I first meant it. **What stood in for expertise was not effort or self-study, but the habit of checking whether something is really finished when you are told it is.** That one is available to anybody.
 
 More small projects on GitHub: [taikiito-dev](https://github.com/taikiito-dev).

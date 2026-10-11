@@ -38,9 +38,9 @@ This was not a workaround for lack of time. It is the split that produces the mo
 
 **Doubting the all-clear.** That is it.
 
-There is a structural reason for it. **Claude wants the task to be finished. I am fine if it isn't.** That asymmetry is the source of everything below. The implementing side has a motive to say "done"; I have none. So the doubt has to come from my side — not because I know more, but because I am standing somewhere else.
+The doubt has to come from my side — not because I know more, but because I am standing somewhere else.
 
-The five records below are the occasions where that asymmetry actually paid.
+The five records below are the occasions where that actually paid.
 
 ---
 
