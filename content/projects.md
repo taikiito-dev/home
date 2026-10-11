@@ -9,7 +9,7 @@ lang: "en"
 [github.com/taikiito-dev/booking-to-caldav](https://github.com/taikiito-dev/booking-to-caldav)
 
 **singlish-lah** — Singlish and local slang picked up around Singapore, written in Japanese.\
-[singlish.taikiito.com](https://singlish.taikiito.com) · [GitHub](https://github.com/taikiito-dev/singlish-lah)
+[singlish.taikiito.com](https://singlish.taikiito.com) · [github.com/taikiito-dev/singlish-lah](https://github.com/taikiito-dev/singlish-lah)
 
 Everything else, including the source of this site:\
 [github.com/taikiito-dev](https://github.com/taikiito-dev)
