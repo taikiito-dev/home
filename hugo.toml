@@ -7,11 +7,14 @@ title = "Taiki Ito"
 
 # 2026-10-08: this used to also disable "RSS" and "sitemap", which was the
 # right call while the site was a single profile page with nothing to
-# subscribe to or crawl. The Off-Grid guide series moved in here on that
-# date (43 pages across two languages), so both are back on: /writing/ and
-# /archive/ now emit a feed, and a sitemap exists for search engines to
-# find the articles at their new URLs. Taxonomies stay off - tags are kept
-# in front matter as metadata, but no tag pages are generated.
+# subscribe to or crawl. Articles arrived on that date, so both came back
+# on. Taxonomies stay off - tags are kept in front matter as metadata, but
+# no tag pages are generated.
+#
+# 2026-10-11: the shelves were folded into /writing/ and the Japanese
+# pages left the repository, so /writing/ is now the only section and the
+# only feed. The settings below are unchanged and still correct; the
+# earlier wording named /archive/ and a page count that no longer exist.
 disableKinds = ["taxonomy", "term"]
 
 [taxonomies]

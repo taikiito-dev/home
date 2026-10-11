@@ -7,10 +7,12 @@
   were a handful of heading/body type-scale classes and a skip-link - for
   ~180KB of CSS+JS (and a full unused JS module, since no govuk-frontend
   component - header nav, buttons, accordion - is used on this page
-  anymore). Replaced with the plain rules below. Off-Grid
-  (offgrid.taikiito.com) is a different project and keeps govuk-frontend
-  properly, since GOV.UK's look is a deliberate trust signal there; this
-  is a personal homepage, so it doesn't need it.
+  anymore). Replaced with the plain rules below.
+
+  The comparison this used to draw - Off-Grid kept govuk-frontend because
+  GOV.UK's look was a deliberate trust signal there - no longer has a
+  second site to point at: offgrid.taikiito.com was taken down in October
+  2026 and what survived of it moved in here.
 */
 
 * {
@@ -84,7 +86,15 @@ h1, h2, h3 {
 
    At 740px: Japanese lands near 38 characters, English near 81. The
    English lines run slightly past the old guidance, taken knowingly - 20
-   of the 22 articles are Japanese.
+   of the 22 articles were Japanese.
+
+   2026-10-11: that premise expired. The Japanese pages left the
+   repository and the site is English only, so every line this width now
+   serves is one of the ~81-character English ones it was knowingly
+   compromising. 740px is kept because it has not been measured again, not
+   because the reasoning above still holds. Whoever revisits it should
+   step through widths on screen as described below rather than reasoning
+   back to 660px from the guidance.
 
    Note for anyone revisiting this: an attempt at 720px on the same day
    was rejected, but it went in TOGETHER WITH a 2.0 line-height, and the
@@ -390,9 +400,9 @@ h1, h2, h3 {
   border-bottom: 2px solid #1a1a1a;
 }
 
-/* Tables are the one element that genuinely cannot reflow to 660px when
-   they carry four or more columns of Japanese. Wrap-scroll the whole
-   table rather than shrinking type further. */
+/* Tables are the one element that genuinely cannot reflow to the column
+   width once they carry four or more columns. Wrap-scroll the whole table
+   rather than shrinking type further. */
 .taiki-prose .table-wrap {
   overflow-x: auto;
 }
@@ -420,7 +430,7 @@ h1, h2, h3 {
   margin: 0.4rem 0 0;
 }
 
-/* ---- Section index pages (/writing/, /archive/) ---------------------- */
+/* ---- Section index pages (/writing/) --------------------------------- */
 
 .taiki-listpage__title {
   font-size: 2rem;
@@ -486,12 +496,13 @@ h1, h2, h3 {
 
 /* ---- Section index excerpts ------------------------------------------ */
 
-/* Clamp the per-item blurb on /writing/, /notes/ and /archive/ to three
-   lines. These come from each page's front-matter `description`, which is
-   written for search engines and runs 100-200 Japanese characters - long
-   enough that a 20-item list became a wall of grey text and the titles
-   stopped being scannable. Three lines is enough to tell two articles
-   apart, which is the only job the blurb has in a list.
+/* Clamp the per-item blurb on the section index to three lines. These
+   come from each page's front-matter `description`, which is written for
+   search engines and ran 100-200 Japanese characters - long enough that a
+   20-item list became a wall of grey text and the titles stopped being
+   scannable. The list is three English items now, so the clamp does
+   nothing at present; it is kept because the condition that caused it is
+   a property of search-engine descriptions, not of that one list.
 
    Scoped to --index so the homepage's hand-written destination
    descriptions, which are already short and are the point of those rows,
