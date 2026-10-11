@@ -33,6 +33,10 @@ such. The label is a fixed string rather than free text, so a reader scanning
 the page recognises it without reading it, and `rg unsure content/` lists
 every open question on the site in one pass.
 
+No published piece uses it at the moment. It was added for a shelf of shorter
+notes that was later folded into `/writing/`, and it is kept for the case it
+was built for: a claim worth publishing that I cannot yet stand behind.
+
 ## Local development
 
 Requires Hugo extended (0.165.0 is what CI uses).
