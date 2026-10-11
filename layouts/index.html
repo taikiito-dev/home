@@ -79,15 +79,11 @@
              `where site.RegularPages "Section" "writing"`: Hugo's `.Section`
              is the FIRST path element, which made that filter unreliable.
 
-             Latest spans BOTH shelves (writing + notes): fed from /writing/
-             alone it would freeze while new notes appeared invisibly. Fixed
-             slots - two Writing plus one Note - rather than the newest three
-             across both, so the finished work is always what a first-time
-             visitor sees first. Rendered as two ranges rather than one
-             merged slice so neither shelf being empty can break the
-             template. */ -}}
-      {{- $enWriting := first 2 (site.GetPage "/writing").RegularPages.ByDate.Reverse }}
-      {{- $enNotes := first 1 (site.GetPage "/notes").RegularPages.ByDate.Reverse }}
+             Latest is the three newest Writing pages. It spanned both
+             shelves until 2026-10-11, when Notes was taken off the site's
+             map: a shelf not listed above should not be feeding the front
+             page either. */ -}}
+      {{- $enWriting := first 3 (site.GetPage "/writing").RegularPages.ByDate.Reverse }}
 
       <!-- Destinations come FIRST, before the latest-articles list.
 
@@ -118,23 +114,12 @@
                  as long as it took to notice. -->
             <p>Finished pieces, written on the assumption that they will not be reworked later: what I was torn between, what I turned down, how the calls look in hindsight &mdash; and one guide for a setup nobody else documents.</p>
           </li>
-          {{- /* The Notes row belongs HERE, directly under Writing, and the
-                 owner chose to link it from the homepage rather than leave
-                 it unlisted ("a shelf nobody can find is the same as not
-                 having one").
-
-                 The guard dates from when the shelf was empty and sending a
-                 visitor to an empty page would have been worse than not
-                 advertising it. Both shelves have pages now, so it always
-                 passes. It is a live count rather than a hand-edited flag,
-                 so it is kept: it costs nothing and it cannot go stale. */ -}}
-          {{- $notesEn := (site.GetPage "/notes").RegularPages -}}
-          {{- if $notesEn }}
-          <li>
-            <h3><a href="/notes/">Notes</a></h3>
-            <p>The casual shelf, newest first: migration records and working notes, edited as things change. Marked where something is unverified.</p>
-          </li>
-          {{- end }}
+          {{- /* The Notes row is deliberately NOT listed here (2026-10-11).
+                 The shelf has one English page; advertising a shelf of one
+                 on the site's map oversells it. /notes/ stays reachable by
+                 URL and from inside the articles that link it. Put the row
+                 back when the shelf holds two or three pages the owner can
+                 explain out loud. */ -}}
           <li>
             <h3><a href="/projects/">Projects</a></h3>
             <!-- The upstream bug reports are deliberately not mentioned
@@ -160,13 +145,8 @@
             <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="taiki-latest__date">{{ .Date.Format "2 Jan 2006" }}</span></h3>
           </li>
           {{- end }}
-          {{- range $enNotes }}
-          <li>
-            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="taiki-latest__date">{{ .Date.Format "2 Jan 2006" }}</span></h3>
-          </li>
-          {{- end }}
         </ul>
-        <p class="taiki-latest__more"><a href="/writing/">All writing &rarr;</a> <a href="/notes/">All notes &rarr;</a></p>
+        <p class="taiki-latest__more"><a href="/writing/">All writing &rarr;</a></p>
       </section>
 
 
