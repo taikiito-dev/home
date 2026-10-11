@@ -12,7 +12,7 @@ tags: ["MulmoClaude", "self-hosting", "VPS", "Cloudflare", "operations"]
 >
 > **Put an authenticating proxy in front of it** — Cloudflare Access, an authenticating reverse proxy, a VPN, Tailscale; anything that stops the request before the application sees it. Two routes are token-free by design: `/api/files/*`, so that `<img>` tags can load, and the `/ws/pubsub` websocket handshake. On loopback that is a sound design. On a public hostname with nothing in front, **anyone who knows the URL can read files out of your workspace and follow your conversations as they stream**, without ever needing the token.
 >
-> **Check your own version before relying on anything here.** The handshake half is being closed upstream: [#3435](https://github.com/receptron/mulmoclaude/pull/3435) requires the bearer token on the `/ws/pubsub` handshake and was merged on 10 October 2026, closing [#3433](https://github.com/receptron/mulmoclaude/issues/3433). It is not in `v2.3.0`, the latest release at the time of writing. `/api/files/*` stays token-free either way, so the proxy is required regardless of which version you run.
+> **Check your own install before relying on anything here.** The handshake half is closed upstream: [#3435](https://github.com/receptron/mulmoclaude/pull/3435) requires the bearer token on the `/ws/pubsub` handshake and was merged on 10 October 2026, closing [#3433](https://github.com/receptron/mulmoclaude/issues/3433). Any release cut before that merge does not have it. Check your own version against the merge rather than against a number written on this page, which will age. `/api/files/*` stays token-free either way, so the proxy is required regardless of which version you run.
 >
 > The application's own bearer token does not cover this. Everything below assumes the proxy is there.
 
@@ -38,7 +38,7 @@ The rest of this page is those six steps with the failures I hit in each.
 MulmoClaude authenticates `/api/*` with a bearer token. Two paths are exempt, both deliberately:
 
 - **`/api/files/*`** — necessarily exempt. An `<img>` tag cannot carry an `Authorization` header, so images in chat would not load if it were not.
-- **`/ws/pubsub`** — the Socket.IO endpoint. No authentication on the handshake, through `v2.3.0`. This half is closed upstream: [#3435](https://github.com/receptron/mulmoclaude/pull/3435) requires the bearer token at handshake time and was merged on 10 October 2026. Check `npx mulmoclaude --version` against your own install rather than assuming you have it. `/api/files/*` has to stay as it is.
+- **`/ws/pubsub`** — the Socket.IO endpoint. The handshake took no authentication at all until [#3435](https://github.com/receptron/mulmoclaude/pull/3435) landed; see the note at the top about checking your own install.
 
 The important part is *why this has been fine*. The server binds to `127.0.0.1`. The exempt paths are open, but the only person who can reach them is the person sitting at that machine. **Serving over a public hostname does not add or remove a lock. It changes who can stand in front of the door.** After that, knowing the hostname is enough to read workspace files and to subscribe to conversations as they stream — no token required.
 
@@ -85,7 +85,7 @@ MULMOCLAUDE_AUTH_TOKEN=...
 MULMOCLAUDE_TRUSTED_ORIGINS=https://mulmoclaude.example.com
 ```
 
-The behaviour worth knowing: the guard reads that variable **once, at module load**, and only inspects the `Origin` header. `GET`, `HEAD` and `OPTIONS` are exempt. So if you add an origin and do not restart, you land in a state that reads perfectly and refuses to write — sending, attaching, deleting, bookmarking and changing model all return 403 while the page itself looks healthy. Restart the service after editing.
+The behaviour worth knowing is the failure. **Add the origin, skip the restart, and you land in a state that reads perfectly and refuses to write** — sending, attaching, deleting, bookmarking and changing model all return 403 while the page itself looks healthy. Reading being unaffected is what makes it hard to recognise. I hit this rather than read the source for it; what I can tell you is that restarting the service after editing the variable clears it.
 
 ## 4. Keeping it running
 
@@ -93,7 +93,7 @@ The behaviour worth knowing: the guard reads that variable **once, at module loa
 [Service]
 User=you
 WorkingDirectory=/home/you/mulmoclaude
-ExecStart=/usr/bin/npx mulmoclaude@2.2.0
+ExecStart=/usr/bin/npx mulmoclaude@2.3.0
 Restart=always
 ```
 
@@ -105,9 +105,9 @@ With `@latest`, every restart after a new release quietly becomes an in-place up
 npm error ENOTEMPTY: rename '.../node_modules/mulmoclaude' -> '.../node_modules/.mulmoclaude-FQR3GhWi'
 ```
 
-That staging directory's name is deterministic. Once the leftover exists, the same rename fails the same way forever — and `Restart=always` turns a one-off into a loop. Mine restarted **75 times across about 12 minutes** before I stopped it. Recovery was `systemctl stop`, `rm -rf ~/.npm/_npx/<hash>`, `systemctl start`.
+The leftover is the part that matters: once it was there, the same rename failed the same way on every attempt that followed — and `Restart=always` turns a one-off into a loop. Mine restarted **75 times across about 12 minutes** before I stopped it. Recovery was `systemctl stop`, `rm -rf ~/.npm/_npx/<hash>`, `systemctl start`.
 
-Pinning has one consequence: npx derives its cache directory from the `ExecStart` string, so changing the version number installs a fresh tree — around 545 packages, roughly two minutes — during the restart. Warm it first, from the workspace directory:
+Pinning has one consequence: changing the version number in the unit means the next restart installs a fresh tree instead of reusing the one already on disk, and the restart sits there waiting for it. Warm it first, from the workspace directory:
 
 ```sh
 cd /home/you/mulmoclaude && npx --yes mulmoclaude@2.3.0 --version
