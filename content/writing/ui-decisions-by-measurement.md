@@ -3,7 +3,7 @@ title: "Taste Is Not a Reason"
 date: 2026-10-07
 lastmod: 2026-10-11
 weight: 17
-description: "A non-engineer's record of adjusting a two-person chat-and-calendar PWA well over a hundred times, with Claude doing the implementation: five dated decisions settled by measurement rather than preference — retiring every read receipt, cutting ornament for speed, removing the navigation outright."
+description: "A non-engineer's record of adjusting a two-person chat-and-calendar PWA well over a hundred times, with Claude doing the implementation: three dated decisions settled by measurement rather than preference — retiring every read receipt, cutting a costly visual effect for speed, and getting the navigation badly wrong once."
 lang: "en"
 tags: ["decision record", "UI design", "PWA", "Claude"]
 ---
@@ -12,11 +12,11 @@ Since September 2026 I have been adjusting a chat-and-calendar progressive web a
 
 The division of labour first. **I did not write the CSS or the JavaScript.** Claude — Anthropic's AI assistant — wrote it. What I did was use the thing on a real phone, say where it felt wrong, and choose from the options that came back.
 
-That split fits visual work unusually well. **This app has two users, so the only person who can say "this is hard to read while using it" is someone using it.** Getting the discomfort into words was my half; turning the words into numbers was Claude's. Every one of the five records below starts with me pointing at something.
+That split fits visual work unusually well. **This app has two users, so the only person who can say "this is hard to read while using it" is someone using it.** Getting the discomfort into words was my half; turning the words into numbers was Claude's. Every one of the three records below starts with me pointing at something.
 
 What follows is the decisions. The CSS and JavaScript that carried them out are not reproduced here; what I publish is what was decided and why.
 
-**What this covers** — Settling the look of a two-person chat-and-calendar PWA by measurement rather than taste, across five dated records — from retiring every read receipt to adding and then removing the navigation.
+**What this covers** — Settling the look of a two-person chat-and-calendar PWA by measurement rather than taste, across three dated records — from retiring every read receipt to adding and then removing the navigation.
 
 ---
 
@@ -28,14 +28,7 @@ What follows is the decisions. The CSS and JavaScript that carried them out are 
 
 After that was fixed I looked again, and finally got it out: **"the dark-text/faint-text inversion is reversed, and it's confusing."**
 
-**What came out.** Measured, it looked like this.
-
-| Where the tick sits | Unread | Read | Direction read moves |
-|---|---|---|---|
-| Inside the bubble (blue ground) | 1.56 | 2.62 | **lighter** than its ground |
-| Beside a sticker (white ground) | 1.56 | 3.64 | **darker** than its ground |
-
-The unread faintness matches exactly. But **the direction "read" travels is reversed.** On the blue bubble, being read makes the tick rise. On the white background, being read makes it sink. The same event goes lighter in one place and darker in the other.
+**What came out.** Measured, the unread faintness matched in both places exactly — and **the direction "read" travels was reversed.** On the blue bubble, being read made the tick stand out more against its ground. Beside a sticker, on white, being read made it sink. The same event went one way in one place and the opposite way in the other.
 
 **What I chose.** **Scrap the per-message tick entirely.** In its place, a small `read` under the last message I sent — nothing else. I picked this from three options. The wording is lowercase `read`, also my call.
 
@@ -48,22 +41,6 @@ Reduce the tick to one instance and there is only one ground. The reversal disap
 **Right or wrong in hindsight.** **Right — and corroborated afterwards.** The only read state this app stores is a single marker of how far the other person has read; there is no per-message state at all. **Showing a tick on every message was displaying information the app does not have.** I suspect that is exactly why the iPhone shows "Read" under only the last message.
 
 **What stuck.** **If meaning is carried by contrast, keep the ground to one kind. If you cannot, stop carrying meaning by contrast.** And match the number of indicators to the granularity of the data behind them. One piece of data and ten indicators means something is lying somewhere.
-
----
-
-## Decision 2 — Same meaning, same side
-
-**Date.** 7 October 2026, mid-way through Decision 1
-
-**What I was torn between.** The first fix above moved the sticker's tick outside the image — and it came out at the bottom *left*, because that was where the space was.
-
-**What I chose.** **I said: put it bottom right, consistently.**
-
-**Why.** The tick inside a bubble is on the right. Put it on the left elsewhere and the eye has to hunt. Bottom right for photos and bottom left for stickers means the reader searches every time.
-
-**Right or wrong in hindsight.** **Right** — and small, but this is the kind of note that only surfaces from real use. Looking at one screen in isolation, I would probably not have caught it.
-
-**What stuck.** Decide an indicator's position by **where the same meaning already lives**, not by where there happens to be room. Use space as the reason and the meaning moves every time the space does.
 
 ---
 
@@ -82,26 +59,6 @@ Reduce the tick to one instance and there is only one ground. The reversal disap
 **Right or wrong in hindsight.** **Right** — the visual difference is invisible unless compared side by side, and scrolling got measurably lighter. It also showed my own guess to be wrong. **I went in suspecting the header; the real culprit was the timestamp chip sitting on every single photo.** I had not thought about the one thing that multiplies by count.
 
 **What stuck.** **Speed comes from measuring what you added and subtracting it.** Which part is responsible is not available to intuition. And **when you remove an effect, re-examine every value you set while assuming it.** Opacity chosen on the assumption of a blurred background let the text behind show through once the blur was gone.
-
----
-
-## Decision 4 — Don't let a static ornament prepare to move
-
-**Date.** October 2026
-
-**What I was torn between.** After the blur was cut, a symptom appeared in the calendar: **"there's a crushed character to the right of November."** One unreadable glyph, left behind.
-
-**What was actually happening.** The culprit was a small `⌄` next to the month heading. That ornament carried properties that tell the browser "this may be about to move." Told that, the browser keeps it as its own layer — and **while an animation ran nearby, the old contents of that layer persisted as a ghost.**
-
-**What I chose.** Strip those properties from the ornament. Express its faintness through colour instead.
-
-**What I turned down.** Adjusting the animation's duration or easing curve.
-
-**Why.** The symptom was not on the thing animating; it was on **the static ornament next to it.** Fixing the moving part cannot remove a ghost left by a part that does not move. Separating where the symptom shows from where the cause lives came first.
-
-**Right or wrong in hindsight.** **Right** — and the same day the same `⌄` caused a second thing. A glyph like that does not wrap when its parent is too narrow the way text does; it simply distorts, and a distorted glyph reads as a broken character. **One small ornament was behind two unrelated symptoms.**
-
-**What stuck.** **Do not make a small static ornament a candidate for its own layer.** And when a report is something the person making it cannot name — "there's a crushed character" — **doubt the name of the thing being seen.** It was not a character.
 
 ---
 
@@ -135,23 +92,21 @@ And: **while something is broken, recovery comes before diagnosis.** I had learn
 
 ## The habits I actually use now
 
-Only the ones that survived the five records above.
+Only the ones that survived the three records above.
 
 **1. Hold a vague discomfort until it can be restated as something measurable.** "Hard to read" became "the direction of the contrast ratio reverses depending on the ground." The moment it was restated, the fix was forced. **The restating is Claude's job. Saying the first sentence is the job of the person using it.**
 
 **2. Delete the structure that produces the problem, not the problem.** The read tick was fixed by reducing it to one, not by correcting its values.
 
-**3. Same meaning, same side. Available space is not a reason.**
+**3. Remove one effect and re-examine every value chosen while assuming it.**
 
-**4. Remove one effect and re-examine every value chosen while assuming it.**
-
-**5. If it cannot be operated, revert before investigating.** And introduce large structural changes one revertible step at a time.
+**4. If it cannot be operated, revert before investigating.** And introduce large structural changes one revertible step at a time.
 
 ---
 
 ## The question I still cannot answer
 
-**Of the discomforts I reported, how many were actually just preference?** All five above held up under measurement. But that can also be read as: only the ones that held up are in the record. I have never counted how many of my notes evaporated once someone measured them.
+**Of the discomforts I reported, how many were actually just preference?** All three above held up under measurement. But that can also be read as: only the ones that held up are in the record. I have never counted how many of my notes evaporated once someone measured them.
 
 Next time I say something, I intend to write it down at the moment I say it.
 
