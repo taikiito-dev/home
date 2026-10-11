@@ -16,9 +16,11 @@ tags: ["MulmoClaude", "self-hosting", "VPS", "Cloudflare", "operations"]
 >
 > The application's own bearer token does not cover this. Everything below assumes the proxy is there.
 
+**What MulmoClaude is.** [MulmoClaude](https://github.com/receptron/mulmoclaude) is an open-source, MIT-licensed personal AI assistant: Claude with a workspace of plain files, where chat opens the right tool — a wiki, a spreadsheet, a chart — and small apps get built for an audience of one. It is designed local-first, for the machine in front of you, bound to `127.0.0.1`. Mine has run on a rented server since August 2026 — which is exactly the setup this page is about.
+
 **Who this is for.** You already have a server and a domain, and you want MulmoClaude running on the server rather than on the machine in front of you — so that it stays awake, keeps working while you are away, and can be reached from a phone.
 
-**What this is not.** I run this setup. The project does not. When I raised the token-free paths with the maintainers, they confirmed the behaviour, shipped the fix for one of them, and were clear that a public-hostname deployment sits outside what they test. So this guide is mine, and so is the responsibility for it. Nothing here carries the project's endorsement.
+**What this is not.** I run this setup. The project does not. When I raised the token-free paths with the maintainers ([#3425](https://github.com/receptron/mulmoclaude/issues/3425)), they confirmed the behaviour, shipped the fix for one of them, and were clear that a public-hostname deployment sits outside what they test. Their suggestion was that this guidance be published by a user, with the warning at the top — which is this page. So this guide is mine, and so is the responsibility for it. Nothing here carries the project's endorsement.
 
 **The shape, not the products.** What matters below is the shape: nothing listening on the public interface, something that authenticates the request *before* the application receives it, a pinned version, and a monitor that watches the application rather than the front door. Cloudflare, Authentik and systemd are what I happen to run, and I name them because a guide with the names taken out cannot be followed. They are not the requirement. Substitute a VPN, Tailscale, an authenticating reverse proxy, a different supervisor, and the shape holds.
 
