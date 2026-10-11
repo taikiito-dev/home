@@ -88,13 +88,24 @@ h1, h2, h3 {
    English lines run slightly past the old guidance, taken knowingly - 20
    of the 22 articles were Japanese.
 
-   2026-10-11: that premise expired. The Japanese pages left the
-   repository and the site is English only, so every line this width now
-   serves is one of the ~81-character English ones it was knowingly
-   compromising. 740px is kept because it has not been measured again, not
-   because the reasoning above still holds. Whoever revisits it should
-   step through widths on screen as described below rather than reasoning
-   back to 660px from the guidance.
+   2026-10-11, part one: that premise expired. The Japanese pages left
+   the repository and the site is English only, so every line this width
+   now serves is one of the ~81-character English ones it was knowingly
+   compromising.
+
+   2026-10-11, part two: RE-MEASURED on that new premise and kept at
+   740px. The owner stepped through 660 / 700 / 740 / 780 / 820 on screen
+   against real article text at this typeface, size and leading, with a
+   live characters-per-line readout, and chose 740 again. So this value is
+   now held because it was measured English-only, not as a leftover from
+   the Japanese era.
+
+   On the guidance it slightly exceeds: the conventional comfortable range
+   is 45-75 characters per line (Bringhurst's 66-character ideal, GOV.UK's
+   75-character ceiling), while Butterick allows 45-90. At ~81 this sits
+   outside the strict ceiling and inside the wide one. It was chosen on
+   screen rather than from the number, which is the method this site uses
+   when a guideline gives a range instead of a value.
 
    Note for anyone revisiting this: an attempt at 720px on the same day
    was rejected, but it went in TOGETHER WITH a 2.0 line-height, and the

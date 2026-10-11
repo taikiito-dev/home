@@ -86,23 +86,23 @@ So far nothing else has crossed that line.
 
 ---
 
-## Decision 3 — I stopped believing "backups are running"
+## Decision 3 — "Roughly equal" nearly cost me six weeks of mail
 
 **Date.** August–September 2026, several times
 
-**What I was torn between.** The nightly backup had been reporting success for weeks. No alerts. Was that good enough?
+**What I was torn between.** Roughly 53,000 messages had to move onto my own domain. When it finished, I counted both sides. The numbers were **roughly equal**. Everything reported success, there were no alerts, and the next step was to start deleting the originals. Was "roughly equal" good enough?
 
-**What I chose.** **Count it myself.** During a server migration I compared photo counts between the old and new machines by hand.
+**What I chose.** **Count it properly, by message, not by total.**
 
-**What came out.** **Forty-six files existed only on the machine I was about to decommission.** The backup script had been stopping at one step partway through, and everything after that step had not run for weeks. Silently. "Success" had only ever meant "it did not break in a way I would notice."
+**What came out.** **Six weeks of mail had not transferred at all.** The gap happened to sit just inside my personal tolerance for "roughly" — close enough that I nearly signed it off. I got 7,536 messages back only because an export I had made earlier in the migration, for an unrelated reason, was still sitting in a trash folder. **That is not a restore procedure. That is luck.**
 
-**Right or wrong in hindsight.** **Right — and I only just made it.** If I had not counted, those forty-six were gone. My reason for counting was not even principled: I was mid-migration and both machines happened to be in front of me.
+**Right or wrong in hindsight.** **Right — and I only just made it.** Had I accepted the totals, the originals would have been deleted and six weeks of correspondence would simply not exist. Nothing would have reported an error at any point.
 
-**Three more wins of the same shape**
+**Three more of the same shape**
 
+- **The nightly backup.** Reporting success for weeks, no alerts. Mid-migration I compared photo counts between the old machine and the new one by hand: **forty-six files existed only on the machine I was about to decommission.** The script had been stopping partway through, and everything after that step had not run for weeks. Silently. "Success" had only ever meant "it did not break in a way I would notice."
 - **A mail client migration.** Reported complete. It was not complete.
 - **A mail tooling integration.** Reported solved three times. Not solved, three times.
-- **A 53,000-message mail migration.** Source and destination counts were "roughly equal", and I nearly called it done. **Six weeks of mail had not transferred at all.** The gap happened to sit just inside my personal tolerance for "roughly". I recovered 7,536 messages only because an export I had made earlier in the migration for an unrelated reason was still sitting in a trash folder. **That is not a restore procedure. That is luck.**
 
 **What stuck.** Three things.
 
@@ -172,7 +172,7 @@ Only the ones that survived the five records above.
 
 One thing is genuinely open.
 
-**Did I win those five because I doubted, or because I happened to be looking?** The forty-six photos surfaced because both machines were in front of me mid-migration. The six weeks of mail survived because of an export sitting in a trash folder. Neither is comfortably a credit to me.
+**Did I win those five because I doubted, or because I happened to be looking?** The six weeks of mail survived because of an export sitting in a trash folder. The forty-six photos surfaced because both machines happened to be in front of me mid-migration. Neither is comfortably a credit to me.
 
 The checks I have put in since are an attempt to convert that luck into procedure. Whether it worked is not yet known. The next time something slips through, it goes here.
 
@@ -182,4 +182,4 @@ The checks I have put in since are an attempt to convert that luck into procedur
 
 ---
 
-**Changelog** — 7 October 2026: first version / 8 October 2026: added a second half covering how I would stand this up from scratch / 11 October 2026: that second half moved to its own page
+**Changelog** — 7 October 2026: first version / 8 October 2026: added a second half covering how I would stand this up from scratch / 11 October 2026: that second half moved to its own page / 11 October 2026: Decision 3 now leads with the mail migration, which had been sitting in a bullet list under it
