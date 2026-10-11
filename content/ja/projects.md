@@ -25,19 +25,11 @@ altLabel: "English"
 
 ## 報告したこと
 
-毎日の作業に使っているツールを、VPSの上・Dockerの中・Macではない環境で、何週間も立ち上げたまま、日本語で動かしている。作られ方も試され方もそういう環境ではないので、報告が次々に出てきた。修正につながったのは以下。
+毎日の作業に使っているツールを、VPSの上・Dockerの中・Macではない環境で、何週間も立ち上げたまま、日本語で動かしている。作られ方も試され方もそういう環境ではないので、報告が次々に出てきた。どれも自分の腕で見つけたものではない。誰も動かしていない機械が1台あった、というだけのこと。
 
-- [#3425](https://github.com/receptron/mulmoclaude/issues/3425) — 認証を通さない経路が2つあった。手元だけで動かす前提では妥当だが、公開の住所に出すと話が変わる。うち片方は本家で閉じられた
-- [#3415](https://github.com/receptron/mulmoclaude/issues/3415) — 会話ログへのリンクの経路が違っていて、エディタからは開けなかった
-- [#3357](https://github.com/receptron/mulmoclaude/issues/3357) — 1往復ごとにポートを1つ取りこぼし、20往復ほどで連携先が黙って消えた
-- [#3018](https://github.com/receptron/mulmoclaude/issues/3018) — 手で登録した連携先が、準備できていても一覧に出てこなかった
-- [#2937](https://github.com/receptron/mulmoclaude/issues/2937) — 24時間より長い間隔の指定が、全部「毎日UTC0時」に潰れていた
+報告の中身と、どれが修正につながったかは、[GitHubのプロフィール](https://github.com/taikiito-dev)に一覧を置いている。一覧は1か所だけに持つ。
 
-どれも自分の腕で見つけたものではない。誰も動かしていない機械が1台あった、というだけのこと。
-
-最後の1件について、本家は「自分たちが動かしてもいない構成の説明をリポジトリに抱えることはしない。ただし、実際に動かしている人を案内する」という線を引いた。これは正しい線だと思う。その手引きは[Running MulmoClaude on a VPS](/writing/running-mulmoclaude-on-a-vps/)に置いた（英語）。
-
-[報告の一覧](https://github.com/receptron/mulmoclaude/issues?q=is%3Aissue+author%3Ataikiito-dev)
+そのうちの1件について、本家は「自分たちが動かしてもいない構成の説明をリポジトリに抱えることはしない。ただし、実際に動かしている人を案内する」という線を引いた。これは正しい線だと思う。その手引きは[Running MulmoClaude on a VPS](/writing/running-mulmoclaude-on-a-vps/)に置いた（英語）。
 
 ## リポジトリ
 
