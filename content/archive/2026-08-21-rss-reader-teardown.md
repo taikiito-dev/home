@@ -3,8 +3,6 @@ title: "I Built Myself an RSS Reader, and Tore It Down the Same Day"
 date: 2026-08-21T10:00:00+08:00
 description: "Self-hosted a Miniflux RSS reader on the same server as MulmoClaude to aggregate news by category, then decided the same day it would just become an overflowing unread inbox, and removed the entire stack."
 lang: "en"
-altUrl: "/ja/archive/2026-08-21-rss-reader-teardown/"
-altLabel: "日本語"
 tags: ["side projects"]
 ---
 

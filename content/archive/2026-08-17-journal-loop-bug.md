@@ -3,8 +3,6 @@ title: "After Making MulmoClaude Run 24/7, Its Background Automation Started Loo
 date: 2026-08-17T09:00:00+08:00
 description: "The day after moving to an always-on server, a background automation task (the journal feature) started endlessly retrying the same sessions. The root cause: a millisecond-precision mismatch between Python and Node.js timestamps."
 lang: "en"
-altUrl: "/ja/archive/2026-08-17-journal-loop-bug/"
-altLabel: "日本語"
 tags: ["MulmoClaude", "debugging"]
 ---
 

@@ -3,8 +3,6 @@ title: "Before Writing a Single Post, I Renamed My GitHub Account"
 date: 2026-08-22T08:00:00+08:00
 description: "The decision to start publishing this blog: Hugo + PaperMod, GitHub Actions deploying to GitHub Pages under a custom domain, a private source repo force-pushing built output to a separate public repo, and a GitHub username rename along the way."
 lang: "en"
-altUrl: "/ja/archive/2026-08-22-building-this-blog/"
-altLabel: "日本語"
 tags: ["side projects", "self-hosting"]
 ---
 

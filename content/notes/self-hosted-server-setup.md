@@ -4,8 +4,6 @@ date: 2026-10-08
 lastmod: 2026-10-11
 description: "Ten steps for putting photos, files, passwords, calendars and mail on one rented server: publish with no inbound ports, scope the backup key so the server cannot destroy its own history, put the watchdog outside, and make every claim of success verifiable from outside. Written by Claude, verified on real hardware, dated rather than maintained."
 lang: "en"
-altUrl: "/ja/notes/self-hosted-server-setup/"
-altLabel: "日本語"
 tags: ["self-hosting", "VPS", "backup", "operations", "Claude"]
 ---
 

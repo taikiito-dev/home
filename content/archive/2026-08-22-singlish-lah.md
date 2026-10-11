@@ -3,8 +3,6 @@ title: "Riding the Momentum of Starting the Blog, I Also Shipped a Singlish Glos
 date: 2026-08-22T08:30:00+08:00
 description: "A small side project shipped the same day as this blog: a plain HTML/CSS/JS Singlish-term glossary for Japanese speakers, plus the subdomain + repo pattern that later projects would reuse."
 lang: "en"
-altUrl: "/ja/archive/2026-08-22-singlish-lah/"
-altLabel: "日本語"
 tags: ["side projects"]
 ---
 

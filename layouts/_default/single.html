@@ -1,41 +1,27 @@
-{{- /* Articles are bilingual as SEPARATE pages, not as one page with both
-     languages swapped by JavaScript (the way the homepage does it). An
-     article is long: holding both languages in one document would double
-     the page weight and show both when JS is off. Each page declares its
-     own language and points at its counterpart via `altUrl` / `altLabel`
-     in front matter. */ -}}
-{{- $lang := .Params.lang | default "en" -}}
-{{- $isJa := eq $lang "ja" -}}
-{{- /* Which shelf this page belongs to, for the label in the meta bar.
+{{- /* Japanese pages were removed from this site on 2026-10-11: the site is
+     English only, and the Japanese records moved out of the repository to be
+     rewritten later for a Japanese platform. The bilingual machinery that
+     used to live here (a `lang` switch, `altUrl`/`altLabel` front matter, an
+     hreflang pair) went with them. Do not reintroduce a language toggle
+     without reinstating hreflang as well.
 
-     Derive it from the logical path, NOT from `.Section`: Hugo's `.Section`
-     is the FIRST path element, so everything under content/ja/ reports
-     "ja". `path.Dir` of "/ja/writing/some-slug" is "/ja/writing", whose
-     base is the shelf name - and that works identically for the English
-     half ("/writing/some-slug").
-
-     The label exists because the site now has three shelves with
-     different standards (settled decision records, unfinished working
-     notes, a frozen diary). A reader arriving from a search result lands
-     mid-site with no way to tell which one they are reading, and the
-     standard they should hold it to differs. One line of metadata is the
-     cheapest fix; this is lifted from kentarokuribayashi.com, which
-     prints "Journal·<date>" or "Blog·<date>" at the top of every entry. */ -}}
+     Which shelf this page belongs to, for the breadcrumb. Derive it from the
+     logical path, not from `.Section`. */ -}}
 {{- $shelf := path.Base (path.Dir .Path) -}}
 {{- $shelfLabel := "" -}}
 {{- $shelfURL := "" -}}
 {{- if eq $shelf "writing" -}}
-  {{- $shelfLabel = cond $isJa "執筆" "Writing" -}}
-  {{- $shelfURL = cond $isJa "/ja/writing/" "/writing/" -}}
+  {{- $shelfLabel = "Writing" -}}
+  {{- $shelfURL = "/writing/" -}}
 {{- else if eq $shelf "notes" -}}
   {{- $shelfLabel = "Notes" -}}
-  {{- $shelfURL = cond $isJa "/ja/notes/" "/notes/" -}}
+  {{- $shelfURL = "/notes/" -}}
 {{- else if eq $shelf "archive" -}}
-  {{- $shelfLabel = cond $isJa "アーカイブ" "Archive" -}}
-  {{- $shelfURL = cond $isJa "/ja/archive/" "/archive/" -}}
+  {{- $shelfLabel = "Archive" -}}
+  {{- $shelfURL = "/archive/" -}}
 {{- end -}}
 <!DOCTYPE html>
-<html lang="{{ $lang }}">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>{{ .Title }} &mdash; Taiki Ito</title>
@@ -49,10 +35,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/site.css">
-  {{- with .Params.altUrl }}
-  <link rel="alternate" hreflang="{{ if eq $lang "en" }}ja{{ else }}en{{ end }}" href="{{ . | absURL }}">
-  <link rel="alternate" hreflang="{{ $lang }}" href="{{ $.Permalink }}">
-  {{- end }}
 </head>
 <body>
 
@@ -66,9 +48,6 @@
 
     <header class="taiki-header">
       <a href="/" class="taiki-wordmark">Taiki Ito</a>
-      {{- with .Params.altUrl }}
-      <a href="{{ . }}" class="taiki-lang-toggle" hreflang="{{ if eq $lang "en" }}ja{{ else }}en{{ end }}">{{ $.Params.altLabel | default "日本語" }}</a>
-      {{- end }}
     </header>
 
     <main id="main-content">
@@ -76,18 +55,16 @@
       {{- /* Breadcrumb, not just a shelf label. A reader who lands here from
              a search result sees where in the site they are standing, and
              pages that sit outside a shelf (/projects/, /about/) get one
-             too - which the bare shelf label could not give them. The home
-             crumb points at "/" in both languages: there is no /ja/ index,
-             the homepage swaps language in the browser. */ -}}
-      <nav class="taiki-metabar" aria-label="{{ if $isJa }}現在位置{{ else }}Breadcrumb{{ end }}">
-        <a class="taiki-metabar__shelf" href="/">{{ if $isJa }}ホーム{{ else }}Home{{ end }}</a>
+             too - which the bare shelf label could not give them. */ -}}
+      <nav class="taiki-metabar" aria-label="Breadcrumb">
+        <a class="taiki-metabar__shelf" href="/">Home</a>
         <span class="taiki-metabar__sep" aria-hidden="true">/</span>
         {{- with $shelfLabel }}
         <a class="taiki-metabar__shelf" href="{{ $shelfURL }}">{{ . }}</a>
         <span class="taiki-metabar__sep" aria-hidden="true">/</span>
         {{- end }}
         <span class="taiki-metabar__here" aria-current="page">{{ .Title }}</span>
-        {{- with $.Date }}<span class="taiki-metabar__date">{{ if $isJa }}{{ .Format "2006-01-02" }}{{ else }}{{ .Format "2 Jan 2006" }}{{ end }}</span>{{ end -}}
+        {{- with $.Date }}<span class="taiki-metabar__date">{{ .Format "2 Jan 2006" }}</span>{{ end -}}
         {{- /* `lastmod` only shows when it actually differs from the
                publication date, so an untouched page does not carry a
                redundant second date. On this site a revision is part of
@@ -95,7 +72,7 @@
                corrected later - so "when was this last touched" is
                information the reader needs, not noise. */ -}}
         {{- if and $.Lastmod $.Date (ne ($.Lastmod.Format "2006-01-02") ($.Date.Format "2006-01-02")) }}
-        <span class="taiki-metabar__lastmod">{{ if $isJa }}最終更新 {{ $.Lastmod.Format "2006-01-02" }}{{ else }}updated {{ $.Lastmod.Format "2 Jan 2006" }}{{ end }}</span>
+        <span class="taiki-metabar__lastmod">updated {{ $.Lastmod.Format "2 Jan 2006" }}</span>
         {{- end }}
       </nav>
 
@@ -111,9 +88,9 @@
              sits outside a shelf. */ -}}
       <p class="taiki-prose__back">
         {{- if $shelfURL -}}
-        <a href="{{ $shelfURL }}">&larr; {{ if $isJa }}{{ $shelfLabel }}の一覧へ{{ else }}All {{ $shelfLabel | lower }}{{ end }}</a>
+        <a href="{{ $shelfURL }}">&larr; All {{ $shelfLabel | lower }}</a>
         {{- else -}}
-        <a href="/">&larr; {{ if $isJa }}ホームに戻る{{ else }}Back to home{{ end }}</a>
+        <a href="/">&larr; Back to home</a>
         {{- end -}}
       </p>
 

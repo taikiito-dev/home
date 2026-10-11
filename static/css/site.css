@@ -121,23 +121,6 @@ h1, h2, h3 {
   text-decoration: none;
 }
 
-.taiki-lang-toggle {
-  background: none;
-  border: none;
-  color: #1a1a1a;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.9rem;
-  padding: 0;
-  text-decoration: underline;
-  text-decoration-thickness: max(1px, .0625rem);
-  text-underline-offset: 0.2em;
-}
-
-.taiki-lang-toggle:hover {
-  color: #5b6472;
-}
-
 /* Hero: plain name, one-line description - no colored background block. */
 .taiki-hero {
   margin-bottom: 40px;
@@ -230,20 +213,6 @@ h1, h2, h3 {
   margin-top: 20px;
   color: #a8a196;
   font-size: 0.9rem;
-}
-
-/* Language show/hide via data attribute, toggled by JS */
-[data-lang-content] {
-  display: none;
-}
-
-[data-lang-content].is-active {
-  display: block;
-}
-
-span[data-lang-content].is-active,
-li[data-lang-content].is-active {
-  display: list-item;
 }
 
 /* ---------------------------------------------------------------------
@@ -651,43 +620,8 @@ li[data-lang-content].is-active {
   margin-bottom: 0;
 }
 
-/* ---- Japanese type runs one step smaller (chosen 2026-10-10) ----
-
-   At equal px, Noto Sans JP reads a full step larger than Newsreader:
-   kana/kanji fill the em square while Newsreader's lowercase sits well
-   inside it. The owner compared 18/17/16px side by side on real copy
-   and picked 17px (ratio 17/18 = 94.44%).
-
-   Article and list pages carry <html lang="ja">, so one root-level
-   percentage scales every rem-based size on the page together (body,
-   headings, meta) and keeps their proportions intact. The homepage
-   mixes both languages in one document (html lang="en" with
-   data-lang-content spans), so the same ratio is applied per element
-   there. Column widths are px and unaffected. */
-
-html[lang="ja"] {
-  font-size: 94.4444%;
-}
-
-.taiki-hero__lede[data-lang-content="ja"] {
-  font-size: 1.1333rem;
-}
-
-.taiki-list h3[data-lang-content="ja"] {
-  font-size: 1.0389rem;
-}
-
-.taiki-list p[data-lang-content="ja"] {
-  font-size: 1.0625rem;
-}
-
-/* The Latest list on the homepage switches per language at the section
-   level; its JP article titles and the shelf links below them carry no
-   data-lang-content of their own. */
-section[data-lang-content="ja"] .taiki-list h3 {
-  font-size: 1.0389rem;
-}
-
-section[data-lang-content="ja"] .taiki-latest__more {
-  font-size: 1.0625rem;
-}
+/* The Japanese type-size block that used to sit here (a 94.44% root scale
+   for html[lang="ja"], plus per-element sizes for the data-lang-content
+   spans on the homepage) went with the Japanese pages on 2026-10-11, when
+   the site became English only. Noto Sans JP stays in the font stack:
+   Japanese still turns up inside English sentences. */

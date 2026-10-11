@@ -3,8 +3,6 @@ title: "Moving to a Server That Never Turns Off"
 date: 2026-08-16T09:00:00+08:00
 description: "Migrating MulmoClaude to AWS Lightsail. A silent CSRF trusted-origin failure, a mystery 'Network error calling ...' traced to a Docker Desktop vs Docker Engine networking difference, and a memory-plan saga."
 lang: "en"
-altUrl: "/ja/archive/2026-08-16-moving-to-a-server/"
-altLabel: "日本語"
 tags: ["MulmoClaude", "debugging"]
 ---
 

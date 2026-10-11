@@ -3,8 +3,6 @@ title: "Getting My Own Domain, and Email On It"
 date: 2026-08-19T09:00:00+08:00
 description: "Got a domain with my own name on it, found a backdoor I'd accidentally left open while reviewing access settings, and hit silent delivery failures even with SPF/DKIM/DMARC all correctly configured."
 lang: "en"
-altUrl: "/ja/archive/2026-08-19-domain-and-email/"
-altLabel: "日本語"
 tags: ["self-hosting"]
 ---
 

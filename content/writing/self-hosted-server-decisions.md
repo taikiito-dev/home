@@ -5,8 +5,6 @@ lastmod: 2026-10-11
 weight: 16
 description: "A non-engineer's record of moving photos, files, passwords, calendars and mail onto one rented server and running it for one month: five dated decisions, the options turned down, and which calls look right in hindsight."
 lang: "en"
-altUrl: "/ja/writing/self-hosted-server-decisions/"
-altLabel: "日本語"
 tags: ["decision record", "self-hosting", "VPS", "backup", "operations"]
 ---
 

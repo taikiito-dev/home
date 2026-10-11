@@ -3,8 +3,6 @@ title: "I Built This Blog a Hatena-Style Calendar, and Locked My Own JSON In a B
 date: 2026-08-22T09:00:00+08:00
 description: "A record of building a Hatena-Blog-style calendar, tag cloud, and monthly jump buttons into this blog's own sidebar - including tracking down why the calendar silently failed to render, caused by Hugo's html/template auto-escaping mangling an inline JSON blob."
 lang: "en"
-altUrl: "/ja/archive/2026-08-22-sidebar-calendar/"
-altLabel: "日本語"
 tags: ["side projects", "debugging"]
 ---
 

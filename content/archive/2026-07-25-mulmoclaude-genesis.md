@@ -3,8 +3,6 @@ title: "How I Ran Into MulmoClaude, and Got It Actually Usable"
 date: 2026-07-25T09:00:00+08:00
 description: "A regular office worker who tinkers with computers on the side, building a personal AI assistant setup from scratch. Includes the ERR_MODULE_NOT_FOUND stumble."
 lang: "en"
-altUrl: "/ja/archive/2026-07-25-mulmoclaude-genesis/"
-altLabel: "日本語"
 tags: ["MulmoClaude"]
 ---
 

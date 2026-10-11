@@ -3,8 +3,6 @@ title: "Projects"
 standfirst: "What I have built."
 description: "Projects by Taiki Ito — a booking-to-calendar tool and a Singlish phrase collection."
 lang: "en"
-altUrl: "/ja/projects/"
-altLabel: "日本語"
 ---
 
 **booking-to-caldav** — booking confirmation emails become events on my own calendar server. Running there since October 2026.\

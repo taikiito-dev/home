@@ -3,8 +3,6 @@ title: "With the Domain Working, I Built Myself a Digital Business Card the Same
 date: 2026-08-19T10:00:00+08:00
 description: "A same-day side quest after getting the domain working: a static digital business card at a new subdomain, served entirely separately from the main app, with a vCard-download button, a WhatsApp click-to-chat link, and a small run-in with Cloudflare's email obfuscation."
 lang: "en"
-altUrl: "/ja/archive/2026-08-19-digital-business-card/"
-altLabel: "日本語"
 tags: ["self-hosting", "side projects"]
 ---
 

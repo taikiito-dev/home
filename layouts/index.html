@@ -28,7 +28,6 @@
 
     <header class="taiki-header">
       <a href="/" class="taiki-wordmark">Taiki Ito</a>
-      <button type="button" class="taiki-lang-toggle" id="lang-toggle" aria-label="Switch language / 言語を切り替える">EN / 日本語</button>
     </header>
 
     <main id="main-content">
@@ -62,8 +61,7 @@
              (his wish, partly with recruiters in mind), no "my job is"
              opener. Keep this lede and the README in the same voice -
              they are the same person met from two directions. -->
-        <p class="taiki-hero__lede" data-lang-content="en">Petroleum trader in Singapore by day. Building software since August 2026 &mdash; I decide what gets built and why; Claude Code writes it. My photos, files, calendars and mail live on one server I pay for, and the decisions, including the wrong ones, are written down here.</p>
-        <p class="taiki-hero__lede" data-lang-content="ja">昼はシンガポールで原油を取引しています。2026年8月からはソフトウェアも&mdash;&mdash;決めるのは私、書くのはClaude Codeです。写真・ファイル・予定表・メールは自分が払う1台のサーバーにあり、決めたことは外した判断も含めてここに書いています。</p>
+        <p class="taiki-hero__lede">Petroleum trader in Singapore by day. Building software since August 2026 &mdash; I decide what gets built and why; Claude Code writes it. My photos, files, calendars and mail live on one server I pay for, and the decisions, including the wrong ones, are written down here.</p>
       </section>
 
       <!-- Latest three articles, newest first.
@@ -77,42 +75,26 @@
            is about. Capped at three on purpose - the previous version grew
            by one entry per article published, which is what drove the
            move away from listing them here. -->
-      {{- /* Languages are separated by directory (content/writing vs
-             content/ja/writing), not by Hugo's multilingual machinery, which
-             this site does not use.
+      {{- /* Address the section pages directly rather than filtering with
+             `where site.RegularPages "Section" "writing"`: Hugo's `.Section`
+             is the FIRST path element, which made that filter unreliable.
 
-             Do NOT filter these with `where site.RegularPages "Section"
-             "writing"`: Hugo's `.Section` is the FIRST path element, so every
-             page under content/ja/ reports section "ja" regardless of which
-             subdirectory it is in. That filter silently returned the English
-             pages only and left the Japanese list empty. Address the two
-             section pages directly instead. */ -}}
-      {{- /* Latest spans BOTH shelves (writing + notes) since 2026-10-10,
-             when most Japanese articles moved to /ja/notes/: a Latest fed
-             from /writing/ alone would freeze at two entries while new
-             notes kept appearing invisibly.
-
-             Fixed slots per shelf since 2026-10-11, rather than the newest
-             three across both. Sorting the union purely by date made the
-             Japanese list all notes: both Japanese Writing pages are dated
-             7 October and three notes are newer, so the shelf holding the
-             finished pieces disappeared from the front page of one language
-             while showing up on the other. Two Writing plus one Note keeps
-             the count at three - the cap is the whole point of this block -
-             and guarantees the finished work is what a first-time visitor
-             sees first. Rendered as two ranges rather than one merged slice
-             so neither shelf being empty can break the template. */ -}}
+             Latest spans BOTH shelves (writing + notes): fed from /writing/
+             alone it would freeze while new notes appeared invisibly. Fixed
+             slots - two Writing plus one Note - rather than the newest three
+             across both, so the finished work is always what a first-time
+             visitor sees first. Rendered as two ranges rather than one
+             merged slice so neither shelf being empty can break the
+             template. */ -}}
       {{- $enWriting := first 2 (site.GetPage "/writing").RegularPages.ByDate.Reverse }}
       {{- $enNotes := first 1 (site.GetPage "/notes").RegularPages.ByDate.Reverse }}
-      {{- $jaWriting := first 2 (site.GetPage "/ja/writing").RegularPages.ByDate.Reverse }}
-      {{- $jaNotes := first 1 (site.GetPage "/ja/notes").RegularPages.ByDate.Reverse }}
 
       <!-- Destinations come FIRST, before the latest-articles list.
 
            Until 2026-10-09 the order was the other way round, and the page
            was genuinely hard to read: the destinations block carries no
            heading of its own, so its <h3> rows sat directly under the
-           "最近書いたもの" heading and read as a fourth and fifth article.
+           "Latest" heading and read as a fourth and fifth article.
            Both blocks also style their rows identically, so nothing told a
            visitor which links were articles and which were sections.
 
@@ -127,17 +109,14 @@
       <section class="taiki-section">
         <ul class="taiki-list">
           <li>
-            <h3 data-lang-content="en"><a href="/writing/">Writing</a></h3>
-            <h3 data-lang-content="ja"><a href="/ja/writing/">執筆</a></h3>
-            <!-- Keep this in step with content/writing/_index.md and
-                 content/ja/writing/_index.md. The shelf stopped being
+            <h3><a href="/writing/">Writing</a></h3>
+            <!-- Keep this in step with content/writing/_index.md. The shelf stopped being
                  decision records only on 2026-10-11, when the MulmoClaude
                  VPS guide was published here: upstream asked for it and
                  links it, so it sits with the finished pieces even though
                  it carries commands. The card said "decision records" for
                  as long as it took to notice. -->
-            <p data-lang-content="en">Finished pieces, written on the assumption that they will not be reworked later: what I was torn between, what I turned down, how the calls look in hindsight &mdash; and one guide for a setup nobody else documents.</p>
-            <p data-lang-content="ja">完成品として書いた判断の記録だけを置いている。何に迷い、どの案を却下し、後から見てどれが外れていたか。公開後は大きく書き換えない。</p>
+            <p>Finished pieces, written on the assumption that they will not be reworked later: what I was torn between, what I turned down, how the calls look in hindsight &mdash; and one guide for a setup nobody else documents.</p>
           </li>
           {{- /* The Notes row belongs HERE, directly under Writing, and the
                  owner chose to link it from the homepage rather than leave
@@ -149,44 +128,31 @@
                  advertising it. Both shelves have pages now, so it always
                  passes. It is a live count rather than a hand-edited flag,
                  so it is kept: it costs nothing and it cannot go stale. */ -}}
-          {{- $notesJa := (site.GetPage "/ja/notes").RegularPages -}}
           {{- $notesEn := (site.GetPage "/notes").RegularPages -}}
-          {{- if or $notesJa $notesEn }}
+          {{- if $notesEn }}
           <li>
-            <h3 data-lang-content="en"><a href="/notes/">Notes</a></h3>
-            <h3 data-lang-content="ja"><a href="/ja/notes/">Notes</a></h3>
-            <p data-lang-content="en">The casual shelf, newest first: migration records and working notes, edited as things change. Marked where something is unverified. Mostly in Japanese.</p>
-            <p data-lang-content="ja">気軽に書く棚。移行の記録と作業メモを日付順に。手順は古くなり得るので直しながら更新する。確かめていない箇所にはそう書いてある。</p>
+            <h3><a href="/notes/">Notes</a></h3>
+            <p>The casual shelf, newest first: migration records and working notes, edited as things change. Marked where something is unverified.</p>
           </li>
           {{- end }}
           <li>
-            <h3 data-lang-content="en"><a href="/projects/">Projects</a></h3>
-            <h3 data-lang-content="ja"><a href="/ja/projects/">プロジェクト</a></h3>
-            <!-- The bug reports filed upstream live on this page rather than
-                 in a row of their own here. Same text either way, but the
-                 reading changes with the position: on the front page it is
-                 addressed at whoever just arrived, and four issue numbers
-                 read as a claim being pressed. Inside Projects it is found
-                 by someone who went looking. The owner's instruction was to
-                 keep it from looking like someone making much of little, and
-                 placement decides most of that. The GitHub profile README
-                 already carries the same list, so anyone arriving from
-                 GitHub has read it before reaching this site. -->
-            <p data-lang-content="en">What I have built, what I have reported to the projects I use, and the repositories behind both.</p>
-            <p data-lang-content="ja">作ったもの、使っているプロジェクトに報告したこと、そのソースを置いているリポジトリ。</p>
+            <h3><a href="/projects/">Projects</a></h3>
+            <!-- The upstream bug reports are deliberately not mentioned
+                 here or on the Projects page: the owner removed them on
+                 2026-10-11 rather than restate what a GitHub visitor can
+                 already see. Do not reintroduce a count. -->
+            <p>What I have built, and the repositories behind it.</p>
           </li>
           <li>
-            <h3 data-lang-content="en"><a href="/about/">About</a></h3>
-            <h3 data-lang-content="ja"><a href="/ja/about/">このサイトについて</a></h3>
-            <p data-lang-content="en">Why I started, how the writing is split between what I decided and what Claude implemented, and the older diary this site began as.</p>
-            <p data-lang-content="ja">始めた理由、「自分が決めたこと」と「Claudeが実装したこと」の分け方、それにこのサイトが最初に取っていた日誌形式について。</p>
+            <h3><a href="/about/">About</a></h3>
+            <p>Why I started, how the writing is split between what I decided and what Claude implemented, and the older diary this site began as.</p>
           </li>
         </ul>
       </section>
 
       <hr class="taiki-rule">
 
-      <section class="taiki-section" data-lang-content="en">
+      <section class="taiki-section">
         <h2>Latest</h2>
         <ul class="taiki-list">
           {{- range $enWriting }}
@@ -203,22 +169,6 @@
         <p class="taiki-latest__more"><a href="/writing/">All writing &rarr;</a> <a href="/notes/">All notes &rarr;</a></p>
       </section>
 
-      <section class="taiki-section" data-lang-content="ja">
-        <h2>最近書いたもの</h2>
-        <ul class="taiki-list">
-          {{- range $jaWriting }}
-          <li>
-            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="taiki-latest__date">{{ .Date.Format "2006-01-02" }}</span></h3>
-          </li>
-          {{- end }}
-          {{- range $jaNotes }}
-          <li>
-            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="taiki-latest__date">{{ .Date.Format "2006-01-02" }}</span></h3>
-          </li>
-          {{- end }}
-        </ul>
-        <p class="taiki-latest__more"><a href="/ja/writing/">執筆の一覧 &rarr;</a> <a href="/ja/notes/">Notesの一覧 &rarr;</a></p>
-      </section>
 
     </main>
 
@@ -232,6 +182,5 @@
 
   </div>
 
-  <script src="/js/lang-toggle.js"></script>
 </body>
 </html>

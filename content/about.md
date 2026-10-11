@@ -5,8 +5,6 @@ lastmod: 2026-10-10
 standfirst: "What this site is, what it deliberately leaves out, and how the work is split: I decide what gets built, Claude writes the commands."
 description: "About taikiito.com — why a non-engineer moved his family's photos, files, passwords and mail off large cloud services onto one server, and how the writing here is split between decisions and implementation."
 lang: "en"
-altUrl: "/ja/about/"
-altLabel: "日本語"
 ---
 
 ## Where it started
@@ -42,7 +40,7 @@ Host names in the articles are replaced with placeholders like `vault.example.co
 ## How the site is laid out
 
 - **[Writing](/writing/)** — finished decision records, written on the assumption that they will not be reworked after publication. Only a few pieces live here.
-- **[Notes](/notes/)** — the casual shelf, in Japanese. One record per job: moving some specific thing off a large service and onto something I run. What I decided and why, then the steps — edited as things change, since steps go stale.
+- **[Notes](/notes/)** — the casual shelf. One record per job: moving some specific thing off a large service and onto something I run. What I decided and why, then the steps — edited as things change, since steps go stale.
 - **[Projects](/projects/)** — what I have built, and where the source lives.
 - **[Archive](/archive/)** — a dated dev diary I kept until the summer of 2026. I folded it because a dated post goes stale and never gets corrected. It is left here for the record; anything still current is in Writing.
 
