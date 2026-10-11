@@ -1,7 +1,7 @@
 ---
 title: "Projects"
-standfirst: "What I have built, and what I have reported to the projects I use."
-description: "Projects by Taiki Ito — a booking-to-calendar tool, a Singlish phrase collection, and bug reports filed upstream."
+standfirst: "What I have built."
+description: "Projects by Taiki Ito — a booking-to-calendar tool and a Singlish phrase collection."
 lang: "en"
 altUrl: "/ja/projects/"
 altLabel: "日本語"
@@ -22,14 +22,6 @@ Running on my server since October 2026.
 A collection of Singlish phrases and local slang picked up from everyday conversation in Singapore. Written in Japanese, for Japanese speakers living here.
 
 [singlish.taikiito.com](https://singlish.taikiito.com) · [source](https://github.com/taikiito-dev/singlish-lah)
-
-## Reported upstream
-
-I run the tool I work in every day on a VPS, inside Docker, not on a Mac, left up for weeks at a time, in Japanese. That is not the setup it was built and tested for, which is why the reports kept coming. None of them needed skill I have. They needed a machine nobody else was running.
-
-The reports themselves, including which ones led to fixes, are listed on [my GitHub profile](https://github.com/taikiito-dev) — one list, kept in one place.
-
-On one of them the maintainers drew a line I think is the right one: the project will not carry documentation for a deployment it does not run or test, but it will point at someone who does. That guide is here: [Running MulmoClaude on a VPS](/writing/running-mulmoclaude-on-a-vps/).
 
 ## Repositories
 

@@ -1,7 +1,7 @@
 ---
 title: "プロジェクト"
-standfirst: "作ったものと、使っているプロジェクトに報告したこと。"
-description: "予約メールをカレンダーに入れる道具、シングリッシュ採集サイト、使っているツールに出したバグ報告。"
+standfirst: "作ったもの。"
+description: "予約メールをカレンダーに入れる道具と、シングリッシュ採集サイト。"
 lang: "ja"
 altUrl: "/projects/"
 altLabel: "English"
@@ -22,14 +22,6 @@ altLabel: "English"
 シンガポールの日常会話で出会ったシングリッシュ・現地スラングを集めたサイト。日本語で、ここで暮らす日本語話者に向けて書いている。
 
 [singlish.taikiito.com](https://singlish.taikiito.com) · [ソース](https://github.com/taikiito-dev/singlish-lah)
-
-## 報告したこと
-
-毎日の作業に使っているツールを、VPSの上・Dockerの中・Macではない環境で、何週間も立ち上げたまま、日本語で動かしている。作られ方も試され方もそういう環境ではないので、報告が次々に出てきた。どれも自分の腕で見つけたものではない。誰も動かしていない機械が1台あった、というだけのこと。
-
-報告の中身と、どれが修正につながったかは、[GitHubのプロフィール](https://github.com/taikiito-dev)に一覧を置いている。一覧は1か所だけに持つ。
-
-そのうちの1件について、本家は「自分たちが動かしてもいない構成の説明をリポジトリに抱えることはしない。ただし、実際に動かしている人を案内する」という線を引いた。これは正しい線だと思う。その手引きは[Running MulmoClaude on a VPS](/writing/running-mulmoclaude-on-a-vps/)に置いた（英語）。
 
 ## リポジトリ
 
