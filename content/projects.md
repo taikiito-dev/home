@@ -25,14 +25,17 @@ A collection of Singlish phrases and local slang picked up from everyday convers
 
 ## Reported upstream
 
-I run the tool I work in every day on a VPS, inside Docker, not on a Mac, left up for weeks at a time, in Japanese. That is not the setup it was built and tested for, which is why six issues came out of it. Four led to fixes:
+I run the tool I work in every day on a VPS, inside Docker, not on a Mac, left up for weeks at a time, in Japanese. That is not the setup it was built and tested for, which is why the reports kept coming. These are the ones that led to fixes:
 
+- [#3425](https://github.com/receptron/mulmoclaude/issues/3425) — two routes were unauthenticated by design, safe on loopback and not behind a public hostname; the websocket half is now closed upstream
 - [#3415](https://github.com/receptron/mulmoclaude/issues/3415) — journal session links pointed at the wrong path, dead in editors
 - [#3357](https://github.com/receptron/mulmoclaude/issues/3357) — the stdio→HTTP shim leaked one port per turn; the MCP server silently disappeared after about twenty turns
 - [#3018](https://github.com/receptron/mulmoclaude/issues/3018) — a manually registered stdio MCP server never surfaced
 - [#2937](https://github.com/receptron/mulmoclaude/issues/2937) — intervals longer than 24h all collapsed into "every day at 00:00 UTC"
 
 None of these needed skill I have. They needed a machine nobody else was running.
+
+On the last one the maintainers drew a line I think is the right one: the project will not carry documentation for a deployment it does not run or test, but it will point at someone who does. That guide is here: [Running MulmoClaude on a VPS](/writing/running-mulmoclaude-on-a-vps/).
 
 [All issues](https://github.com/receptron/mulmoclaude/issues?q=is%3Aissue+author%3Ataikiito-dev)
 
