@@ -1,9 +1,9 @@
 ---
 title: "About"
 date: 2026-09-12
-lastmod: 2026-10-10
+lastmod: 2026-10-11
 standfirst: "What this site is, what it deliberately leaves out, and how the work is split: I decide what gets built, Claude writes the commands."
-description: "About taikiito.com — why a non-engineer moved his family's photos, files, passwords and mail off large cloud services onto one server, and how the writing here is split between decisions and implementation."
+description: "About taikiito.com — why a non-engineer moved his family's photos, files, passwords and mail off large cloud services onto one server, and why what gets published here is the decisions, not the steps."
 lang: "en"
 ---
 
@@ -13,7 +13,7 @@ It started from wanting to explain what I had been doing in words my wife could 
 
 Since September 2026 I have been moving the things I had left sitting on Google, Apple and other large services — photos, passwords, files, mail, contacts — onto hardware I pay for. Google Photos to Immich. Google Drive to a Nextcloud of my own. A commercial password manager to Vaultwarden.
 
-Some of it turned out easier than I expected. Some of it cost me a whole day. I wanted to tell her about it, but the [diary](/archive/) I was writing at the time was mostly notes to myself and assumed technical background. It was not something I could hand over.
+Some of it turned out easier than I expected. Some of it cost me a whole day. I wanted to tell her about it, but the dated dev diary I was keeping at the time was mostly notes to myself and assumed technical background. It was not something I could hand over.
 
 So I rewrote the same experience in a form that needs **no prior knowledge** — and that someone who wants to do the same thing can use directly. That is what the decision records under [Writing](/writing/) are for.
 
@@ -41,7 +41,8 @@ Host names in the articles are replaced with placeholders like `vault.example.co
 
 - **[Writing](/writing/)** — finished decision records, written on the assumption that they will not be reworked after publication. Only a few pieces live here.
 - **[Projects](/projects/)** — what I have built, and where the source lives.
-- **[Archive](/archive/)** — a dated dev diary I kept until the summer of 2026. I folded it because a dated post goes stale and never gets corrected. It is left here for the record; anything still current is in Writing.
+
+There used to be a dated dev diary here as well. It came down in October 2026, for the same reason the steps did: most of it was not something I could stand behind in my own words.
 
 Updated at whatever pace is sustainable, when there is something to say.
 

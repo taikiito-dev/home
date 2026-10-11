@@ -1,9 +1,9 @@
 ---
 title: "Taste Is Not a Reason"
 date: 2026-10-07
-lastmod: 2026-10-10
+lastmod: 2026-10-11
 weight: 17
-description: "A non-engineer's record of adjusting a two-person chat-and-calendar PWA well over a hundred times, with Claude doing the implementation: five dated decisions settled by measurement rather than preference — retiring every read receipt, cutting ornament for speed, removing the navigation outright — plus the dimensions and motion rules in the second half."
+description: "A non-engineer's record of adjusting a two-person chat-and-calendar PWA well over a hundred times, with Claude doing the implementation: five dated decisions settled by measurement rather than preference — retiring every read receipt, cutting ornament for speed, removing the navigation outright."
 lang: "en"
 tags: ["decision record", "UI design", "PWA", "Claude"]
 ---
@@ -14,9 +14,9 @@ The division of labour first. **I did not write the CSS or the JavaScript.** Cla
 
 That split fits visual work unusually well. **This app has two users, so the only person who can say "this is hard to read while using it" is someone using it.** Getting the discomfort into words was my half; turning the words into numbers was Claude's. Every one of the five records below starts with me pointing at something.
 
-What follows is the decisions. Measurements and implementation are collected in the lower half of this page.
+What follows is the decisions. The CSS and JavaScript that carried them out are not reproduced here; what I publish is what was decided and why.
 
-**What this covers** — Settling the look of a two-person chat-and-calendar PWA by measurement rather than taste, across five dated records — from retiring every read receipt to adding and then removing the navigation. The implementation notes are in the [second half](#implementation).
+**What this covers** — Settling the look of a two-person chat-and-calendar PWA by measurement rather than taste, across five dated records — from retiring every read receipt to adding and then removing the navigation.
 
 ---
 
@@ -155,69 +155,3 @@ Only the ones that survived the five records above.
 
 Next time I say something, I intend to write it down at the moment I say it.
 
----
-
-# Implementation
-
-Everything below was written by Claude and confirmed by running it on my own devices. It is kept here for two reasons. One, it shows the shape and the length of the work before you start. Two, **it is material someone wanting to do the same thing can hand straight to their own AI.**
-
-## How dimensions get chosen
-
-Dimensions come from measuring first-party apps, not from preference. There is no correct number for a bubble's corner radius, but there is a defensible **ratio**. Measured locally: radius ÷ font size = 1.63, radius ÷ the height of two lines = 0.436. Change the font size and the radius follows the ratio. Hold ratios rather than numbers and nothing breaks later.
-
-Do not fight dimensions the OS has already set: 44pt header, 49pt bottom tab bar. Frequently tapped targets at least 40px (Apple's guidance is 44pt square). One caveat: **the amount of space reserved for content must not exceed the real height.** Any excess is taken directly out of the content.
-
-## How colours get sampled
-
-Screenshots from iPhone and Mac are stored in **Display P3** (a wider colour space than sRGB). Write the raw values from one into CSS and the result is slightly duller than the device. Always convert to sRGB and **round-trip a colour you already know as a check** before adopting anything. Eyeballing colour is also out: when a screenshot arrives, sample the pixels mechanically.
-
-## The read marker (Decision 1's implementation)
-
-If the appearance is uniquely determined by state, let CSS decide it. Inserting the marker from JavaScript creates five or more repaint routes — first render, scrolling back through history, new messages, switching rooms, optimistic send — and one of them will always forget to call it.
-
-```css
-.row.me.read:not(:has(~ .row.me.read)) { /* place the marker here */ }
-```
-
-"My own read row that has no later read row of mine after it" can only ever match a single row, because read state is applied from the oldest row forward. JavaScript's only job is to mark which rows are read; it knows nothing about where the marker goes. On a browser that does not support this selector the whole rule is ignored and **the marker simply does not appear** — nothing breaks.
-
-For dimensions: leave 22px of margin below the row and position the marker absolutely inside it. Letting it overhang without reserving the space makes it collide with the next row (**adjacent vertical margins collapse into one**, so nobody reserves room for the overhang). The 45px from the right is the avatar's 34 plus its 5 of margin plus the row's 6 gap, which lines the marker up with **the right edge of the bubble**.
-
-Beside a sticker, the available space is the 11px gap between the image and the avatar (6px row gap + 5px avatar margin). The marker is 13px, so `right:-13px` fits exactly.
-
-## Rules kept for motion
-
-- Animate only `transform` and opacity. Never width, height, or position itself (a `height` or `padding-bottom` transition relayouts the whole screen every frame, so stretching the duration does not stop the stutter)
-- Blur only where the background does not move. It can be dropped entirely while something is animating. Never interpolate its radius
-- No shadows on moving elements (a one-pixel line at the edge substitutes)
-- No `transition` or `opacity` on a static ornament. Express faintness through colour
-- Give side-by-side glyphs a no-shrink declaration (`flex: 0 0 auto`)
-- Give the animating side a repaint-containment declaration (`contain: layout paint`)
-- Compute drag response once per frame. **Never let width follow the finger** — change it once, at the moment a threshold is crossed
-- On release, decide open-or-closed from **velocity** (px/ms), not position
-- Change a duration and every timeout tied to that duration changes with it
-- Finish the contents of a thing before you animate it (most "stuttering" is not the curve or the duration; it is other rendering happening in the same window)
-- Only one surface may move during a screen transition (three at once reads as elevator doors)
-- All of the above is disabled when the OS "reduce motion" setting is on
-
-## No meaning in spacing
-
-A convention of widening the gap when the sender changes nearly went in. Measured against an existing app used as reference, the gap does not change when the sender changes — it is fixed at 17pt. Spacing is too convenient as a way of expressing grouping: start using it in one place and you will want it everywhere, and eventually nobody can say which gap means what. Deciding not to use it at all is cheaper.
-
-## Entrances and exits (Decision 5's implementation)
-
-Four bottom tabs, swapped for a 56px left rail on desktop. Stacking order sits above the full-screen panels and below the image viewer. **Funnel every exit through one function** — any transition to a different context must pass through it. Before that existed, the login screen ended up hidden under an opaque panel and looked like a freeze. Each new screen gets registered in three places: the close handler, the swipe-away gesture, and the Escape ordering. Anything that covers the screen gets one sweeper that retracts it if it is showing when it should not be.
-
-## Updating the screen during text entry (an iOS trap)
-
-**If the set of form controls on screen changes while text is being entered, iOS rebuilds the bar above the keyboard — and takes the Japanese conversion candidates down with it.** Worse, **rewriting an attribute with the same value still counts as a change.**
-
-Two fixes. Write only when the value actually changes. And **skip the update entirely while an input has focus, then redo it when focus leaves.** Alongside that, frequently rebuilt regions stopped using `<button>` (same appearance and same hit area, with the role declared on a `div` instead). In an app like chat, where the screen updates while you are typing, this has to be settled as a convention.
-
-## How waiting is shown
-
-Float a "loading…" card in the middle of the screen and it will cover something. There is a surface that covers nothing: the 2px bottom edge of the header. Run a bar across it left to right and you have said "waiting" without hiding a single piece of information — and without words, so there is nothing to translate.
-
-## Anything the UI promises gets implemented
-
-If the desktop layout prints "⌘/Ctrl + Enter to send" under the input, that shortcut works. Printed and broken is worse than never printed.
