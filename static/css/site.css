@@ -575,6 +575,19 @@ li[data-lang-content].is-active {
   color: #a8a196;
 }
 
+/* Breadcrumb: the separator and the current page are not links, and sit
+   back a step from the crumbs that are. The trail ends on the page you are
+   already on, so it is deliberately the quietest item on the line. */
+.taiki-metabar__sep {
+  color: #c3bcb0;
+}
+
+.taiki-metabar__here {
+  color: #8c8578;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
 /* ---- Typographic detail --------------------------------------------- */
 
 /* Tabular figures everywhere a number is meant to line up or be scanned:

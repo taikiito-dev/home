@@ -70,6 +70,14 @@
 
     <main id="main-content">
 
+      {{- /* Same breadcrumb as single.html, one level shorter: a shelf index
+             sits directly under the homepage. */ -}}
+      <nav class="taiki-metabar" aria-label="{{ if $isJa }}現在位置{{ else }}Breadcrumb{{ end }}">
+        <a class="taiki-metabar__shelf" href="/">{{ if $isJa }}ホーム{{ else }}Home{{ end }}</a>
+        <span class="taiki-metabar__sep" aria-hidden="true">/</span>
+        <span class="taiki-metabar__here" aria-current="page">{{ .Title }}</span>
+      </nav>
+
       <h1 class="taiki-listpage__title">{{ .Title }}</h1>
       {{- with .Params.standfirst }}
       <p class="taiki-prose__standfirst">{{ . }}</p>

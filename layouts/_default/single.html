@@ -73,9 +73,20 @@
 
     <main id="main-content">
 
-      {{- with $shelfLabel }}
-      <p class="taiki-metabar">
+      {{- /* Breadcrumb, not just a shelf label. A reader who lands here from
+             a search result sees where in the site they are standing, and
+             pages that sit outside a shelf (/projects/, /about/) get one
+             too - which the bare shelf label could not give them. The home
+             crumb points at "/" in both languages: there is no /ja/ index,
+             the homepage swaps language in the browser. */ -}}
+      <nav class="taiki-metabar" aria-label="{{ if $isJa }}現在位置{{ else }}Breadcrumb{{ end }}">
+        <a class="taiki-metabar__shelf" href="/">{{ if $isJa }}ホーム{{ else }}Home{{ end }}</a>
+        <span class="taiki-metabar__sep" aria-hidden="true">/</span>
+        {{- with $shelfLabel }}
         <a class="taiki-metabar__shelf" href="{{ $shelfURL }}">{{ . }}</a>
+        <span class="taiki-metabar__sep" aria-hidden="true">/</span>
+        {{- end }}
+        <span class="taiki-metabar__here" aria-current="page">{{ .Title }}</span>
         {{- with $.Date }}<span class="taiki-metabar__date">{{ if $isJa }}{{ .Format "2006-01-02" }}{{ else }}{{ .Format "2 Jan 2006" }}{{ end }}</span>{{ end -}}
         {{- /* `lastmod` only shows when it actually differs from the
                publication date, so an untouched page does not carry a
@@ -86,8 +97,7 @@
         {{- if and $.Lastmod $.Date (ne ($.Lastmod.Format "2006-01-02") ($.Date.Format "2006-01-02")) }}
         <span class="taiki-metabar__lastmod">{{ if $isJa }}最終更新 {{ $.Lastmod.Format "2006-01-02" }}{{ else }}updated {{ $.Lastmod.Format "2 Jan 2006" }}{{ end }}</span>
         {{- end }}
-      </p>
-      {{- end }}
+      </nav>
 
       <article class="taiki-prose">
         <h1>{{ .Title }}</h1>
