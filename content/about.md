@@ -15,7 +15,7 @@ Since September 2026 I have been moving the things I had left sitting on Google,
 
 Some of it turned out easier than I expected. Some of it cost me a whole day. I wanted to tell her about it, but the [diary](/archive/) I was writing at the time was mostly notes to myself and assumed technical background. It was not something I could hand over.
 
-So I rewrote the same experience in a form that needs **no prior knowledge** — and that someone who wants to do the same thing can use directly. That is why the migration records under [Notes](/notes/) exist.
+So I rewrote the same experience in a form that needs **no prior knowledge** — and that someone who wants to do the same thing can use directly. That is what the decision records under [Writing](/writing/) are for.
 
 ## What this site is, and is not
 
@@ -31,7 +31,7 @@ What changed my mind was realising that **hiding it deletes the most useful part
 
 You, reading this, probably have access to Claude or ChatGPT too. So the steps are available to you on request, and the version you get will be newer and fitted to your machine. **What you cannot get on request is where it stalls and what is worth protecting.** Those I decided, so those I can write.
 
-From October 2026 on, each article is built in two halves: **decisions** on top (what I settled on, what I turned down, how it looks in hindsight), and **implementation** below (written by Claude, run on my own machines, confirmed by me). The order matters, because **the decisions are the part you need first.**
+From October 2026 on, what I publish is the decisions — what I settled on, what I turned down, how it looks in hindsight. The steps are left out. A page of commands I did not work out myself is a page I cannot defend when asked about it, and the version your own assistant writes for you will be newer and fitted to your machine anyway.
 
 The split feels good to work in. Not having to compose the steps means I can spend the attention on what is worth protecting. **Being able to delegate the implementation is what leaves the human side free to concentrate on judgement.** What I was doing over that month was, probably, practice at that. And anyone can start practising.
 
@@ -40,7 +40,6 @@ Host names in the articles are replaced with placeholders like `vault.example.co
 ## How the site is laid out
 
 - **[Writing](/writing/)** — finished decision records, written on the assumption that they will not be reworked after publication. Only a few pieces live here.
-- **[Notes](/notes/)** — the casual shelf. One record per job: moving some specific thing off a large service and onto something I run. What I decided and why, then the steps — edited as things change, since steps go stale.
 - **[Projects](/projects/)** — what I have built, and where the source lives.
 - **[Archive](/archive/)** — a dated dev diary I kept until the summer of 2026. I folded it because a dated post goes stale and never gets corrected. It is left here for the record; anything still current is in Writing.
 

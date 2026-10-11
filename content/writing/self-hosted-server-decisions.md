@@ -10,7 +10,7 @@ tags: ["decision record", "self-hosting", "VPS", "backup", "operations"]
 
 I negotiate crude oil contracts for a living. I don't write code — I decide what to build and why, and Claude Code writes it. **Until September 2026 I had nothing to do with software at all** — no server of my own, no command line, none of it.
 
-**What this covers** — Putting photos, files, passwords, calendars and the mail for a domain I own onto one rented server, and keeping it running since September 2026. Five dated decisions, and the options I turned down. The implementation is a separate page: [Standing Up a Self-Hosted Server](/notes/self-hosted-server-setup/).
+**What this covers** — Putting photos, files, passwords, calendars and the mail for a domain I own onto one rented server, and keeping it running since September 2026. Five dated decisions, and the options I turned down.
 
 In September 2026 I started moving what I had been keeping on large cloud services onto a single server I pay a monthly fee for. Photos, files, passwords, calendars, and eventually mail.
 
@@ -18,7 +18,7 @@ The reason was simple: **I did not like that the terms of custody could change a
 
 That server has been running since September 2026. Two users. It has not been out of my hands for a day.
 
-This page is a record of **what I decided** over the first month: what I was torn between, which option I took, which ones I turned down, and whether the call looks right or wrong from here. With dates. **What I would do, and in what order, to stand this up from scratch** is written out on its own page: [Standing Up a Self-Hosted Server](/notes/self-hosted-server-setup/).
+This page is a record of **what I decided** over the first month: what I was torn between, which option I took, which ones I turned down, and whether the call looks right or wrong from here. With dates.
 
 ## What is on it
 
@@ -181,7 +181,5 @@ The checks I have put in since are an attempt to convert that luck into procedur
 *The first month, one server, two users. I have not typed it. I have decided it.*
 
 ---
-
-*How I would stand the same setup up from scratch, in order, is on its own page: [Standing Up a Self-Hosted Server](/notes/self-hosted-server-setup/).*
 
 **Changelog** — 7 October 2026: first version / 8 October 2026: added a second half covering how I would stand this up from scratch / 11 October 2026: that second half moved to its own page
