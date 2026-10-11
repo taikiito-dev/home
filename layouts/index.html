@@ -84,9 +84,22 @@
       {{- /* Latest spans BOTH shelves (writing + notes) since 2026-10-10,
              when most Japanese articles moved to /ja/notes/: a Latest fed
              from /writing/ alone would freeze at two entries while new
-             notes kept appearing invisibly. */ -}}
-      {{- $en := first 3 ((union (site.GetPage "/writing").RegularPages (site.GetPage "/notes").RegularPages).ByDate.Reverse) }}
-      {{- $ja := first 3 ((union (site.GetPage "/ja/writing").RegularPages (site.GetPage "/ja/notes").RegularPages).ByDate.Reverse) }}
+             notes kept appearing invisibly.
+
+             Fixed slots per shelf since 2026-10-11, rather than the newest
+             three across both. Sorting the union purely by date made the
+             Japanese list all notes: both Japanese Writing pages are dated
+             7 October and three notes are newer, so the shelf holding the
+             finished pieces disappeared from the front page of one language
+             while showing up on the other. Two Writing plus one Note keeps
+             the count at three - the cap is the whole point of this block -
+             and guarantees the finished work is what a first-time visitor
+             sees first. Rendered as two ranges rather than one merged slice
+             so neither shelf being empty can break the template. */ -}}
+      {{- $enWriting := first 2 (site.GetPage "/writing").RegularPages.ByDate.Reverse }}
+      {{- $enNotes := first 1 (site.GetPage "/notes").RegularPages.ByDate.Reverse }}
+      {{- $jaWriting := first 2 (site.GetPage "/ja/writing").RegularPages.ByDate.Reverse }}
+      {{- $jaNotes := first 1 (site.GetPage "/ja/notes").RegularPages.ByDate.Reverse }}
 
       <!-- Destinations come FIRST, before the latest-articles list.
 
@@ -110,30 +123,26 @@
           <li>
             <h3 data-lang-content="en"><a href="/writing/">Writing</a></h3>
             <h3 data-lang-content="ja"><a href="/ja/writing/">執筆</a></h3>
-            <p data-lang-content="en">Finished decision records, written on the assumption that they will not be reworked later: what I was torn between, what I turned down, and how the calls look in hindsight.</p>
-            <p data-lang-content="ja">完成品として書いた判断の記録。何に迷い、どの案を却下し、後から見てどれが外れていたか。公開後は大きく書き換えない数本だけを置いている。</p>
+            <!-- Keep this in step with content/writing/_index.md and
+                 content/ja/writing/_index.md. The shelf stopped being
+                 decision records only on 2026-10-11, when the MulmoClaude
+                 VPS guide was published here: upstream asked for it and
+                 links it, so it sits with the finished pieces even though
+                 it carries commands. The card said "decision records" for
+                 as long as it took to notice. -->
+            <p data-lang-content="en">Finished pieces, written on the assumption that they will not be reworked later: what I was torn between, what I turned down, how the calls look in hindsight &mdash; and one guide for a setup nobody else documents.</p>
+            <p data-lang-content="ja">完成品として書いた判断の記録だけを置いている。何に迷い、どの案を却下し、後から見てどれが外れていたか。公開後は大きく書き換えない。</p>
           </li>
           {{- /* The Notes row belongs HERE, directly under Writing, and the
                  owner chose to link it from the homepage rather than leave
                  it unlisted ("a shelf nobody can find is the same as not
-                 having one"). It is held back only because the shelf has
-                 no entries yet, and sending a first-time visitor to an
-                 empty page is worse than not advertising it.
+                 having one").
 
-                 Restore by deleting this guard once content/notes/ has at
-                 least one page. The markup is kept rather than deleted so
-                 restoring is one edit:
-
-                   <li>
-                     <h3 data-lang-content="en"><a href="/notes/">Notes</a></h3>
-                     <h3 data-lang-content="ja"><a href="/ja/notes/">Notes</a></h3>
-                     <p data-lang-content="en">Working notes, newest first: things I looked up, things I got stuck on, things not settled yet. Unfinished on purpose, and marked where I have not verified something.</p>
-                     <p data-lang-content="ja">書きかけの作業メモ。調べたこと、詰まったこと、まだ結論が出ていないこと。完成品ではなく、確かめていない箇所にはそう書いてある。</p>
-                   </li>
-
-                 The guard is a live count, not a hand-edited flag, so the
-                 row appears by itself the moment a note is published and
-                 cannot be left stale. */ -}}
+                 The guard dates from when the shelf was empty and sending a
+                 visitor to an empty page would have been worse than not
+                 advertising it. Both shelves have pages now, so it always
+                 passes. It is a live count rather than a hand-edited flag,
+                 so it is kept: it costs nothing and it cannot go stale. */ -}}
           {{- $notesJa := (site.GetPage "/ja/notes").RegularPages -}}
           {{- $notesEn := (site.GetPage "/notes").RegularPages -}}
           {{- if or $notesJa $notesEn }}
@@ -174,7 +183,12 @@
       <section class="taiki-section" data-lang-content="en">
         <h2>Latest</h2>
         <ul class="taiki-list">
-          {{- range $en }}
+          {{- range $enWriting }}
+          <li>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="taiki-latest__date">{{ .Date.Format "2 Jan 2006" }}</span></h3>
+          </li>
+          {{- end }}
+          {{- range $enNotes }}
           <li>
             <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="taiki-latest__date">{{ .Date.Format "2 Jan 2006" }}</span></h3>
           </li>
@@ -186,7 +200,12 @@
       <section class="taiki-section" data-lang-content="ja">
         <h2>最近書いたもの</h2>
         <ul class="taiki-list">
-          {{- range $ja }}
+          {{- range $jaWriting }}
+          <li>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="taiki-latest__date">{{ .Date.Format "2006-01-02" }}</span></h3>
+          </li>
+          {{- end }}
+          {{- range $jaNotes }}
           <li>
             <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="taiki-latest__date">{{ .Date.Format "2006-01-02" }}</span></h3>
           </li>
