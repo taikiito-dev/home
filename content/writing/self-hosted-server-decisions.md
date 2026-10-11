@@ -132,7 +132,7 @@ So far nothing else has crossed that line.
 
 ---
 
-## Decision 5 — I stopped accepting "build succeeded" as evidence (today)
+## Decision 5 — I stopped accepting "build succeeded" as evidence
 
 **Date.** 7 October 2026
 
@@ -148,7 +148,7 @@ Neither counts as a failure, so the success report was true. **It just answered 
 
 **Why that shape.** What actually hurts me is not knowing which of two things is wrong: is publishing lagging, or did the article get dropped? Those two have opposite responses, and guessing wrong costs hours of waiting. So all I need is to know which commit production came from. **I do not need the cause. Once the problem is halved, finding the cause is Claude's job.**
 
-**Right or wrong in hindsight.** **Unknown.** I added it today, and it pays off the next time this happens. I will come back and fill this in.
+**Right or wrong in hindsight.** **Unknown.** It went in on the day of the decision, and it pays off the next time this happens. I will come back and fill this in.
 
 **What stuck.** My job is not to find the cause. **It is to cut the search space in half.** That does not require knowing the implementation.
 
