@@ -92,11 +92,16 @@ The behaviour worth knowing is the failure. **Add the origin, skip the restart, 
 ## 4. Keeping it running
 
 ```ini
+[Unit]
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
 [Service]
 User=you
 WorkingDirectory=/home/you/mulmoclaude
 ExecStart=/usr/bin/npx mulmoclaude@2.3.0
 Restart=always
+RestartSec=5
 ```
 
 **Pin the exact version. Do not write `@latest`.**
@@ -108,6 +113,10 @@ npm error ENOTEMPTY: rename '.../node_modules/mulmoclaude' -> '.../node_modules/
 ```
 
 The leftover is the part that matters: once it was there, the same rename failed the same way on every attempt that followed — and `Restart=always` turns a one-off into a loop. Mine restarted **75 times across about 12 minutes** before I stopped it. Recovery was `systemctl stop`, `rm -rf ~/.npm/_npx/<hash>`, `systemctl start`.
+
+**`RestartSec` is not what stops that loop.** Mine had it; five seconds between attempts is what produced one restart every ten seconds for twelve minutes rather than a tighter spin. What stops it is a limit on how many attempts are allowed: `StartLimitBurst` with `StartLimitIntervalSec`, which puts the unit in a failed state instead of retrying forever. Those two go in `[Unit]`, not `[Service]`.
+
+There is a deeper point here that I have not acted on. **`npx` in `ExecStart` means the service reaches the network in order to start** — which is the only reason an interrupted install could break startup at all. Installing the package and pointing `ExecStart` at the binary removes that whole class of failure. I run the `npx` form, so the pre-warm below is a workaround for a shape I chose, not the better shape.
 
 Pinning has one consequence: changing the version number in the unit means the next restart installs a fresh tree instead of reusing the one already on disk, and the restart sits there waiting for it. Warm it first, from the workspace directory:
 
@@ -123,13 +132,18 @@ As for the server itself: mine is a Contabo Cloud VPS, 6 vCPU / 12 GB RAM / 200 
 
 **Do not monitor the public URL to check the application is alive.** Mine sat behind Cloudflare Access, so the monitor followed the redirect, found a perfectly healthy login page, and reported OK every single minute of the twelve-minute outage described above. Not one alert fired.
 
-Monitor the application's own port from inside the server instead. And a monitor is not a monitor until you have made it go red on purpose — point it at a closed port once and confirm the failure is actually recorded.
+Monitor the application's own port from inside the server instead.
+
+**That check has its own blind spot, and mine still has it.** A monitor running on the same machine cannot tell you the machine is gone; it dies with it. What closes that is a probe from somewhere else — an external uptime service hitting an endpoint that answers without authentication, or a dead-man's switch that the on-box check has to keep feeding. Mine runs on the same box as the application, so what I have catches the application dying and would not catch the server dying.
+
+And a monitor is not a monitor until you have made it go red on purpose — point it at a closed port once and confirm the failure is actually recorded.
 
 ## What not to do
 
 - Don't bind to `0.0.0.0`, even temporarily.
 - Don't serve a public hostname with only the bearer token in front, for the reasons in section 1.
 - Don't write `@latest` in a systemd unit, for any package.
+- Don't let a restart policy retry without a limit.
 - Don't treat a 200 from the public URL as proof the application is up.
 
 ---
