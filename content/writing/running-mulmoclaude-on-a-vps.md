@@ -16,6 +16,8 @@ tags: ["MulmoClaude", "self-hosting", "VPS", "Cloudflare", "operations"]
 >
 > The application's own bearer token does not cover this. Everything below assumes the proxy is there.
 
+**If an agent is doing this for you, give it [`agent.txt`](/writing/running-mulmoclaude-on-a-vps/agent.txt) instead.** Most people who put MulmoClaude on a server will not type these commands themselves — they will ask an assistant to do it. That file carries the same guidance as operating constraints: preconditions, the checks that prove each one, the points where it should stop and ask you, and which facts on this page expire. This page is the reasoning; that file is the rules.
+
 **What MulmoClaude is.** [MulmoClaude](https://github.com/receptron/mulmoclaude) is an open-source, MIT-licensed personal AI assistant: Claude with a workspace of plain files, where chat opens the right tool — a wiki, a spreadsheet, a chart — and small apps get built for an audience of one. It is designed local-first, for the machine in front of you, bound to `127.0.0.1`. Mine has run on a rented server since August 2026 — which is exactly the setup this page is about.
 
 **Who this is for.** You already have a server and a domain, and you want MulmoClaude running on the server rather than on the machine in front of you — so that it stays awake, keeps working while you are away, and can be reached from a phone.
