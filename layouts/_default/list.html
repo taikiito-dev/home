@@ -3,17 +3,14 @@
      English only since 2026-10-11; see single.html for why the bilingual
      machinery was removed.
 
-     Pages are ordered by `weight` ascending, so the set reads in the order
-     it was meant to be read (the foundational guide is weight 1). This is a
-     reference set, not a feed, which is also why no date is printed on each
-     row - the dates are on the pages themselves.
-
-     Archive and Notes were ordered date-descending instead, and Notes
-     printed its dates, because both were running logs where age was the
-     first thing a reader needed. Both shelves were folded into /writing/ on
-     2026-10-11 and that branch went with them. Restoring a running log
-     means restoring the ordering too: a feed sorted by weight silently
-     reads oldest-first.
+     Pages are ordered newest first. Until 2026-10-13 they were ordered by
+     `weight` ascending, on the theory that this shelf was a reference set
+     to be read in a meant order, not a feed - which was also the reason no
+     date was printed per row. Both halves of that theory fell on the same
+     day: a fresh-eyes review found the dateless list disorienting, so rows
+     got dates, and with dates visible a weight order silently reads
+     oldest-first, which just looks like the site leads with its stalest
+     piece. The `weight` values in front matter are no longer read here.
 */ -}}
 {{- /* Japanese companions are excluded from this index. One page has a
        Japanese summary alongside it (see single.html for the whole
@@ -21,7 +18,7 @@
        shelf whose premise is one row per piece. The Japanese page is
        reached from the language row on its English counterpart, and stays
        in the sitemap so a Japanese search can still find it. */ -}}
-{{- $pages := where .RegularPages.ByWeight "Params.lang" "!=" "ja" -}}
+{{- $pages := where .RegularPages.ByDate.Reverse "Params.lang" "!=" "ja" -}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
