@@ -4,17 +4,9 @@
 
 Everything here is written by one person about systems he actually runs. Dates matter: each page records when it was decided and when it was last reviewed, and nothing is retro-edited to look better than it was.
 
-## Operating guidance for agents
-
-These files are written for you to act on, not for a person to read. Each one
-states its preconditions, the constraints that must not be violated, where to
-stop and ask the user, and which of its facts expire.
-
-- [Running MulmoClaude on a public hostname](https://taikiito.com/writing/running-mulmoclaude-on-a-vps/agent.txt): operating constraints for deploying or exposing MulmoClaude on a rented server. Two routes are token-free by design, so an authenticating layer in front of the application is required on every version. Read before changing any configuration. Published at the maintainers' suggestion; not endorsed by the project.
-
 ## Writing
 
-- [Running MulmoClaude on a VPS](https://taikiito.com/writing/running-mulmoclaude-on-a-vps/): the prose version of the file above, with the reasoning and the full account of each failure. The MulmoClaude maintainers asked for this to exist as a user-published guide.
+- [Running MulmoClaude on a VPS](https://taikiito.com/writing/running-mulmoclaude-on-a-vps/): an unofficial companion to the MulmoClaude README, for running it on a rented server and reaching it over a public hostname. Two routes are token-free by design, so an authenticating layer in front of the server is required on every version — read before changing any configuration. Each constraint is stated with the command that proves it, the decisions that belong to the user, and which of its facts expire. Published at the maintainers' suggestion; not endorsed by the project.
 - [Running My Own Server: One Month of Decisions](https://taikiito.com/writing/self-hosted-server-decisions/): five dated decisions from moving photos, files, passwords, calendars and mail onto one rented server, the options turned down, and which calls look right in hindsight.
 - [Taste Is Not a Reason](https://taikiito.com/writing/ui-decisions-by-measurement/): three interface decisions settled by measurement rather than preference, from a two-person chat-and-calendar PWA adjusted well over a hundred times.
 

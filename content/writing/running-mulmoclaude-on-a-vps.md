@@ -18,7 +18,7 @@ tags: ["MulmoClaude", "self-hosting", "VPS", "Cloudflare", "operations"]
 
 **This page is a companion to the official [README](https://github.com/receptron/mulmoclaude#readme) and [user guide](https://receptron.github.io/mulmoclaude/) — not a replacement for them.** Install, prerequisites and first run belong to the README and are not repeated here; everything in its [Prerequisites](https://github.com/receptron/mulmoclaude#prerequisites) applies, on the server rather than on your laptop. This page picks up where the README's **Quick Start** ends, and covers the one configuration the project does not ship.
 
-**If an agent is doing this for you, give it [`agent.txt`](/writing/running-mulmoclaude-on-a-vps/agent.txt) instead.** Most people who put MulmoClaude on a server will not type these commands themselves — they will ask an assistant to do it. That file carries the same guidance as operating constraints: preconditions, the checks that prove each one, the points where it should stop and ask you, and which facts on this page expire. This page is the reasoning; that file is the rules.
+**If you are asking an assistant to do this for you, give it this page.** Most people who put MulmoClaude on a server will not type these commands themselves. Every constraint below is stated as a rule, with the command that proves it and the point at which it should stop and ask you.
 
 **What MulmoClaude is.** [MulmoClaude](https://github.com/receptron/mulmoclaude) is an open-source, MIT-licensed personal AI assistant: Claude with a workspace of plain files, where chat opens the right tool — a wiki, a spreadsheet, a chart — and small apps get built for an audience of one. It is designed local-first, for the machine in front of you, bound to `127.0.0.1`. Mine has run on a rented server since August 2026 — which is exactly the setup this page is about.
 
@@ -26,9 +26,20 @@ tags: ["MulmoClaude", "self-hosting", "VPS", "Cloudflare", "operations"]
 
 **If you only want your phone, you probably don't need this page.** The README's [Remote Access](https://github.com/receptron/mulmoclaude#remote-access) does that already: sign in at both ends with the same Google account and the phone finds your host through the project's relay. No hostname, no proxy, nothing to operate — and none of the risk at the top of this page. The trade is that it depends on a Google account and a shared relay, and gives the phone a purpose-built view rather than the whole app. If that trade suits you, use it and stop reading.
 
+**Two other cases where none of this is needed.** If the service stays bound to `127.0.0.1` and is used only from that machine, there is nothing here you have to do. And if access is only ever over a VPN or Tailscale, with nothing listening on a public interface, the VPN already satisfies the requirement in section 1 — the rest of the page still applies.
+
 **What this is not.** I run this setup. The project does not. When I raised the token-free paths with the maintainers ([#3425](https://github.com/receptron/mulmoclaude/issues/3425)), they confirmed the behaviour, shipped the fix for one of them, and were clear that a public-hostname deployment sits outside what they test. Their suggestion was that this guidance be published by a user, with the warning at the top — which is this page. So this guide is mine, and so is the responsibility for it. Nothing here carries the project's endorsement.
 
 **The shape, not the products.** What matters below is the shape: nothing listening on the public interface, something that authenticates the request *before* the server receives it, a pinned version, and a monitor that watches the server rather than the front door. Cloudflare, Authentik and systemd are what I happen to run, and I name them because a guide with the names taken out cannot be followed. They are not the requirement. Substitute a VPN, Tailscale, an authenticating reverse proxy, a different supervisor, and the shape holds.
+
+## Four decisions, not steps
+
+Doing this involves four choices that are yours. If you have delegated the work, these are the points where whoever is doing it should stop and ask you.
+
+1. **Which authenticating layer to use.** It has to be something you will maintain; an unmaintained door is the failure mode here.
+2. **Any DNS change, certificate issuance, or tunnel creation on an account that is not solely yours.**
+3. **Any change to the bind address.** There is no case where widening it is correct. If someone tells you there is, make them say why, and stop.
+4. **Which version to pin to.**
 
 ## The whole thing, in order
 
@@ -52,6 +63,19 @@ The important part is *why this has been fine*. The server binds to `127.0.0.1`.
 
 So the requirement is specific: something must **authenticate the request before the server receives it**. Not beside it — in front of it.
 
+**Do not try to settle this by checking a version number.** Because `/api/files/*` stays exempt either way, the front layer is required on every version. #3435 reduced the blast radius; it did not remove the requirement.
+
+What does not count as a front layer: the bearer token on its own; a hostname nobody has guessed yet; a firewall rule that still admits the public internet; authentication configured inside MulmoClaude.
+
+Prove it from a machine that is **not** the server, in a session with no cookies:
+
+```sh
+curl -sS -o /dev/null -w '%{http_code}\n' https://HOST/api/files/raw
+curl -sS -i -N https://HOST/ws/pubsub 2>&1 | head -5
+```
+
+Expect a redirect to, or a challenge from, the front layer in both cases — not a 200, and not anything MulmoClaude itself produced. For the websocket, the challenge must come before any Socket.IO payload appears.
+
 Mine is Cloudflare Access with [Authentik](https://goauthentik.io/) as the identity provider, self-hosted, so the account and its passkey belong to me rather than to a vendor. A request arrives at Cloudflare, is bounced to Authentik, and only continues once a passkey has been presented. MulmoClaude sees nothing until then. An authenticating reverse proxy, a VPN or Tailscale all satisfy the same requirement; pick whichever you will actually maintain.
 
 If you do wire Authentik to Cloudflare Access, three things are not obvious:
@@ -70,9 +94,17 @@ Fix with `PATCH /api/v3/providers/oauth2/<pk>/` and `{"grant_types":["authorizat
 
 ## 2. Reaching the server without opening a port
 
-I use a Cloudflare Tunnel. `cloudflared` runs on the server, dials out to Cloudflare, and traffic for `mulmoclaude.example.com` comes back down that connection to `localhost:3001`. Nothing listens on the public interface and the firewall stays shut. The server keeps its `127.0.0.1` bind — **never change it to `0.0.0.0`**, not even to test something.
+I use a Cloudflare Tunnel. `cloudflared` runs on the server, dials out to Cloudflare, and traffic for `mulmoclaude.example.com` comes back down that connection to `localhost:3001`. Nothing listens on the public interface and the firewall stays shut. The server keeps its `127.0.0.1` bind — **never change it to `0.0.0.0`**, not even to test whether the tunnel works. The whole safety of the default configuration rests on that bind.
 
-Two things that cost time:
+Prove it on the server:
+
+```sh
+ss -tlnp | grep -vE '127\.0\.0\.|\[::1\]'
+```
+
+Expect MulmoClaude's port to be absent from the output. Check IPv6 too — a `*:PORT` entry means both families, and grepping for `0.0.0.0` will not match it.
+
+Three things that cost time:
 
 **A tunnel created in the Cloudflare dashboard is remotely managed, and the `ingress:` section of your local `/etc/cloudflared/config.yml` is ignored.** Only `tunnel:` and `credentials-file:` do anything locally. You can edit that file all afternoon and change nothing. The tell is in the journal at startup:
 
@@ -83,6 +115,8 @@ INF Updated to new configuration config="{...}" version=4
 Routes for a remotely-managed tunnel are changed in the dashboard, or through the API at `/accounts/<id>/cfd_tunnel/<id>/configurations`. If you use the API, note that `PUT` replaces the entire ingress array — `GET` and keep a copy first, and leave the catch-all 404 rule last.
 
 **Keep the hostname to one label.** Cloudflare's free universal certificate covers `example.com` and `*.example.com`, but not `m.mulmoclaude.example.com`. A two-label name fails at the TLS handshake, which looks nothing like a certificate problem while you are debugging it. Join the words with a hyphen instead.
+
+**If a new route answers "Unable to connect to origin", the daemon did not reload — restart it.** And restart it properly: **do not send it `SIGHUP`.** It exits on `SIGHUP` rather than reloading, which takes every route down with it, not just the one you were working on.
 
 ## 3. `MULMOCLAUDE_TRUSTED_ORIGINS`
 
@@ -150,7 +184,18 @@ And a monitor is not a monitor until you have made it go red on purpose — poin
 - Don't serve a public hostname with only the bearer token in front, for the reasons in section 1.
 - Don't write `@latest` in a systemd unit, for any package.
 - Don't let a restart policy retry without a limit.
+- Don't patch files inside an npx-installed tree.
+- Don't send `SIGHUP` to `cloudflared` expecting a reload.
 - Don't treat a 200 from the public URL as proof the server is up.
+
+## What on this page expires
+
+Re-check these upstream rather than trusting this page.
+
+- **2026-10-10 — [#3435](https://github.com/receptron/mulmoclaude/pull/3435) merged**, requiring the bearer token on the `/ws/pubsub` handshake, closing [#3433](https://github.com/receptron/mulmoclaude/issues/3433). Any release cut before that merge lacks it.
+- **`/api/files/*` is token-free.** True as of the date at the top of this page. It is a design consequence of `<img>` tags, so it is unlikely to change — but verify rather than assume.
+- **Version numbers are deliberately absent from the constraints above.** Check your installed version against the merge, not against a number written on a page.
+- The Cloudflare specifics will drift fastest of anything here.
 
 ---
 
