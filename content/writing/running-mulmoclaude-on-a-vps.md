@@ -195,7 +195,7 @@ And a monitor is not a monitor until you have made it go red on purpose — poin
 
 ## What on this page expires
 
-Re-check these upstream rather than trusting this page.
+Re-check these upstream rather than trusting this page. **This page is maintained against upstream**: when something listed here changes, the page gets corrected, and the dates at the top record when it last was.
 
 - **2026-10-10 — [#3435](https://github.com/receptron/mulmoclaude/pull/3435) merged**, requiring the bearer token on the `/ws/pubsub` handshake, closing [#3433](https://github.com/receptron/mulmoclaude/issues/3433). Any release cut before that merge lacks it.
 - **`/api/files/*` is token-free.** True as of the date at the top of this page. It is a design consequence of `<img>` tags, so it is unlikely to change — but verify rather than assume.

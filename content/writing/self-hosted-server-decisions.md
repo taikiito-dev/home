@@ -1,14 +1,14 @@
 ---
 title: "Running My Own Server: One Month of Decisions"
 date: 2026-10-07
-lastmod: 2026-10-11
+lastmod: 2026-10-13
 weight: 16
 description: "A non-engineer's record of moving photos, files, passwords, calendars and mail onto one rented server and running it for one month: five dated decisions, the options turned down, and which calls look right in hindsight."
 lang: "en"
 tags: ["decision record", "self-hosting", "VPS", "backup", "operations"]
 ---
 
-I negotiate crude oil contracts for a living. I don't write code — I decide what to build and why, and Claude Code writes it. **Until September 2026 I had nothing to do with software at all** — no server of my own, no command line, none of it.
+I negotiate crude oil contracts for a living. I don't write code — I decide what to build and why, and Claude Code writes it. **Until August 2026 I had nothing to do with software at all** — no server of my own, no command line, none of it.
 
 **What this covers** — Putting photos, files, passwords, calendars and the mail for a domain I own onto one rented server, and keeping it running since September 2026. Five dated decisions, and the options I turned down.
 
@@ -24,7 +24,7 @@ This page is a record of **what I decided** over the first month: what I was tor
 
 One rented virtual private server, under ten dollars a month. Nothing is exposed by opening ports inward; it is reached through a tunnel the server itself dials outward.
 
-On it: photos, files, passwords, calendars and contacts, a single sign-on front door, a git repository, uptime monitoring, and a chat-and-calendar app I had built for myself. Backups go offsite every night, encrypted.
+On it: photos, files, passwords, calendars and contacts, a single sign-on front door, a git repository, uptime monitoring, and a chat-and-calendar app built — by the same division of labour as everything else here — for two people. Backups go offsite every night, encrypted.
 
 Mail came last and matters most. Roughly 53,000 messages now live on a domain I own. **That is the part that actually changed things.** Because the address is mine, I can change providers without telling anyone that my address changed — which is the first time the custodian became a replaceable part rather than the foundation.
 

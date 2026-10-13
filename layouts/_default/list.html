@@ -74,7 +74,7 @@
         <ul class="taiki-list taiki-list--index">
           {{- range $pages }}
           <li>
-            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="taiki-latest__date">{{ .Date.Format "2 Jan 2006" }}{{ if ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02") }} · updated {{ .Lastmod.Format "2 Jan 2006" }}{{ end }}</span></h3>
             {{- with .Params.description }}
             <p>{{ . }}</p>
             {{- end }}

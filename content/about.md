@@ -41,7 +41,7 @@ Host names in the articles are replaced with placeholders like `vault.example.co
 
 ## How the site is laid out
 
-- **[Writing](/writing/)** — finished pieces, written on the assumption that they will not be reworked after publication: dated decision records, and one operations guide the MulmoClaude maintainers asked for. Only a few live here.
+- **[Writing](/writing/)** — finished pieces: dated decision records, and one operations guide the MulmoClaude maintainers asked for. They get corrected when wrong and dated when changed, never rewritten to look better. Only a few live here.
 - **[Projects](/projects/)** — what I have built, and where the source lives.
 
 There used to be a dated dev diary here as well. It came down in October 2026, for the same reason the steps did: most of it was not something I could stand behind in my own words.
