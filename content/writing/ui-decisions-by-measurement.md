@@ -1,7 +1,7 @@
 ---
 title: "Taste Is Not a Reason"
 date: 2026-10-07
-lastmod: 2026-10-11
+lastmod: 2026-10-13
 weight: 17
 description: "A non-engineer's record of adjusting a two-person chat-and-calendar PWA well over a hundred times, with Claude doing the implementation: three dated decisions settled by measurement rather than preference — retiring every read receipt, cutting a costly visual effect for speed, and getting the navigation badly wrong once."
 lang: "en"
@@ -44,7 +44,7 @@ Reduce the tick to one instance and there is only one ground. The reversal disap
 
 ---
 
-## Decision 3 — Given looks versus speed, I cut the looks
+## Decision 2 — Given looks versus speed, I cut the looks
 
 **Date.** October 2026
 
@@ -62,7 +62,7 @@ Reduce the tick to one instance and there is only one ground. The reversal disap
 
 ---
 
-## Decision 5 — I made the navigation permanent. And got it badly wrong once
+## Decision 3 — I made the navigation permanent. And got it badly wrong once
 
 **Date.** October 2026
 
