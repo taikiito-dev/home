@@ -204,7 +204,7 @@ Re-check these upstream rather than trusting this page. **This page is maintaine
 
 ---
 
-I have run this setup daily since September 2026, and reach it mostly from a phone. I don't write code — I decide what gets built and why, and Claude Code writes it.
+I have run this setup daily since September 2026. I don't write code — I decide what gets built and why, and Claude Code writes it.
 
 I raised this upstream expecting a one-line answer. What came back was a careful one, and a clear line: the project does not run this configuration, so the project will not document it — but it will point at someone who does. My thanks to [isamu arimoto](https://github.com/isamu) for drawing that line so plainly.
 
