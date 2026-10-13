@@ -82,8 +82,16 @@
              Latest is the three newest Writing pages. It spanned both
              shelves until 2026-10-11, when Notes was taken off the site's
              map: a shelf not listed above should not be feeding the front
-             page either. */ -}}
-      {{- $enWriting := first 3 (site.GetPage "/writing").RegularPages.ByDate.Reverse }}
+             page either.
+
+             Translations are excluded, as they are in the /writing/ list.
+             Between 2026-10-13 and later the same day they were NOT: the
+             Japanese summary added beside the MulmoClaude guide was filtered
+             out of /writing/ but not here, so this list led with a Japanese
+             title on an English page, showed the same article twice, and the
+             duplicate pushed a real article off the front page. The filter
+             belongs on both lists or on neither. */ -}}
+      {{- $enWriting := first 3 (where (site.GetPage "/writing").RegularPages.ByDate.Reverse "Params.lang" "!=" "ja") }}
 
       <!-- Destinations come FIRST, before the latest-articles list.
 
