@@ -25,7 +25,7 @@ tags: ["MulmoClaude", "self-hosting", "VPS", "Cloudflare", "operations"]
 
 **If you are asking an assistant to do this for you, give it this page.** Most people who put MulmoClaude on a server will not type these commands themselves. Every constraint below is stated as a rule, with the command that proves it and the point at which it should stop and ask you.
 
-**What MulmoClaude is.** [MulmoClaude](https://github.com/receptron/mulmoclaude) is an open-source, MIT-licensed personal AI assistant: Claude with a workspace of plain files, where chat opens the right tool — a wiki, a spreadsheet, a chart — and small apps get built for an audience of one. It is designed local-first, for the machine in front of you, bound to `127.0.0.1`. Mine has run on a rented server since August 2026 — which is exactly the setup this page is about.
+**What MulmoClaude is.** [MulmoClaude](https://github.com/receptron/mulmoclaude) is an open-source, MIT-licensed personal AI assistant: Claude with a workspace of plain files, where chat opens the right tool — a wiki, a spreadsheet, a chart — and small apps get built for an audience of one. It is designed local-first, for the machine in front of you, bound to `127.0.0.1`. Mine has run on a rented server since September 2026 — which is exactly the setup this page is about.
 
 **Who this is for.** You already have a server and a domain, and you want MulmoClaude running on the server rather than on the machine in front of you — so that it stays awake, keeps working while you are away, and the full browser UI is reachable from anywhere.
 
@@ -144,14 +144,14 @@ StartLimitBurst=5
 [Service]
 User=you
 WorkingDirectory=/home/you/mulmoclaude
-ExecStart=/usr/bin/npx mulmoclaude@2.3.0
+ExecStart=/usr/bin/npx mulmoclaude@VERSION
 Restart=always
 RestartSec=5
 ```
 
-**Pin the exact version. Do not write `@latest`.**
+**Pin the exact version. Do not write `@latest`.** `VERSION` above is a placeholder on purpose — put in the version you have actually checked yourself, against the merge noted at the top of this page rather than against any number written here.
 
-With `@latest`, every restart after a new release quietly becomes an in-place upgrade of the running tree. On 6 October a restart of mine landed minutes after a release, the install was interrupted, and npm left a staging directory behind:
+With `@latest`, every restart after a new release quietly becomes an in-place upgrade of the running tree. On 6 October 2026 a restart of mine landed minutes after a release, the install was interrupted, and npm left a staging directory behind:
 
 ```
 npm error ENOTEMPTY: rename '.../node_modules/mulmoclaude' -> '.../node_modules/.mulmoclaude-FQR3GhWi'
@@ -166,12 +166,12 @@ There is a deeper point here that I have not acted on. **`npx` in `ExecStart` me
 Pinning has one consequence: changing the version number in the unit means the next restart installs a fresh tree instead of reusing the one already on disk, and the restart sits there waiting for it. Warm it first, from the workspace directory:
 
 ```sh
-cd /home/you/mulmoclaude && npx --yes mulmoclaude@2.3.0 --version
+cd /home/you/mulmoclaude && npx --yes mulmoclaude@VERSION --version
 ```
 
 Then edit the unit, `systemctl daemon-reload`, restart. Keep the previous cache directory; it is your rollback. And **never patch files inside the installed tree** — start hooks run before npx installs, so at the moment a patch matters you are patching the version you are about to replace.
 
-As for the server itself: mine is a Contabo Cloud VPS, 6 vCPU / 12 GB RAM / 200 GB SSD, about $9 a month. MulmoClaude is not the demanding part; everything else I run on the box is.
+As for the server itself: mine is a Contabo Cloud VPS, 6 vCPU and 12 GB of RAM. MulmoClaude is not the demanding part; everything else I run on the box is. Disk and price are left out here on purpose — mine have both changed since I started, and neither is something you need from me in order to follow this page.
 
 ## 5. Monitoring, and one way to get it wrong
 
