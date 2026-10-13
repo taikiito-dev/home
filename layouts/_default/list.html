@@ -15,7 +15,13 @@
      means restoring the ordering too: a feed sorted by weight silently
      reads oldest-first.
 */ -}}
-{{- $pages := .RegularPages.ByWeight -}}
+{{- /* Japanese companions are excluded from this index. One page has a
+       Japanese summary alongside it (see single.html for the whole
+       reasoning); listing both would put two rows for the same piece on a
+       shelf whose premise is one row per piece. The Japanese page is
+       reached from the language row on its English counterpart, and stays
+       in the sitemap so a Japanese search can still find it. */ -}}
+{{- $pages := where .RegularPages.ByWeight "Params.lang" "!=" "ja" -}}
 <!DOCTYPE html>
 <html lang="en">
 <head>

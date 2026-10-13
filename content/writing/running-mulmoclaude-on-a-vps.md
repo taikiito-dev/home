@@ -5,6 +5,11 @@ lastmod: 2026-10-13
 weight: 18
 description: "An unofficial companion to the MulmoClaude README, for running it on a rented server and reaching it over a public hostname: which routes are deliberately left unauthenticated, why something must authenticate the request before the server sees it, and the operational traps that cost the most time."
 lang: "en"
+langLabel: "English"
+altUrl: "/writing/running-mulmoclaude-on-a-vps/ja/"
+altLang: "ja"
+altLabel: "日本語"
+defaultUrl: "/writing/running-mulmoclaude-on-a-vps/"
 tags: ["MulmoClaude", "self-hosting", "VPS", "Cloudflare", "operations"]
 ---
 

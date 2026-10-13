@@ -2,8 +2,26 @@
      English only, and the Japanese records moved out of the repository to be
      rewritten later for a Japanese platform. The bilingual machinery that
      used to live here (a `lang` switch, `altUrl`/`altLabel` front matter, an
-     hreflang pair) went with them. Do not reintroduce a language toggle
-     without reinstating hreflang as well.
+     hreflang pair) went with them, under a standing condition: do not
+     reintroduce a language toggle without reinstating hreflang as well.
+
+     On 2026-10-13 a toggle came back for ONE page, and the condition was
+     honoured — the hreflang trio below is that reinstatement. The site is
+     still English only. What changed is that the MulmoClaude VPS guide has
+     a readership that is mostly Japanese-speaking (the project announces in
+     Japanese and ships a Japanese-only Mac setup guide), while the guide
+     itself has to stay English because the link into it comes from an
+     English repository.
+
+     The Japanese side is a SUMMARY, not a translation: it carries no
+     commands, no version numbers and no vendor specifics, so a change to
+     the steps does not strand it. A full translation was rejected for the
+     reason a parallel `agent.txt` was deleted the same day — two documents
+     holding the same material drift on the first edit to either.
+
+     Any page can opt in by setting `altUrl` / `altLang` / `altLabel` /
+     `langLabel` / `lang` / `defaultUrl`. A page with no `altUrl` renders
+     exactly as before: no row, no hreflang, `lang="en"`.
 
      Which shelf this page belongs to, for the breadcrumb. Derive it from the
      logical path, not from `.Section`.
@@ -20,7 +38,7 @@
   {{- $shelfURL = "/writing/" -}}
 {{- end -}}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ with .Params.lang }}{{ . }}{{ else }}en{{ end }}">
 <head>
   <meta charset="utf-8">
   <title>{{ .Title }} &mdash; Taiki Ito</title>
@@ -34,6 +52,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/site.css">
+  {{- /* hreflang. Both directions plus x-default, which points at the
+         English page: it is the canonical landing, and the one an
+         English-language link into this site arrives at. */ -}}
+  {{- with .Params.altUrl }}
+  <link rel="alternate" hreflang="{{ with $.Params.lang }}{{ . }}{{ else }}en{{ end }}" href="{{ $.Permalink }}">
+  <link rel="alternate" hreflang="{{ $.Params.altLang }}" href="{{ . | absURL }}">
+  <link rel="alternate" hreflang="x-default" href="{{ $.Params.defaultUrl | absURL }}">
+  {{- end }}
 </head>
 <body>
 
@@ -74,6 +100,19 @@
         <span class="taiki-metabar__lastmod">updated {{ $.Lastmod.Format "2 Jan 2006" }}</span>
         {{- end }}
       </nav>
+
+      {{- /* Language row, above the title, as the MulmoClaude README does
+             it: the current language in plain text, the other as a link.
+             Deliberately not a scripted toggle - a link is what survives
+             with JavaScript off, and it is the form a reader coming from
+             GitHub already recognises. */ -}}
+      {{- with .Params.altUrl }}
+      <nav class="taiki-langbar" aria-label="Language">
+        <span class="taiki-langbar__current">{{ $.Params.langLabel }}</span>
+        <span class="taiki-langbar__sep" aria-hidden="true">·</span>
+        <a href="{{ . }}" lang="{{ $.Params.altLang }}" hreflang="{{ $.Params.altLang }}">{{ $.Params.altLabel }}</a>
+      </nav>
+      {{- end }}
 
       <article class="taiki-prose">
         <h1>{{ .Title }}</h1>

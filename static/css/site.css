@@ -646,4 +646,49 @@ h1, h2, h3 {
    for html[lang="ja"], plus per-element sizes for the data-lang-content
    spans on the homepage) went with the Japanese pages on 2026-10-11, when
    the site became English only. Noto Sans JP stays in the font stack:
-   Japanese still turns up inside English sentences. */
+   Japanese still turns up inside English sentences.
+
+   The root scale is back as of 2026-10-13, because one page is Japanese
+   again and sets lang="ja". Japanese glyphs carry more ink at the same
+   nominal size and read a step large next to Newsreader; this was measured
+   rather than guessed, which is why the figure is not a round number. The
+   per-element homepage sizes did NOT come back - the markup they targeted
+   is gone. */
+html[lang="ja"] {
+  font-size: 94.44%;
+}
+
+/* Language row. One page carries a Japanese summary beside its English
+   original; this is the row that links the pair. It sits between the
+   breadcrumb and the title, quiet enough not to compete with either, and
+   reads as orientation rather than navigation - the same register as the
+   breadcrumb above it. Pages with no counterpart render no row at all. */
+.taiki-langbar {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  gap: 0 0.5em;
+  margin: -0.5rem 0 1.5rem;
+}
+
+.taiki-langbar__current {
+  color: #5b6472;
+  font-weight: 600;
+}
+
+.taiki-langbar__sep {
+  color: #c3bcb0;
+}
+
+.taiki-langbar a,
+.taiki-langbar a:visited {
+  color: #8c8578;
+  text-decoration: none;
+}
+
+.taiki-langbar a:hover {
+  color: #5b6472;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
