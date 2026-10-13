@@ -7,6 +7,7 @@ Everything here is written by one person about systems he actually runs. Dates m
 ## Writing
 
 - [Running MulmoClaude on a VPS](https://taikiito.com/writing/running-mulmoclaude-on-a-vps/): an unofficial companion to the MulmoClaude README, for running it on a rented server and reaching it over a public hostname. Two routes are token-free by design, so an authenticating layer in front of the server is required on every version — read before changing any configuration. Each constraint is stated with the command that proves it, the decisions that belong to the user, and which of its facts expire. Published at the maintainers' suggestion; not endorsed by the project.
+- [Self-Hosting: What I Moved, and What I Refused to Move](https://taikiito.com/writing/what-i-refused-to-move/): five dated decisions from replacing paid services with self-hosted ones, four of which are decisions not to move, not to install, or not to switch something on — passkeys that could not be exported, a collaborative editor declined after counting the files, a vendor alias feature that would have created the lock-in it guards against, a second backup copy kept off hardware of mine, and one store deliberately left outside the backup encryption.
 - [Running My Own Server: One Month of Decisions](https://taikiito.com/writing/self-hosted-server-decisions/): five dated decisions from moving photos, files, passwords, calendars and mail onto one rented server, the options turned down, and which calls look right in hindsight.
 
 ## Projects
