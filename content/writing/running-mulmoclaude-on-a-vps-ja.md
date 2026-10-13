@@ -1,8 +1,6 @@
 ---
 title: "MulmoClaudeを借りたサーバーで動かす"
-date: 2026-10-10
-lastmod: 2026-10-13
-weight: 18
+date: 2026-10-13
 url: "/writing/running-mulmoclaude-on-a-vps/ja/"
 description: "公式READMEの番外編として書いた、MulmoClaudeを借りたサーバーに置いて外から使うための手引き。その日本語の要点。手順そのものは英語版にある。"
 lang: "ja"
