@@ -1,9 +1,12 @@
 ---
 title: "Projects"
 standfirst: "What I have built."
-description: "Projects by Taiki Ito — a booking-to-calendar tool and a Singlish phrase collection."
+description: "Projects by Taiki Ito — a paste-to-read page turner, a booking-to-calendar tool and a Singlish phrase collection."
 lang: "en"
 ---
+
+**reader** — paste a long text and read it as pages in the browser. Nothing is uploaded or stored.\
+[reader.taikiito.com](https://reader.taikiito.com) · [github.com/taikiito-dev/reader](https://github.com/taikiito-dev/reader)
 
 **booking-to-caldav** — booking confirmation emails become events on my own calendar server. Running there since October 2026.\
 [github.com/taikiito-dev/booking-to-caldav](https://github.com/taikiito-dev/booking-to-caldav)
